@@ -1,0 +1,1472 @@
+---
+title: "Метода."
+author: "Денис Тельнов"
+format:
+  pdf:
+    papersize: A4
+    documentclass: scrartcl
+    toc: true
+    number-sections: true
+    colorlinks: true
+    mainfont: Open Sans SemiCondensed
+    sansfont: Open Sans SemiCondensed
+    highlight-style: github
+    code-block-border-left: "#808080"
+    code-block-bg: "#FAFAFA"
+    lang: ru
+---
+
+_Preface:_ без использования SSD нормальной работы разработчика не получится, даже если удастся (хватит терпения) установить все необходимые программы :(
+
+# Этап 1: Установка базового набора рабочих программ
+
+# Установка Windows11
+
+Windows11 устанавливать En версию Windows 11 Pro. Скачать официальный установочный диск с какого-либо зеркала, например с [rutracker.org](https://rutracker.org/), версию _build 22631.3296_. Она, с одной стороны, достаточно свежая, чтобы были драйвера для новых ноутов, а с другой стороны эта версия всё ещё позволяет при установке создать локальную учётную запись без необходимости онлайн регистрации учётной записи Microsoft (можно использовать и более новые версии при настройке с помощью rufus, см. далее), а также не пытается удалить КМС при активации.
+
+Подготовить загрузочную флешку можно с помощью утилиты [rufus](https://rufus.ie/) под Windows, или [mkusb](https://help.ubuntu.com/community/mkusb) под Linux. Rufus позволяет при создании сделать _Customize Windows Installation_, а именно запрет на: проверку ограничений, сбор данных (телеметрию), онлайн регистрацию. При выборе типа загрузки следует выбирать GPT/SecureBoot, а не MBR/Legacy, который предназначен для очень старых компьютеров.
+
+При установке не подключать интернет! — сказать, что нет интернета. И, соответственно, установка будет идти без учётной записи Microsoft -- будет только локальное имя и пароль. Логин пользователя должен быть из латинских букв и без пробелов, чтобы избежать возможных проблем со старыми программами, которые не понимают юникод. Регион выбрать _US_, и вообще всё _En_, можно только добавить клавиатуру _Ru_, но не делать её первой. После установки все эти настройки можно будет сменить, и даже полностью сменить интерфейс на русский.
+
+Как загрузится после установки первым делом вставить флешку с _KMS_, нажать _Offline Activation_ — верхняя кнопка. Воткнуть интернет кабель, потом нажать Активировать. Если всё сделать в такой последовательности, то Windows не удаляет никаких файлов. Если же что-то пошло не так, и Windows удалила файлы, то об этом Windows напишет в _Notification_ (нажать на часы в трее). В уведомлениях/Notifications нажать на сообщение, откроется настройка защиты, и там можно будет восстановить удалённый файл и разрешить этот файл на флешке. Если уведомления уже погасли, то искать записи об удалённых файлах в разделе _Windows Security > Protection History_. На каждый удалённый файл там в списке будет запись, раскрыв её выбрать _Actions > Restore_. Возможно где-то там потребуется нажать _Enable on this device_ или что-то похожее.
+
+~~Сразу после активации из этого же запущенного KMS можно установить MSOffice — там есть кнопка. Выбирать канал _Current_ (справа), и версию 2024ProPlus или 2021ProPlus. После установки опять нажать Активация Оффлайн, и там внизу выбрать из выпадающего списка Office/Visio/ProjectPro и каждого из них активировать.~~
+MSOffice лучше уставливать утилитой _"Office 2013-2024 C2R Install + Lite v7.7.7.7 ++ r25"_ -- она не сбрасывает канал (_Current_) при выборе версии (_2024ProPlus, ru_ru_) офиса. Но возможно потребуется восстановить файлы удалённые Windows Defender'ом -- если он уже успел обновиться, то будет удалять файлы КМС утилиты.
+
+## Настройки Windows
+
+* Разрешить _Windows Development Mode_: (~~_Settings > Update & Security > For Developers:~~) _Settings > System > For Developers: Developer Mode -> On_
+
+* Также, для разработчиков, для поддержки длинных имён файлов выполнить в PowerShell(Admin): `Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1`
+
+* После активации в настройках появится возможность переместить меню Старт влево: _Setting > Personalization > TaskBar > Taskbar behaviors > Taskbar alignment_.
+
+* Отключить режим гибернации (hibernate): в PowerShell(Admin) выполнить `powercfg /H off`
+
+* После установки региона _Россия_ Windows настроит все соответствующие параметры, в том числе установит запятую в качестве десятичного разделителя. Поправить на точку можно в _ControlPannel_, раздел _Region > Additional Settings... > Decimal Symbol_.
+
+* Настройка действия на складывание ноутбука — поиском в меню Start слова _Lid_.
+
+* Поведение _\<Alt+Tab\>_ -- показывать ли отдельные Табы в списке окон по _\<Alt+Tab\>_: _Settings > System > Mutitasking: Show tabs from apps..._, установить в _Don't show tabs_, тогда по _\<Alt+Tab\>_ будут показываться только окна, без составляющих их табов.
+
+* Включить встроенный многокарманный буфер обмена (Clipboard) в Windows -- `Win+V` (_Note:_ этот буфер очищается при перезагрузке!)
+
+* _Windows Update > Advanced Options >_ включить _Receive Updates for other Microsoft products_. Это чтобы MSOffice тоже обновлялся.
+
+* Высокое время задержки перед повтором клавиш [правится](https://www.reddit.com/r/techsupport/comments/1du2gvd/keyboard_repeat_delay_keeps_setting_itself_to_its/) в реестре:
+  `regedit`: `HKEY_CURRENT_USER>Control Panel>Accessibility>Keyboard Response`:
+  ```sh
+	AutoRepeatDelay 200
+  AutoRepeatRate 5
+  BounceTime 0
+  DelayBeforeAcceptance 10
+  Flags 59
+  ```
+  Эти настройки могут слетать (при каждом обновлении Windows?), поэтому надо сделать _.reg_ файл для этого раздела регистра, и применять его, когда задержка перед повтором опять станет длительной. См. также [Настройки](https://learn.microsoft.com/en-us/answers/questions/1124213/registry-keyboard-response-default-values).
+
+* После установки всех программ отредактировать список программ запускаемых при загрузке: _Settings > Apps > StartUp_.
+
+* Правой клавишей по трею > _Taskbar settings > Other system tray icons_, выбрать постоянно показываемые иконки:
+  _Safely Remove Hardware..._
+  _Windows Update Status_
+  А остальные спрятать чтобы не мешали.
+  
+* Настройка вида меню Start: _Settings > Personalization > Start_.
+
+* В меню Start в нижней строке можно расположить быстрый доступ к Папкам и _Settings_: _Personalization > Start > Folders_.
+
+* Если Edge станет совсем занудным, то есть пара утилит, [GoAwayEdge](https://github.com/valnoxy/GoAwayEdge) и [MSEdgeRedirect](https://github.com/rcmaehl/MSEdgeRedirect), которые отключает Edge и регулярно проверяет, чтобы Edge больше не просыпался.
+
+## Клавиши быстрого доступа (shortcut keys) в Windows
+
+### Переключение окон
+
+`Win+#Digit`: `Win+1`, `Win+2`, и т.д. -- быстрое переключение на приложение номер _#Digit_ в _Панели Задач_/_Taskbar_. Если в _Панели Задач_ закреплено (pin) несколько приложений, например: _FileExplorer_, _Edge_ и _Far_, то, нажатие на `Win+3` переключит на первый открытый _Far_, сколько бы ни было открыто слева окон проводников или браузеров. Повторное нажатие на `Win+3` переключит на следующий открытый _Far_, и т.д.
+
+То есть, закрепив в _Панели Задач_ наиболее часто используемые приложения, их всегда можно сходу вызвать по их порядковому номеру соответствующей горячей клавишей `Win+Номер`.
+
+### Переключение вкладок
+
+В Windows во всех приложениях быстрый доступ к конкретной _Вкладке_/_Табу_ (_Tab_)  проводится по комбинации `Ctrl+#Digit`, т.е. `Ctrl+1`, `Ctrl+2` и т.п.
+
+По `Ctrl+Tab` -- листание _Вкладок_. `Ctrl+Shift+Tab` -- листание _Вкладок_ в обратном порядке.
+
+### Остальные команды
+
+`Ctrl+D` -- свернуть все окна
+`Ctrl+Esc` -- меню Start (Пуск)
+`Ctrl+Shift+Esc` -- вызвать Task Manager (Менеджер Задач)
+`Win+E` -- открыть новый File Explorer (Проводник)
+
+Полный список [комбинаций клавиш быстрого доступа Windows](https://support.microsoft.com/help/12445), [ещё один](https://www.windowscentral.com/best-windows-10-keyboard-shortcuts).
+
+Так же есть утилита [AutoHotKey](https://www.autohotkey.com/), которая позволяет запрограммировать любые действия на любые клавиши, но это весьма нетривиально.
+
+
+# Установка программ
+
+Менеджеры программ для Windows: [Scoop](https://scoop.sh/#/) (консольная), [WinGet](https://github.com/microsoft/winget-cli) (консольная), [Chocolatey](https://chocolatey.org/) (есть GUI). Потребуются все три менеджера, так как не все программы есть в каком-то одном. На сайте https://repology.org/projects/ есть сведения практически обо всех существующих программах распространяемых через интернет. Также там можно определить в каких репозиториях есть интересующая программа.
+
+Существует [UniGetUI](https://github.com/marticliment/UniGetUI) -- графический интерфейс к большинству менеджеров программ -- но не всегда ставится, не надёжен.
+
+Все консольные программы надо устанавливать через Scoop, при этом программы будут установлены в домашнюю папку, и пути будут добавлены в переменную _PATH_, что автоматически позволит запускать эти программы из командной строки.
+
+Графические программы следует устанавливать либо через Chocolatey, либо через WinGet -- примерно одно и тоже. Через winget стоит устанавливать те программы, которым не требуется регулярное обновление, либо которые умеют сами обновляться, например Telegram -- установил и забыл. Если программы требуют регулярного контроля над обновлениями, то это удобнее делать через ChocolateyGUI.
+
+Видимость установленных программ. Scoop "видит" только те программы, что установил сам. Winget помимо программ, которые были им установлены, также "видит" программы, установленные через Chocolatey; для Chocolatey обратное неверно -- если программа установлена не через Chocolatey, то она её не "видит".
+
+
+## scoop
+
+https://scoop.sh/#/apps — сайт-каталог доступных программ.
+
+Установка scoop с сайта https://scoop.sh/ -- запустить две строчки в PowerShell (не Admin!). 	После выполнить проверку:
+```sh
+scoop checkup
+```
+Здесь потребуется пара настроек Windows для Developer Mode и LongPaths, если они не были сделаны при установке.
+
+Установить все программы -- в любом терминале (не Admin) выполнить:
+
+```sh
+scoop install git
+scoop update
+
+scoop bucket add nerd-fonts
+scoop install nerd-fonts/IosevkaTerm-NF-Mono
+#scoop install main/far
+scoop install main/cmder
+scoop install main/oh-my-posh
+scoop install main/fd
+scoop install main/ripgrep
+scoop install main/fzf
+scoop install main/python
+scoop install main/pipx
+scoop install main/ccat
+scoop install main/neovim
+scoop install main/7zip
+scoop install main/wget
+scoop install main/curl
+scoop install main/gcc
+scoop install main/gdb
+scoop install main/make
+scoop install main/cmake
+scoop install main/clipboard
+scoop install main/imagemagick
+scoop install main/graphicsmagick
+scoop install main/gnuplot
+scoop install main/openssh
+scoop install main/pwsh
+#scoop install main/cwrsync
+scoop install main/concfg
+
+scoop install main/winget
+
+scoop bucket add extras
+scoop install extras/winmerge
+scoop install extras/vscode
+scoop install extras/copyq
+```
+
+
+## winget
+
+Список доступных к установке программ:
+https://winstall.app/
+
+_winget_ уже должен быть установлен с помощью _scoop_: `scoop install main/winget`.
+
+Устанавливать программы из под пользователя, а не Admin!, при необходимости _winget_ сам спросит права.
+
+```sh
+winget install --id=FarManager.FarManager  -e
+winget install --id=Hibbiki.Chromium  -e
+winget install --id=Mozilla.Firefox.ESR  -e
+winget install --id=Chocolatey.Chocolatey  -e
+winget install --id=AutoHotkey.AutoHotkey  -e
+winget install --id=MartiCliment.UniGetUI  -e
+winget install --id=Microsoft.PowerShell  -e
+winget install --id=Microsoft.WindowsTerminal  -e
+winget install --id=xiaoyifang.GoldenDict-ng  -e
+winget install --id=WinDirStat.WinDirStat  -e
+winget install --id=PuTTY.PuTTY  -e
+winget install --id=Telegram.TelegramDesktop -e
+winget install --id=IrfanSkiljan.IrfanView  -e
+winget install --id=IrfanSkiljan.IrfanView.PlugIns  -e
+winget install --id=TheDocumentFoundation.LibreOffice  -e
+scoop shim add soffice "C:\Program Files\LibreOffice\program\soffice.exe"
+```
+
+## Chocolatey
+
+~~Установить Chocolatey: с сайта https://chocolatey.org/install скопировать в PowerShell(Admin) одну строчку и запустить.~~
+_Chocolatey_ уже был установлен с помощью _winget_: `winget install --id=Chocolatey.Chocolatey  -e`. Для установки _GUI_ для _Chocolatey_ запустить в Admin терминале:
+```sh
+choco install -y chocolateygui
+```
+
+_Note:_ В настройках ChocolateyGUI (запускается уже из меню Start) лучше отключить вид в виде tiles/плиток — построчный показ удобнее. 
+
+В _Chocolatey_ из терминала -- так удобнее -- установить программы (Admin!):
+```sh
+choco install -y vcredist-all
+choco install -y irfanview
+choco install -y irfanviewplugins
+choco install -y meld
+choco install -y rufus
+choco install -y reflect-free
+```
+
+_Note:_ В _Cmder_ для выполнения программ под правами _Admin_ следует вставлять _sudo_ перед командой, например: 	`sudo choco install -y vcredist-all`.
+
+В _ChocolateyGUI_ в репозитории эти программы также можно найти и установить вручную:
+* Microsoft Visual C++ Runtime - all versions
+* IrfanView
+* IrfanView-Plugins
+* Rufus
+* Meld
+* Macrium Reflect
+
+## Обновление (update) всех установленных в Windows программ
+
+Все менеджеры программ предоставляют возможность обновить все программы одной командой -- для этого выполнить в терминале (не Admin!):
+```sh
+scoop update --all
+sudo choco update all -y
+winget update --all
+```
+
+* _Scoop_ может обновить только то, что он сам установил: `scoop list`, вывести список обновляемого: `scoop update`, обновить всё: `scoop update --all`.
+
+* _Chocolatey_ может обновить только то, что он сам установил. В ChocolateyGUI при запуске он покажет, что можно обновить: нажать иконку-звёздочку. Обновить из CLI: `choco update all -y`.
+
+* _Winget_ может обновить программы, которые были установлены и через winget, и через Chocolatey, список установленного: `winget list`, при наличии обновления эта команда укажет новую вресию, либо, сразу показать список обновляемого: `winget update`. Обновить всё: `winget update --all`.
+
+
+## Некоторые программы и утилиты
+
+Несколько слов о разных программах и утилитах, которые не требуют подробного описания установки или использования. Большинство из них были в списках установки выше.
+
+
+### OpenVPN
+
+**[OpenVPN](https://openvpn.net/community-downloads/)** Версии 2.6.xy не работают со старыми ключами, поэтому, либо скачать предыдущую версию 2.5.xy (2.5.10) с https://openvpn.net/community-downloads/ и после установки зафиксировать эту версию:
+  ```sh
+  winget pin add OpenVPNTechnologies.OpenVPN
+  ```
+  Либо отредактировать _.ovpn_ файл: убрать строчку _compress_.
+
+### Работа с текстом
+
+Написание программных кодов предполагается в VSCode, настройка которого рассмотрена в отдельной главе.
+
+* **[Notepad++](https://notepad-plus-plus.org/)** -- легковесная замена блокнота и ультраэдита, с подсветкой синтаксиса и проч. Устанавливается: `scoop install extras/notepadplusplus`.
+
+* **[Meld](https://meldmerge.org/)** и **[WinMerge](https://winmerge.org/)** -- это программы для сравнения и редактирования файлов бок о бок, наиболее популярные из открытых. Используются, в том числе, для разрешения конфликтов при слияниях **git**. Устанавливаются, соответственно: `sudo choco install -y meld` и `scoop install extras/winmerge`.
+
+
+### Утилиты для работы с дисками
+
+* **[WinDirStat](https://windirstat.net/)** -- утилита для контроля занимаемого места файлами на диске, установка: `winget install --id=WinDirStat.WinDirStat  -e`
+
+* **[Rufus](https://rufus.ie/)** -- утилита для создания загрузочных флешек, для установки операционных систем Windows, Linux и пр. Установка: `choco install -y rufus`.
+
+* **[GSmartControl](https://gsmartcontrol.shaduri.dev/)** -- утилита для получения информации S.M.A.R.T. SSD/HDD, в частности, для контроля истирания **SSD**. Установка: `winget install --id=AlexanderShaduri.GSmartControl  -e` 
+
+* обновление прошивок **SSD**:
+  - _[Samsung](https://semiconductor.samsung.com/consumer-storage/support/tools/)_: `choco install -y samsung-magician`
+  - _[Intel](https://www.solidigm.com/support-page/drivers-downloads/ka-00085.html)_: `winget install --id=Solidigm.StorageTool  -e`
+  - _[Transcend](https://www.transcend-info.com/Support/Software-10/)_: `winget install --id=TransendInfo.SSDScopeApp  -e`
+  - _[Kingston](https://www.kingston.com/en/support/technical/ssdmanager)_: `winget install --id=Kingston.SSDManager  -e`
+  - _[Micron](https://www.micron.com/products/storage/ssd/micron-ssd-firmware)_, [2](https://www.micron.com/sales-support/downloads/software-drivers/storage-executive-software): `choco install -y micron-storage-executive`
+  - _[Crucial](https://www.crucial.com/support/storage-executive)_: `winget install --id=Crucial.StorageExecutive  -e`
+  - _[WD](https://support-en.wd.com/app/answers/detailweb/a_id/31759)_: `winget install --id=WesternDigital.Dashboard  -e`
+
+### Прочее
+
+* для ноутбуков **Lenovo** есть утилита [Lenovo System Update](https://support.lenovo.com/us/en/downloads/ds012808-lenovo-system-update-for-windows-10-7-32-bit-64-bit-desktop-notebook-workstation), которая может скачать/обновить BIOS и специфичные драйвера для Windows. Установка: `winget install --id=Lenovo.SystemUpdate  -e`. [Ещё](https://winstall.app/apps/Lenovo.UpdateRetriever).
+
+* для ноутбуков **Huawei** есть утилита [PC Clone](https://winstall.app/apps/Huawei.PCClone) для копирования системы с/на другие компьютеры и ноутбуки. Копирование происходит: а) копированием всех файлов пользователя, б) установкой соответствующих программ на другом компьютере и копировании данных для каждой из этих программ (поддерживается ограниченный список программ). Должна работать не только с Huawei.
+
+* **[FanControl](https://getfancontrol.com/)** -- утилита для настройки скорости вращения вентиляторов, актуально для ноутбуков, [установка](https://winstall.app/apps/Rem0o.FanControl): `winget install --id=Rem0o.FanControl  -e`.
+
+* Быстрый переход в конкретные приложения по горячим клавишам: [autohotkey](https://github.com/AutoHotkey/AutoHotkey), [wmctrl](https://github.com/ebranlard/wmctrl-for-windows) -- трудно настроить.
+
+
+## Backup операционной системы Windows
+
+Резервное копирование систем Windows удобно делать используя программу _MacriumReflect_ -- это проприетарная программа, но бесплатная для персонального использования. Программа должна была быть установлена через _Chocolatey_ (см. выше):
+```sh
+choco install reflect-free
+```
+
+### Особенности использования MacriumReflect
+
+При первом бэкапе будет создан шаблон, который, в дальнейшем, можно будет запускать безо всех этих шагов с указанием пути, имени, и т.п. Шаблон во втором табе/вкладке.
+
+Для возможности восстановления из бэкапов необходимо создать загрузочную запись, либо на флешке, либо на самом диске с установленной операционной системой. Это делается в меню _Other Tasks > Create Rescue Media_.
+
+В меню _Other Tasks > Edit Defaults and Settings > Update Settings_ отключить проверку обновлений -- очень часто обновляется, будет раздражать. Рядом в _Backup Defaults > Retension Rules_, стоит отключить автоматическое удаление старых бэкапов.
+
+## Браузеры
+
+Наиболее широко распространённые браузеры: Chromium (Chrome), Firefox, Edge, Brave. Chrome, Edge, Brave созданы на основе Chromium, Firefox -- отдельная разработка. Все браузеры примерно равны, и у всех есть возможность установки наиболее востребованных плагинов. Edge и Chrome по умолчанию следят за пользователями, Chromium и Firefox не следят (так как их исходный код доступен и любой желающий параноик в этом может убедиться), но Edge и Chrome наиболее массовые браузеры, и, поэтому, наиболее протестированные и защищённые. На сегодняшний день для повседневной работы с неконфидициальными данными, в Windows вполне обосновано применять _Edge_, с установленным плагином [UBlock Origin](https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak), и настройками, запрещающими отправку данных в _Edge > Settings > Privacy, Search and Services:_.
+
+
+* UBlock Origin.  _"Must have"_ для всех браузеров, без вариантов! [Edge](https://microsoftedge.microsoft.com/addons/detail/ublock-origin/odfafepnkmbhccpbejgmiehpchacaeak), [Chrome/Chromium](https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/). После установки плагина в настройках дополнительно включить фильтр _Ru_ в табе _Filter lists_ в самом низу в _Regions, languages_.
+
+* NoScript. [Во](https://addons.mozilla.org/en-US/firefox/addon/noscript/) [всех](https://chromewebstore.google.com/detail/noscript/doojmbjmlfjjnbmnoijecmcbfeoakpjm) [браузерах](https://microsoftedge.microsoft.com/addons/detail/noscript/debdhlbmgmkkfjpcglcbjadbhhekgfjh) есть [NoScript](https://noscript.net) плагин, который позволяет запуск каких-либо _.js_ скриптов только по _белому списку_, т.е. никакие сторонние скрипты никогда _не запустятся_, если только их явно не _разрешить_.
+
+* В Firefox есть встроенный менеджер паролей, защищённый _Мастер Паролем_, т.е. Firefox не позволяет посмотреть сохранённые пароли и реквизиты банковских карт пока не будет введён _Мастер Пароль_. У Chromium (Chrome, Edge) нет такой возможности -- они позволяют любому посмотреть все сохранённые пароли. /Параноик Mode Off.
+
+Примерный список плагинов приведён в конце параграфа на примере _Chromium_.
+
+Далее рассмотрим некоторые варианты использования браузеров, учитывающие их особенности.
+
+### Конфиденциальные данные
+
+Установить FirefoxESR: `choco install -y firefoxesr`, установить _МастерПароль_, установить [NoScript](https://addons.mozilla.org/en-US/firefox/addon/noscript/), [U-Block Origin](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/). Этот браузер будет для работы с конфиденциальными данными, для работы: с почтой, банковскими сайтами, и т.п.
+
+### Обычное использование интернета
+
+Установить один из браузеров для работы по умолчанию (кроме уже задействованного FirefoxESR). Установить в нём все плагины, кроме NoScript.
+
+### Песочница
+
+[Brave](https://brave.com/) позиционируется как наиболее защищённый браузер, и он может использоваться в качестве "песочницы". `winget install --id=Brave.Brave  -e`. В настройках в brave://settings/shields включить _Aggresive_ в _Trackers & ads blocking_, и включить _Block Scripts_. В последующем использовании разрешать скрипты по очереди -- иконка щита справа от адресной строки. В браузере ни в коем случае не сохранять логинов и паролей. Тогда в этом браузере можно абсолютно безопасно посещать любые недостоверенные сайты, и это не приведёт ни к компроментации данных, ни к вирусам. Также в Brave смогут открываться некоторые сайты, которые в других браузерах не открываются из-за санкций.
+
+### Примерный набор плагинов
+
+для браузера _Chromium_:
+
+[uBlock Origin](https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm)
+[Open Tabs Next to Current](https://chromewebstore.google.com/detail/open-tabs-next-to-current/gmpnnmonpnnmnhpdldahlekfofigiffh)
+[QR Code Generator](https://chromewebstore.google.com/detail/qr-code-generator/afpbjjgbdimpioenaedcjgkaigggcdpp)
+[Enable right click](https://chromewebstore.google.com/detail/enable-right-click/hhojmcideegachlhfgfdhailpfhgknjm)
+[History Trends Unlimited](https://chromewebstore.google.com/detail/history-trends-unlimited/pnmchffiealhkdloeffcdnbgdnedheme)
+[The Marvellous Suspender](https://chromewebstore.google.com/detail/the-marvellous-suspender/noogafoofpebimajpfpamcfhoaifemoa)
+[Unpaywall](https://chromewebstore.google.com/detail/unpaywall/iplffkdpngmdjhlpjmppncnlhomiipha)
+
+Для того, чтобы открывались санкционные сайты, например https://www.netlib.org/lapack/explore-html/ -- сайт библиотеки LAPACK, можно попробовать следующие плагины:
+[Runet Censorship Bypass](https://chromewebstore.google.com/detail/%D0%BE%D0%B1%D1%85%D0%BE%D0%B4-%D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BE%D0%BA-%D1%80%D1%83%D0%BD%D0%B5%D1%82%D0%B0/npgcnondjocldhldegnakemclmfkngch)
+[Snowflake](https://chromewebstore.google.com/detail/snowflake/mafpmfcccpbjnhfhjnllmmalhifmlcie)
+
+## Far Manager и консольный терминал
+
+### Первый уровень сложности
+
+Если ещё не установлен, то установить:
+```sh
+scoop install main/7zip
+winget install --id=FarManager.FarManager  -e
+```
+
+### Второй уровень сложности
+
+Установить:
+```sh
+scoop install main/7zip
+winget install --id=FarManager.FarManager  -e
+winget install --id=Microsoft.WindowsTerminal  -e
+```
+
+и запускать Far в WindowsTerminal, в котором можно настроить цвета/палитры, шрифты и т.п. При такой установке панкль с Far должна автоматически появиться в WindowsTerminal.
+
+### Невероятный уровень сложности
+
+В принципе, на этом можно и остановиться, но для полноценной разработки/программирования рекомендуется установить и настроить нормальный менеджер терминалов, например связку [Windows Terminal](https://learn.microsoft.com/ru-ru/windows/terminal/install) + [Cmder](https://cmder.app/), где Cmder будет [запускаться внутри Windows Terminal](https://github.com/cmderdev/cmder/wiki/Seamless-Windows-Terminal-Integration) (далее WT). Такая связка позволит устанавливать темы оформления и поведение отдельно для [каждого типа терминала](https://learn.microsoft.com/ru-ru/windows/terminal/customize-settings/profile-advanced) (свойство WT); и позволит иметь [удобный консольный терминал](https://chrisant996.github.io/clink/), схожий с настроенным Linux терминалом (Cmder). Пример настройки Cmder приводится в дополнении.
+
+## Многокарманный буфер обмена
+
+**[CopyQ](https://github.com/hluk/CopyQ)** -- многокарманный буфер обмена. _Note:_ хоть в Windows и есть встроенный многокарманный буфер, но он очищается при перезагрузке, поэтому его невозможно использовать как некую временную "записную книжку" с сохранёными фрагментами текста.
+
+_CopyQ_ поддерживает несколько списков хранения, позволяет исправлять (редактировать) хранимые фрагменты текста, поддерживает темы оформления, кросплатформенный.
+
+Установка:
+```sh
+scoop install extras/copyq
+```
+Для автозапуска CopyQ при загрузке Windows, необходимо скопировать ссылку на CopyQ в папку автозапуска, для этого в меню Start правой кнопкой по нему выбрать _Open file location_, скопировать ярлык, и _Paste_ его в папку автозапуска, открываемую по _shell:startup_ в _\<Win+R\>_.
+
+Настройка:
+
+* _\<Win+V\>_ занят встроенным в Windows буфером обмена, поэтому на вызов CopyQ можно назначить сочетание клавиш `Alt+V` в _Preferences > Shortcuts > Globals: Show/Hide main window_
+* в настройках _Preferences > History_ увеличить количество хранимых заметок до 10000
+* в настройках _Preferences > Items > Images_ увеличить максимальный хранимый размер изображений до 2560 на 1600
+* при копировании в буфер форматированного текста (rich text) из Word или html, форматирование сохраняется. Эту особенность можно отключить в _Preferences > Items > Text_. Или настроить _Paste as plain text_ в _Shortcuts_.
+
+Еще есть многокарманный буфер **[Ditto](https://ditto-cp.sourceforge.io/)**, если CopyQ чем-то не устроит, [установка](https://winstall.app/apps/Ditto.Ditto).
+
+## Системы виртуализации WSL и Docker
+
+_WSL_ требуется для программирования: для компиляции и отладки программ. _Docker_ необходим для установки некоторых сложных приложений (_OpenFOAM_).
+
+### WSL
+
+WSL -- Windows Subsystem for Linux, это встроенная в Windows система виртуализации, позволяющая запускать Linux приложения непосредственно в Windows.
+
+Сначала установить [WSL2](https://learn.microsoft.com/ru-ru/windows/wsl/install), для этого в терминале (Admin) запустить:
+```sh
+wsl --install
+```
+
+В процессе установки Ubuntu установить набор пакетов для программирования:
+```sh
+sudo apt update
+sudo apt install aptitude mc bash-completion neovim wget curl ca-certificates git build-essential gfortran libopenmpi-dev mpi-default-bin libopenblas-dev libopenblas-openmp-dev libhypre-dev liblapack-dev liblapack-doc libhdf5-mpi-dev libscotch-dev petsc-dev libsuitesparse-dev libsuperlu-dev libsuperlu-dist-dev fortran-language-server gdb python3 python3-pip ripgrep fzf fd-find
+```
+
+Для запуска терминала с WSL запускать `WSL` или `Ubuntu.exe` из меню _Start/Пуск_; другой вариант -- запуск `wsl` из Cmd/PS; и, самый лучший вариант, это [настроить](https://conemu.github.io/en/wsl.html#wsl-native) отдельный терминал в _Cmder_ -- делается автоматически в _Cmder_ по _Setup Tasks > Add/refresh default tasks_. (_Замечание:_ _Ubuntu.exe_ -- это alias, которые Windows автоматически создаёт для каждой WSL системы для быстрого доступа/запуска)
+
+#### WSL Manager
+
+Существуют графические утилиты для управления WSL контейнерами, одна из них [WSLManager](https://github.com/bostrot/wsl2-distro-manager); [установка](https://winstall.app/apps/Bostrot.WSLManager):
+```sh
+winget install --id=Bostrot.WSLManager  -e
+```
+
+#### Использование _WSL_:
+
+Аргументы _some commands_ после слова _wsl_ в команде `wsl some commands` будут запущены внутри WSL виртуалки: например, команда `wsl rg "some-phrase"` запустит Linux утилиту `rg`, которая, в данном случае, будет выполнять полнотекстовый поиск _"some-phrase"_ в текущей папке. Т.е. в любом терминале Windows можно выполнить команду Linux, в том числе для действий над своими файлами/данными лежащими на локальных дисках _C:_, _D:_ и т.п.
+
+Аналогично, скомпилировать программу из исходного кода, с использованием библиотеки _OpenMPI_:
+`wsl mpif90 -g -o test test.f`
+Запустить скомпилированную параллельную программу в параллельном режиме:
+`wsl mpirun -n 4 ./test`
+Запустить отладку скомпилированной программы:
+`wsl gdb test`
+
+В итоге, в Windows более не требуется сложная процедура установки компиляторов, библиотек, прописывания путей, и т.п. -- это всё делается в Linux, который лучше для этого приспособлен.
+
+_Note:_ установленные в WSL2 графические Linux приложения работают "из коробки".
+
+### Docker
+
+Docker -- это менеджер виртуальных машин; сам он не выполняет виртуальные машины, а только занимается организацией создания, хранения, и запуска машин с помощью других систем виртуализации, например, таких как WSL. Поэтому, устанавливать Docker следует только после установки WSL.
+
+Установка:
+```sh
+winget install --id=Docker.DockerDesktop -e
+```
+
+Про установку и запуск виртуальных машин в Docker см. далее в _Дополнительных материалах_.
+
+### ssh/Putty
+
+В Windows для удалённого доступа по протоколу _ssh_ могут использоваться **[Putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/)** и **[OpenSSH](https://www.openssh.com/)**. Оба пакета выполняют один функционал. Запускать любой из них следует в окне консольного теминала WindowsTerminal/Cmder/Conemu, чтобы были доступны все клавиши навигации, настроенные шрифты и цветовая схема. В Windows выбор из _Putty_ и _OpenSSH_ определяется исходя из задачи соединения: для удалённого запуска тяжёлых графических приложений потребуется Putty+VcXsrv, для быстрого входа в Linux систему для консольных задач набрать `ssh user@host` будет быстрее и удобнее в привычном терминале. _Note:_ в Linux _OpenSSH_ всегда хорошо и быстро работает вне зависимости от задачи, и применение Putty не требуется.
+
+Документация по настройке ssh/Putty на Windows: https://github.com/ScoopInstaller/Scoop/wiki/SSH-on-Windows https://github.com/cmderdev/cmder/wiki/Integrate-SSH-Agent-or-PuTTY-Agent.
+
+_Note:_ В Windows имеется встроенный _OpenSSH_, но из-за [ANSI несовместимости](https://github.com/Maximus5/ConEmu/issues/1625#issuecomment-402519869) его нельзя применять в терминалах Cmder/Conemu, поэтому потребуется ещё установить нормальный OpenSSH.
+
+Установить оба, и [OpenSSH](https://www.openssh.com/), и [Putty]():
+```sh
+scoop install main/openssh
+winget install --id=PuTTY.PuTTY  -e
+```
+
+Для настройки входа без пароля потребуется добавить свой публичный ключик к файлу `.ssh/authorized_keys`.
+
+### Вариант для ssh содинения
+
+[Инструкция](https://www.ssh.com/academy/ssh/copy-id):
+
+1. Посмотреть содержимое папки в домашней директории на Windows `%HOME%\.ssh` на наличие уже созданных ключей, если там есть пара файлов `id_SOMEPROTOCOL` и `id_SOMEPROTOCOL.pub`, то ключи уже созданы и перейти к следующему шагу, иначе создать их командой:
+    ```sh
+    ssh-keygen
+    ```
+    понажимать _Enter_, и ключи готовы.
+
+2. Скопировать их на целевой Linux:
+    ```sh
+    ssh-copy-id user@hostname
+    ```
+
+### Вариант для Putty содинения
+
+Инструкция тут [посложнее](https://putty.org.ru/articles/putty-ssh-key-auth):
+
+1. Открыть из меню Start _PuTTYgen_, сгенерировать ключ, сохранить обе части -- public/private.
+
+2. Выделить открытую часть и скопировать в буфер обмена, чтобы добавить в файл `.ssh/authorized_keys` на Linux, для чего зайти на Linux через Putty, и выполнить:
+    ```sh
+    cd ~/.ssh
+    vi authorized_keys
+    ```
+    Далее процесс добавления ключа из буфера обмена в открытый в `vi` файл:
+    ```sh
+    Go<Shift+Insert><Esc>:wq
+    ```
+    здесь `<Shift+Insert>` и `<Esc>` -- это клавиатурные комбинации, а не строчки которые вводить.
+
+    Поправить права доступа (на всякий случай):
+    ```sh
+    chmod 600 authorized_keys
+    ```
+    Можно выходить из сессии.
+
+3. Теперь добавить ключ в Putty для использования: запустить из Start _Pageant_. Правой кнопкой мышки в трее на иконке _Pageant_ кликнуть и указать _Add key_, выбрать сохранённый приватный ключ _.ppk_. Чтобы вход по ключам всегда срабатывал, потребуется настроить автозапуск _Pageant_: скопировать ссылку на _Pageant_ в папку автозапуска, для этого в меню Start правой кнопкой по нему выбрать _Open file location_, скопировать ярлык, и _Paste_ его в папку автозапуска, открываемую по _shell:startup_ в _\<Win+R\>_.
+
+
+## Xserver
+
+Установленный _WSL_ несёт в себе "нативный" X-server, он работает, но его производительность заметно ниже, чем у [VcXsrv](https://repology.org/project/vcxsrv/versions). Поэтому, установить VcXsrv: 
+```sh
+sudo choco install -y vcxsrv
+```
+
+_Note:_ при запуске VcXsrv ставить галочку "Disable Access Control", для разрешение на запуск графических приложений с любого Linux узла.
+
+Для использования VcXsrv ssh содинение с Linux должно производиться через Putty (а не по _ssh_ из WSL или OpenSSH), иначе проброс графического соединения не произойдёт (может это как-то можно настроить?).
+
+В настройках Putty необходимо устанавливать настройку _X-Forwarding_ (эквивалентно опции `-X` у `ssh`).
+
+После настройки X-сервера проверить его работоспособность можно парой программок: `xclock` -- простые часы, и `glxgears` -- OpenGL программка из пакета _mesa-utils_.
+
+
+
+# OpenFOAM
+
+[OpenFOAM](https://openfoam.org/)
+Онлайн книжка по OpenFOAM -- [Notes on Computational Fluid Dynamics: General Principles (2022) C. Greenshields, H. Weller](https://doc.cfd.direct/notes/cfd-general-principles/index).
+
+OpenFOAM будет запускаться из docker-контейнера из под WSL. В такой комбинации: OpenFOAM сможет работать в параллельном режиме, будет запускаться [ParaView](https://www.paraview.org/) без X-сервера в нативном WSL2 графическом режиме.
+
+Дальше предполагается, что _DockerDesktop_ уже запущен.
+
+Устанавливается с помощью docker из каталога https://hub.docker.com/u/openfoam, например:
+```sh
+docker pull openfoam/openfoam11-paraview510:latest
+```
+(Скачивает 1.5Гб, займёт 3Гб)
+
+Установка: в WSL скачивается запускающий _OpenFOAM_ скрипт из официального [каталога](http://dl.openfoam.org/docker/), выполнить следующие команды в WSL терминале (открывается командой `wsl` или в Cmder/Conemu):
+```sh
+mkdir -p $HOME/software
+cd $HOME/software
+wget http://dl.openfoam.org/docker/openfoam11-linux
+sudo cp openfoam11-linux /usr/local/bin
+sudo chmod a+x /usr/local/bin/openfoam11-linux
+exit
+```
+
+Запуск OpenFOAM: выполнить из любого терминала:
+```sh
+cd some-project-dir
+wsl openfoam11-linux -x
+```
+
+_Note:_ если изначально OpenFOAM не был закачен с помощью _docker pull ..._, то OpenFOAM будет скачан при первом запуске.
+
+_Note:_ скрипт запуска _openfoam11-linux_ имеет небольшой баг: после его запуска и выхода, запуск в этом же терминале `wsl` (без параметров) будет произведён в последней mount-point OpenFOAM контейнера; это абсолютно ни на что не влияет, просто к сведению.
+
+Для ускорения обработки данных может помочь нативный [ParaView](https://www.paraview.org/), который умеет применять аппаратное ускорение видеоадаптера (OpenGL). [Установить](https://winstall.app/apps/Kitware.ParaView) (долго скачивает!):
+```sh
+winget install --id=Kitware.ParaView  -e
+```
+
+# FreeCAD
+
+[FreeCAD](https://www.freecad.org/features.php) -- opensource CAD программа. Использование разделяется на режимы, в зависимости от выбранного [Workbench](https://wiki.freecad.org/workbenches): есть режимы создания 2D чертежа (Draft&Sketcher), два режима создания 3D деталей ([Part&PartDesign](https://wiki.freecad.org/Part_and_PartDesign)), сборки геометрии ([Assembly](https://wiki.freecad.org/Assembly_Workbench)), создания сетки с помощью GMSH ([Mesh](https://wiki.freecad.org/Mesh_Workbench)), создание и решения задач МКЭ ([FEM](https://wiki.freecad.org/FEM_Workbench)). Все эти возможности показаны в соответствующих [туториалах](https://wiki.freecad.org/Tutorials#Tutorials_-_Comprehensive_list).
+
+[Установка](https://winstall.app/apps/FreeCAD.FreeCAD):
+```sh
+winget install --id=FreeCAD.FreeCAD  -e
+```
+
+Настройка:
+
+* режиму навигации мышкой продуктов Ansys соответствует режим _Blender_ во FreeCAD
+* цветовая схема _FreeCAD Light_ самая разборчивая.
+
+# Математика
+
+## SageMath
+
+[SageMath](https://www.sagemath.org/tour.html) -- opensource программа для символьной математики, альтернатива Mathcad, Mathematica.
+
+Устанавливается с помощью docker из https://hub.docker.com/r/sagemath/sagemath (размер скачиваемго образа 1.5Гбайт):
+```sh
+docker run -p8888:8888 sagemath/sagemath:latest sage-jupyter
+```
+
+В консоли появится сообщение вида
+```txt
+To access the server, open this file in a browser:
+        ...
+    Or copy and paste one of these URLs:
+        http://127.0.0.1:8888/tree?token=
+```
+По этой ссылке будет доступно запущенное SageMath приложение. В нём создать новую сессию: кнопка _New_ справа сверху, из выпадающего списка выбрать SageMath. Созданный Jupyter NoteBook после работы сохранить в виде .ipynb файла, и скачать (_Download_) в файловом менеджере на первой странице, чтобы сохранить копию в своих папках, помимо сохранённой версии в docker контейнере.
+
+## Maxima
+
+Ещё есть CAS программа для символьной математики [Maxima](https://maxima.sourceforge.io/)/[WxMaxima](https://github.com/wxMaxima-developers/wxmaxima), использование которой [достаточно](https://maxima.sourceforge.io/documentation.html) [не тривиально](https://wxmaxima-developers.github.io/wxmaxima/wxmaxima.pdf), но это, возможно, наилучшая открытая [CAS](https://en.wikipedia.org/wiki/List_of_computer_algebra_systems).
+```sh
+scoop install extras/maxima
+```
+
+В дополнение можно установить чуть более новый GUI со страницы https://github.com/wxMaxima-developers/wxmaxima/releases.
+
+## Построение графиков
+
+**LabPlot** https://labplot.kde.org/
+Открытая программа для постороения графиков по табличным данным, альтернатива Origin/Grapher. Понимает [Markdown](https://ru.wikipedia.org/wiki/Markdown) и [LaTeX](https://en.wikibooks.org/wiki/LaTeX/Mathematics) формулы; умеет загружать данные напрямую из Jupyter Notebook, включая Python, Julia, Maxima. Умеет Digitization картинок -- вытаскивать данные из графиков с картинок.
+`winget install --id=KDE.LabPlot  -e`
+
+**Gnuplot** [www.gnuplot.info](http://www.gnuplot.info/demo_6.0/)
+Нетривиальная консольная программа для построения графиков.
+`scoop install main/gnuplot`
+
+**Matplotlib** [matplotlib.org](https://matplotlib.org/stable/plot_types/index.html)
+Библиотека для Python для построения графиков, удобна для постоянных пользователей Python; [установка](https://matplotlib.org/stable/install/index.html):
+`python -m pip install -U matplotlib`
+
+**Veusz** [veusz.github.io](https://veusz.github.io/examples/)
+Простая программа для построения графиков по табличным данным.
+`scoop install extras/veusz`
+
+
+# Программы для ведения заметок
+
+Среди множества существующих программ для ведения заметок следует рассматривать только opensource программы, которые поддерживают формулы в LaTeX нотации [https://alternativeto.net/category/productivity/note-taking/](https://alternativeto.net/category/productivity/note-taking/?feature=latex-support&license=opensource). Программ много, можно выбрать на любой вкус. 
+
+Я веду заметки в https://tiddlywiki.com. Это браузерное приложение в виде одного _.html_ файла, т.е., чтобы посмотреть или отредактировать заметки, не потребуется установка каких-либо программ. Поддерживает язык разметки [Markdown](https://ru.wikipedia.org/wiki/Markdown) и формулы [LaTeX](https://en.wikibooks.org/wiki/LaTeX/Mathematics). Из минусов -- если вставлять картинки в виде ссылок на файлы, то теряется концепция хранилища в виде одного файла, если же картинки интегрировать, то размер файла заметок быстро растёт; а [tikz](https://tikz.net/) не поддерживается. Так же из минусов -- это отсутствие Autosave "из коробки".
+
+Для удобства использования надо настроить Autosave для TiddlyWiki: в _Firefox_ установить плагин [Timimi](https://addons.mozilla.org/en-US/firefox/addon/timimi/), также установить приложение [timimi-2-1-1-Windows-Firefox.exe](https://github.com/ibnishak/Timimi/releases). Autosave работает только в _Firefox_, в _Chromium_ почему-то не работает.
+
+[Скачать](https://tiddlywiki.com/#GettingStarted) пустой файл заметок. Открыть в _Firefox_. Установить плагины:
+_CodeMirror_
+_CodeMirror Close Brackets_
+_CodeMirror Mode Markdown_
+_CodeMirror Search and Replace_
+_Highlight_
+_KaTeX_
+_Markdown_
+Есть поддержка режима редактирования Vim в плагине _CodeMirror Keymap Vim_.
+
+
+
+# Настройка среды для программирования
+
+Рассматривается вариант настройки универсальной среды разработки [VSCode](https://code.visualstudio.com/) в Windows, который будет использовать инструменты Linux для компиляции, запуска и отладки программ. Для этого в VSCode используются плагины [WSL](https://code.visualstudio.com/docs/remote/wsl) и [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack), которые позволяют запускать компиляторы и отладчики, как локально (WSL), так и удалённо по _ssh_. Также существует вариант запуска процесса разработки внутри виртуальных машин в [Docker](https://docs.docker.com/desktop/features/wsl/use-wsl/#develop-with-docker-and-wsl-2).
+
+Сначала установить _WSL2_ и _Docker_ -- см. выше.
+
+## VSCode
+
+Если VSCode ещё не установлен, то установить:
+```sh
+scoop isntall main/vscode
+```
+
+Для запуска компилятов и т.п. в Windows используется префикс `wsl`:
+```sh
+wsl gfortran -g -o test test.f
+wsl gdb test
+```
+VSCode [умеет](https://learn.microsoft.com/ru-ru/windows/wsl/tutorials/wsl-vscode) так запускать компиляторы и отладчики при помощи расширения [WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) для VSCode.
+
+Для начала работы, ~~после установки расширения _WSL_,~~ в Cmder/Cmd/PS перейти в папку с проектом или исходным кодом программы, и запустить команду:
+```sh
+wsl code .
+```
+`code` -- это название исполняемого файла VSCode, она так называется. В результате выполнения команды запустится VSCode с открытой текущей папкой (`.`).
+
+_Note_: при таком опосредованном выполнении в WSL, VSCode расширения (extensions) будут устанавливаться в раздел плагинов _WSL_ -- в нижний список установленных расширений. Т.е. в VSCode будет два набора расширений, и, возможно, какие-то расширения будут установлены и там и там, например [Python](https://marketplace.visualstudio.com/items?itemName=ms-python.python), который можно использовать как в WSL, так и локально с помощью нативного _python_.
+
+Расширение [WSL](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl) запускает компилятор и пр. локально, непосредственно на комьютере. Существует вариант удалённой работы через _ssh_ по сети -- на кластер или внутрь виртуальных машин -- делается это с помощью расширения [Remote Development](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack). Это расширение позволяет проводить удалённую работу/отладку с любого компьютера, в том числе через интернет, причём все настройки сохраняются на стороне удалённого сервера/виртуалки (в папке проекта _.vscode_), и проекты будут настроены одинаково с любого удалённого места доступа.
+
+_Note:_ Профессиональные разработчики в своей работе применяют [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker), который позволяет для каждого запуска отладки создавать новый, эталонно настроенный контейнер (виртуалку), и уже с ним работать. Эта технология позволяет:
+
+* иметь разные раборы компиляторов, библиотек и настроек для отладки разных приложений;
+* проводить разработку и отладку на гарантированно одинаковом наборе исходных данных, без необходимости после каждого запуска вручную очищать и копировать данные;
+* так же эта технология позволяет настроить Continuous Integration (CI) -- сервис Непрерывной Интеграции, запускающий набор тестов для каждого внесённого изменения в исходный код.
+
+### C/C++
+
+Расширение [C/C++](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools) должно работать "из коробки".
+
+### Python
+
+На Windows можно установить нативные компилятор Python и его библиотеки, без использования WSL.
+
+У Python есть несколько менеджеров окружений, которые используются для разделения установленных пакетов на независимые "песочницы", с тем, чтобы было возможно установить пакеты, которые имеют зависимости, конфликтующие с зависимостями других пакетов. Один из таких менеджеров -- это [pipx](https://pipx.pypa.io/stable/). На практике, при установке широкоизвестных библиотек лучше использовать стандартный метод `pip install --upgrade some-python-library`. Но если устанавливается Python-программа, особенно с большим числом зависимостей, то её лучше установить в отдельное окружение: `pipx install some-python-app`.
+
+Установка python/pip и pipx:
+```sh
+scoop install main/python
+scoop install main/pipx
+pipx ensurepath
+```
+
+Списоки установленных пакетов: `pip list`, `pipx list`.
+
+Установить математические библиотеки:
+```sh
+python -m pip install --upgrade numpy
+python -m pip install --upgrade plotly
+python -m pip install --upgrade numba
+python -m pip install --upgrade mpi4py
+```
+
+Для разработки на Python есть несколько вариантов IDE: [VSCode](https://marketplace.visualstudio.com/items?itemName=ms-python.python), [Spyder](https://www.spyder-ide.org/), [Positron](https://positron.posit.co/), [PyCharm](https://www.jetbrains.com/pycharm/).
+
+#### Python в VSCode
+
+[VSCode](https://code.visualstudio.com/) рекомендуется как универсальная среда разработки, где освоив разработку на каком-либо языке программирования, разработка на других языках уже не будет представлять сложности. Python в VSCode [использовать](https://code.visualstudio.com/docs/languages/python) [не сложно](https://marketplace.visualstudio.com/items?itemName=ms-python.python).
+```sh
+scoop install extras/vscode
+```
+
+#### Python в Spyder
+
+В [Spyder](https://docs.spyder-ide.org/current/quickstart.html) всё настроено для Python "из коробки". Основной упор сделан на Data Science: обработка данных на Python, построение графиков, статистика. По стилю работы похож на MatLab. При первом запуске проводится краткий обучающий тур основам использования. При наличии HiDPI экрана в настройках для этого есть опция _Tools > Preferences > Application: Interface > Enable auto high DPI scaling_.
+```sh
+winget install --id=Spyder.Spyder  -e
+```
+
+#### Python в Positron
+
+Так же для DataScience стоит попробовать [Positron](https://positron.posit.co/start.html). Это VSCode, где встроили набор плагинов для обработки данных на Python/R и проч. По стилю работы очень похож на VSCode (что подкупает ненужностью изучения чего-то непохожего), но это пока проект в beta стадии, могут встречаться ошибки.
+```sh
+python -m pip install --upgrade ipykernel
+scoop install extras/positron
+```
+
+#### Python в PyCharm
+
+Для профессиональной разработки на Python возможно стоит рассмотреть проприетарный PyCharm -- порог вхождения выше, но и возможностей больше.
+```sh
+scoop install extras/pycharm
+```
+
+### Fortran
+Установить расширение [Modern Fortran](https://marketplace.visualstudio.com/items?itemName=fortran-lang.linter-gfortran), переключиться (Switch) на _Pre-Release_ версию расширения.
+
+Если подсветка не заработала, то [разрешить](https://fortran-lang.discourse.group/t/modern-fortran-configuration-in-vscode/7055/7) в настройках _fortls_ (должен быть уже установлен fortran-language-server в WSL).
+
+Для компиляции (возможно?) потребуется файл кофигурации `task.json`:
+
+Создайте файл tasks.json для настройки компиляции: открыть командную палитру _\<Ctrl+Shift+P\>_, ввести _Tasks: Configure Task_, выбрать _Create tasks.json file from template_, выбрать _Others_, отредактировать на:
+```json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "gfortran",
+      "args": [
+        "-o",
+        "${workspaceFolder}/program",
+        "${file}"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "Generated task by VSCode"
+    }
+  ]
+}
+```
+
+Для отладки потребуется создать/отредактировать файл [`launch.json`](https://github.com/fortran-lang/vscode-fortran-support?tab=readme-ov-file#debugging): _\<Ctrl-Shift-P\>_, _Debug_, _Edit launch.json_:
+```json
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "(gdb) Fortran",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/a.out",
+      "args": [], // Possible input args for a.out
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true,
+        },
+      ],
+    },
+  ],
+}
+```
+
+## Julia
+Установить:
+```sh
+winget install --id=Julialang.Juliaup  -e
+juliaup add lts
+julia
+] add Revise, OhMyREPL, Unitful, Roots, DataStructures, Plots, Chairmarks, Debugger
+```
+Настроить `%HOME%\.julia\config\startup.jl`:
+```sh
+atreplinit() do repl
+    @eval using OhMyREPL
+    @eval using Unitful
+    @eval using LinearAlgebra
+    @eval using Chairmarks
+    @eval using Debugger
+    @eval using DataStructures
+    @eval using Revise
+end
+```
+
+Установить [расширение](https://code.visualstudio.com/docs/languages/julia) для VSCode ([пример установки](https://docs.sciml.ai/Overview/stable/getting_started/installation/#Optional-Step-1.5:-Get-VS-Code-Setup-with-the-Julia-Extension)).
+
+После установки создать новый `.jl` файл, набрать в нём `1+1`, и нажать `Ctrl+Enter`, должно появиться всплывающее сообщение с ответом `2`, по `Esc` пропадёт; в открывшемся терминале также должен появиться ответ `2` (при первом запуске, или после обновления, период ожидания до ответа может быть продолжительным).
+
+## Neovim
+
+Пользователи Vim могут воспользоваться плагином [VSCode Neovim](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim), который запускает полноценную версию Neovim в редакторе VSCode. Будут доступны обычный _init.lua_ и [большинство](https://github.com/vscode-neovim/vscode-neovim/wiki/Plugins) привычных плагинов.
+
+
+
+# Работа с текстами -- создание отчётов, журналов и статей
+
+## Quarto
+
+https://quarto.org/
+Quarto – интерактивная система вёрстки на основе MarkDown, с одновременным отображением отрендеренного содержимого:
+
+* умеет показывать формулы, картинки, код;
+* может выполнять код на Julia, Python, R, Observable (by Jupyter), и показывать результат в тексте;
+* имеет стили, для написания статей, презентаций, сайтов, и др.;
+* формат файлов Quarto (_.qmd_) -- это MarkDown с некоторыми расширениями, т.е. простой текстовый файл, который можно редактировать в любом редакторе;
+* поддерживается в [VSCode](http://marketplace.visualstudio.com/items?itemName=quarto.quarto);
+* _.qmd_ файлы конвертируются в pdf, docx, pptx, html с учётом заданных стилей, или стилем по умолчанию;
+* умеет [загружать](https://quarto.org/docs/tools/jupyter-lab.html) _.ipynb_;
+* [JupyterLab](https://quarto.org/docs/tools/jupyter-lab-extension.html) умеет показывать Quarto с полным форматированием;
+* под капотом использует [pandoc](https://pandoc.org/).
+
+Установка:
+```sh
+winget install --id=Posit.Quarto -e
+python3 -m pip install nbclient
+```
+
+## Pandoc
+
+https://pandoc.org/
+CLI инструмент для конвертации документов в различных форматах в документы в других различных форматах. pdf, docx, pptx, html, MarkDown могут быть сконвертированы друг в друга почти без ограничений, в том числе и с сохранением математических формул.
+`scoop install main/pandoc`
+
+
+
+# AI/LLM
+
+Далее предполагается работа только с локальными моделями LLM -- которые хранятся и запускаются непосредственно на компьютере.
+
+## Рекомендации по выбору моделей
+
+Модели бывают двух типов: base и instruct. Instruct это дообученная для диалога base модель, поэтому для практического применения следует выбирать instruct модель. Модели instruct более "понятливые", но, возможно, менее "умные", чем base. Модели base нужны для исследователей/создателей LLM для дальнейшего дообучения для каких-то частных конкретных задач.
+
+У моделей есть размер -- пишется как 3b, 70b и т.п. -- обозначает количество коэффициентов-весов в модели в b-billions -- в миллиардах. Т.е. для не квантизированной (см. далее) 3b модели с размером весов fp16 -- 2 байта, размер всей модели будет 3E9 * 2байт = 6 Гбайт.
+
+Модели бывают исходные, где все веса имеют размер fp16 или даже fp32. И бывают квантизированные -- модели, где веса были округлены  для экономии занимаемой памяти и ускорения работы. Уровней квантизации-округления [много](https://gist.github.com/Artefact2/b5f810600771265fc1e39442288e8ec9) [разных](https://huggingface.co/mradermacher/grok-1-GGUF), от 1 байта на коэффициент (Q_8), до 1-2 битов на коэффициент (Q_2 и т.п.). Квантизированные модели всегда менее точные и больше глючат, чем исходные, поэтому, при возможности, следует использовать неквантизированные fp16 модели. Характерная зависимость точности (perplexity) моделей от степени квантизации представлена на графике [Perplexity vs. Quantization](https://github.com/ggerganov/llama.cpp/pull/1684). Из графика следует, что Q_8 практически неотличима от fp16; и чем больше модель ~~огрублена~~ округлена, тем хуже её качество. Также из графика следует, что даже самая сжатая модель большего размера будет лучше, чем не квантизированная модель меньшего размера.
+
+Квантизация/quantization моделей, на момент 2024г, это в какой-то мере искусство, а не наука. Разные коэффициенты/веса моделей имеют разное влияние на конечный результат, и есть некоторое [количество](https://arxiv.org/abs/2402.17762) [весов](https://arxiv.org/abs/2411.07191) (логическое ядро?), которые в наибольшей степени определяют ответ, и, даже небольшое их изменение приводит к сильной деградации работы модели. Алгоритм квантизации должен, в теории, уметь находить такие ключевые веса и ограждать их от излишнего округления. Поэтому модель, квантизированная до одной и той же степени (плотности), но разными подходами и алгоритмами квантизации, может иметь принципиальное разное качество. Поэтому не стоит ожидать, что одинаковые цифры в названиях моделей дадут схожий результат.
+
+При выборе степени квантизации/сжатия модели важное значение имеет область применения LLM: при написании программ или формул, т.е. там где принципиальное значение имеет каждый символ и любые ошибки недопустимы, даже незначительная квантизация Q_8 может вносить существенные ошибки. Для практического применения всегда стоит опробовать и сравнивать модели в применении к конкретной задаче: и fp16 модель меньшего размера, и, скажем, модель Q4_K_M большего размера.
+
+На практике, применение локальных LLM сильно ограничено их фактическим размером, в первую очередь это ограничение связано со скоростью шины памяти -- такой большой массив данных как модель, просто физически долго прокачивать из памяти в процессор. И, как показывает опыт применения LLM, при отсутствии GPU, для современного процессора следует выбирать модель размером до 6Гбайт (оптимально до 3Гбайт), иначе будет работать совсем уж медленно. При наличии GPU, если размер модели помещается в VRAM, то работа модели будет прямо быстрой, что связано с, в разы, более широкой шиной памяти VRAM. Если же модель полностью не помещается в VRAM, то та часть модели, что не поместилась в VRAM, будет обрабатываться процессором и будет иметь вышеизложенные соответствующие ограничения на размер.
+
+## Программы для работы с локальными LLM
+
+Существует небольшое число инструментов, непосредственно выполняющих LLM: [llama.cpp](https://github.com/ggerganov/llama.cpp), [Ollama](https://github.com/ollama/ollama), плюс какие-то графические -- это LLM провайдеры. Но абсолютное большинство [программ](https://github.com/vince-lam/awesome-local-llms#open-source-local-llm-projects) для запуска LLM -- это  интерфейсы, графические "оболочки", которые запускают тот или иной LLM провайдер. Далее рассмотрены несколько таких программ, что попроще.
+
+## LM Studio
+
+Сайт [lmstudio.ai](https://lmstudio.ai/) возможно под санкциями, поэтому [webarchive](https://web.archive.org/web/20241112235033/https://lmstudio.ai/).
+
+Удобная программа "По одной кнопке". Умеет загружать pdf/txt и выполнять запрос в их контексте. Из минусов -- не opensorce, и  лицензия запрещает коммерческое применение. Также не умеет рисовать LaTeX формулы, и не умеет делать подсветку для Fortran (это можно обойти если установить [Open WebUI](https://openwebui.com/) (см. ниже) и уже из него запускать LMStudio по OpenAI API протоколу). Не рекомендую для постоянной работы, а вот "потрогать" модельки удобно из-за встроенного поиска моделей и настройки параметров запуска.
+
+_Здесь эта программа приведена только лишь из-за простоты установки -- чтобы желающий мог быстренько установить, посмотреть, удовлетворить любопытство, да и удалить чтобы место не занимала._
+
+Установить:
+```sh
+winget install --id=ElementLabs.LMStudio  -e
+```
+
+### Использование:
+
+* для контроля над LLM необходимо включить режим "Power User" в самом низу, если ещё не включен;
+
+* выбрать и скачать LLM модель: слева иконка лупы;
+
+* выбрать модель из уже скачанных для загрузки: слева иконка открытой папочки;
+
+* начать чат с моделью: слева в самом верху иконка сообщения;
+
+* сменить загруженную модель на другую: сверху плашка с названием модели, при нажатии выпадет список доступных для загрузки;
+
+* работа с документами: "скрепкой" подцепить файл и запрос будет в контексте данных из файла.
+
+P.S. Перед удалением не забыть удалить скачанные модели в интерфейсе управления моделями -- иконка открытой папки.
+
+## Open WebUI (with Ollama)
+
+https://openwebui.com/
+Достаточно большие возможности при несложной установке и простом интерфейсе. Умеет отображать Markdown и LaTeX формулы.
+
+Установить [Ollama](https://ollama.com/):
+```sh
+winget install --id=Ollama.Ollama  -e
+```
+
+[Установка](https://github.com/open-webui/open-webui#installation-with-default-configuration) (размер скачиваемого образа 4.0ГБ, займёт 8.5ГБ) и запуск Open WebUI с использованием уже установленного Ollama:
+```sh
+docker run -d -p 3000:8080 --gpus all --add-host=host.docker.internal:host-gateway -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:cuda
+```
+Open WebUI при этом запустится как фоновый процесс (все его свойства/характеристики можно посмотреть в интерфейсе _Docker Desktop_). По адресу http://localhost:3000 появится приложение в виде веб-страницы.
+
+В случае ошибки соединения _Open WebUI: Server Connection Error_ есть другие [варианты установки](https://github.com/open-webui/open-webui?tab=readme-ov-file#open-webui-server-connection-error).
+
+Для скачивания моделей применять команды скопированные со [страницы](https://ollama.com/library/qwen2.5-coder:1.5b-instruct-fp16) выбранной LLM модели, где команду `run` заменить на `pull`, например:
+```
+ollama pull qwen2.5-coder:1.5b-instruct-fp16
+```
+(Вроде бы есть экспериментальная возможность загрузки моделей прямо изнутри Open WebUI, но это надо где-то включать)
+
+При необходимости обновления Ollama и Open WebUI до новой версии выполнить команду:
+```sh
+winget upgrade ollama
+docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --run-once open-webui
+```
+
+### Использование:
+
+При первом запуске программа попросит задать имя, имейл и пароль, это чтобы никто другой не воспользовался данными пользователя -- они хранятся в зашифрованом виде, а имейл и пароль никуда не передаются. Если забыть пароль, то данные будут потеряны.
+
+* Выбрать модель из загруженных: сверху слева кнопка _Arena Model_.
+
+* Новый чат/список чатов: слева сверху три горизонтальные полоски.
+
+## Page Assist (with Ollama)
+
+Это [плагин](https://chromewebstore.google.com/detail/page-assist-a-web-ui-for/jfgfiigpkhlkbnfnbobbkinehhfdhndo) для Chromium. Удобный инструмент, но на текущей версии начинает сильно тормозить, если поднакопятся чат сессии или данные.
+
+Установить [Ollama](https://ollama.com/) (если ещё не установлен):
+```sh
+winget install --id=Ollama.Ollama  -e
+```
+
+Установить плагин для Chromium [Page Assist - A Web UI for Local AI Models](https://chromewebstore.google.com/detail/page-assist-a-web-ui-for/jfgfiigpkhlkbnfnbobbkinehhfdhndo). Этот плагин умеет в разметку Markdown, рисовать LaTeX формулы, и подсвечивать программный код.
+
+На странице https://ollama.com/models выбрать модель (например [qwen2.5-coder:1.5b](https://ollama.com/library/qwen2.5-coder:1.5b-instruct-fp16) или [3b](https://ollama.com/library/qwen2.5-coder:3b-instruct-fp16)), скачать (с момента установки плагина появится кнопочка-стрелочка _скачать_ рядом с моделью), и запустить в Page Assist.
+
+
+## Конкретные примеры
+
+### Программирование
+
+Для программирования и формул очень хорошо работает модель [qwen2.5-coder](https://ollama.com/library/qwen2.5-coder). Для её применения надо прямо в лоб на русском спрашивать:
+
+> Напиши программу для параллельного умножения матрицы размером MxN на вектор с использованием MPI на языке Fortran. Последовательно объясни действия процедур.
+
+> Напиши программу для интегрирования задачи трёх тел на примере Солнца, Юпитера и Земли методом Адамса-Башфорта на Python. Последовательно объясни действия функций.
+
+> Как на github создать PR в чужой проект, если у меня уже есть форк этого проекта со внесёнными мной коммитами и мержами апстрима?
+
+> Как настроить VSCode для компиляции и отладки программ на языке Fortran?
+
+
+### Translating
+
+Для перевода может применяться любая модель, которая понимает русский язык; но, есть специальная модель, заточенная именно для переводов на всевозможные языки, это [aya-expance](https://ollama.com/library/aya-expanse:8b-q4_K_M), она применяется обычным способом:
+
+> Переведи на английский язык текст начиная со следующей строки, выведи только перевод.
+> Ехали медведи
+> На велосипеде.
+> А за ними кот
+> Задом наперёд.
+> А за ним комарики
+> На воздушном шарике.
+
+### Expert mode
+
+На данный момент (2024г) [написание запросов](https://huggingface.co/docs/transformers/en/tasks/prompting) (PROMPTs)  для реальной работы представляет собой нетривиальную задачу, поэтому её стоит переложить на LLM: составляется простой запрос на русском с просьбой написать экспертный запрос на английском (LLM его лучше понимают) для выполнения требуемой работы:
+
+> Напиши PROMPT для LLM на английском для рефакторинга кода с целью замены существующей структуры данных \`some current data structure\` на новую структуру данных \`some new data structure\` в нижеприведённом коде \`some code\`.
+
+Должна получиться страница текста, если же меньше, то стоит перезапустить запрос, или выбрать другую модель для генерации PROMPT'а. В полученном запросе должны быть прописаны что-то вроде Role, Requirements, Assumptions, Constraints, цепочки анализа; да и вообще -- запрос должен выглядеть _серьёзно_ и _экспертно :)_. Полученный запрос ещё придётся поредактировать, но большая часть работы уже проделана LLM.
+
+Данная технология генерации запросов к LLM с помощью LLM применяется во всех коммерческих ИИ системах -- она не видна потому что спрятана "под капотом". Применение цепочки моделей обусловлено тем, что создать одну универсальную модель гораздо сложнее, чем создать несколько небольших специализированных моделей заточенных на конкретную задачу. По технологии цепочки моделей, данные, полученные на выходе из одной модели, передаются на вход другой модели, [формируя](https://flowiseai.com/) [конвеер](https://github.com/langchain-ai/langchain) [обработки](https://haystack.deepset.ai/) [данных](https://github.com/danielmiessler/fabric).
+
+Готовый PROMPT также можно взять из библиотек, например [0xeb/TheBigPromptLibrary](https://github.com/0xeb/TheBigPromptLibrary) или [abilzerian/LLM-Prompt-Library](https://github.com/abilzerian/LLM-Prompt-Library).
+
+### Отступление про действительно большие модели
+
+Все ~~коммерческие~~ платные модели достаточно велики, чтобы их было невозможно запустить на потребительском компьютере. Тут на первый план выходит даже не открытость весов модели, а именно их размер. Для примера, есть проект [DeepSeek](https://chat.deepseek.com/), веса которой свободно лежат на [hf.com](https://huggingface.co/deepseek-ai/DeepSeek-V2.5). Но они занимают 500ГБ, т.е. для запуска модели потребуется суммарно не менее 500ГБ видеопамяти, и никакой персональный компьютер такое не сможет запустить. Поэтому для серьёзных задач так или иначе придётся оплачивать использование моделей, даже если они и открытые.
+
+Для локального использования остаётся только дожидаться, когда появятся узкоспециализированные модели небольшого размера, заточенные под одну конкретную задачу. И составлять из таких моделей цепочку исполнения.
+
+## Работа с документами
+
+Для работы со своими документами/файлами применяется технология [RAG](https://en.wikipedia.org/wiki/Retrieval-augmented_generation) -- Retrieval-Augmented Generation. Продвинутые пользователи могут использовать более мощные [инструменты](https://github.com/vince-lam/awesome-local-llms#open-source-local-llm-projects), например [SillyTavern](https://github.com/SillyTavern/SillyTavern), а здесь далее будут описаны способы попроще.
+
+### Open WebUI
+
+В Open WebUI можно создать _Базу Знаний (Knowledge Base)_ на основе локальных текстов, [инструкция](https://docs.openwebui.com/tutorials/tips/rag-tutorial/):
+
+* Загрузить данные: _Workspace > Knowledge > + Create a Knowledge Base_ и загрузить файлы.
+
+* Создать модель с загруженными данными: _Workspace > Models > + Add New Model_, выбрать модель, выбрать данные _Knowledge Source_, сохранить модель (это может быть долго).
+
+* Выбрать созданную модель для нового чата.
+
+### Page Assist
+
+В Page Assist для создания _Базы Знаний_ на основе локальных текстов потребуется скачать модель [nomic](https://ollama.com/library/nomic-embed-text), которая будет читать загруженные текстовые документы и транслировать их в вектора данных (токенов).  В настройках _Settings > RAG Settings_ выставить _nomic-embed-text_ в качестве _Embedding Model_.
+
+* В меню _Settings > Manage Knowledge > Add New Knowledge_ загрузить нужные pdf/doc/txt, и дождаться их обработки.
+
+* На главной странице, нажав снизу на _"квадратики"_ выбрать нужную базу знаний. После чего запросы к LLM будут производиться с учётом данных из файлов.
+
+### Примечание по RAG технологии
+
+Следует помнить, что на 2024г технология новая, отработана слабо, поэтому стоит учитывать, что, к примеру, данные могут выгрузиться в базу данных не полностью, или с ошибками, это особенно часто случается при работе с pdf, где разметка страницы может прерывать текст, а формулы без OCR вообще не вытащить. Существуют модели (и использующие их программы), которые могут не только выдёргивать тексты из pdf, но и умеют OCR pdf, картинок и видео, например [Qwen2-VL](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct). Но для их применения необходимы другие более сложные программы, например [vLLM](https://github.com/vllm-project/vllm), [SillyTavern](https://github.com/SillyTavern/SillyTavern) или [quivr](https://github.com/QuivrHQ/quivr).
+
+
+# Консольные приложения
+
+Глава для продвинутых пользователей. В этой главе установка и настройка следующего:
+
+* консольный терминал Conemu/Cmder
+* RipGrep -- быстрый поиск по содержимому файлов, в том числе docx и pdf
+* Neovim
+* управление Docker'ом
+* Backup/Restore WSL систем
+
+## Ограничения командной строки Windows
+
+В Windows `*` (wildcard) [не](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) [раскрывается](https://github.com/chrisant996/clink/discussions/548#discussioncomment-8137898) перед запуском программ, а передаётся прямо как звёздочка, и, скажем, обычная команда `ls *` скажет, что нет такого файла _*_. У этого ограничения есть несколько решений.
+
+* Использовать [BusyBox](https://frippery.org/busybox/), где в каждую [команду](https://www.busybox.net/downloads/BusyBox.html) встроен свой [глоббинг](https://frippery.org/busybox/globbing.html) и правильное распознавание `\`/`/` в путях, и, тот же `ls`, из состава BusyBox, сработает как в Linux. BusyBox, это альтернатива сборкам [Git-for-Windows](https://gitforwindows.org/)/[MSYS2](https://www.msys2.org/). Этот вариант подходит для использования с _Conemu_.
+
+* Использовать доработанный _Conemu_ -- [Cmder](), где глоббинг встроен в консольные скрипты, которые перед запуском команд осуществляют подмену _wildcards_ на аргументы как в Linux.
+
+* Другие варианты -- это использовать настоящий Linux shell, например, в виде терминала с WSL в Cmder/Conemu, или использовать bash/zsh из проектов [Git-for-Windows](https://gitforwindows.org/)/[MSYS2](https://www.msys2.org/) или [BusyBox](https://frippery.org/busybox/).
+
+### Отступление о Cmder vs. Conemu
+
+[Cmder](https://cmder.app/) -- это [донастроенный](https://conemu.github.io/en/cmder.html) [Conemu](https://conemu.github.io/en/), со встроенным набором стандартных [Linux утилит](https://gitforwindows.org/), плюс [Clink](https://mridgers.github.io/clink/). Т.е. Cmder всё необходимое ~~носит с собой~~ при установке скачивает заодно.  При запуске Cmder автоматически ищет установленные утилиты из Git-for-Windows и прописывает их в пути (контролируется [опцией](https://github.com/cmderdev/cmder#command-line-arguments-for-initbat) _/nix_tools_). В случае с Conemu эти утилиты изначально необходимо доустанавливать, и, возможно, прописывать вручную пути. Ещё у _Cmder_ есть некоторое преимущество -- это его мобильность ([portable](https://github.com/cmderdev/cmder/tree/master#single-user-portable-config)), т.е., что его можно носить и запускать преднастроенным с флешки. Из минусов Cmder -- настройки по умолчанию для интерфейса весьма сомнительные, их обязательно придётся править.
+
+Но, Cmder при стандартной установке с [Git-for-Windows](https://gitforwindows.org/) не умеет распознавать направление слешей: прямой и обратный, и, например, не сможет отработать такую команду:
+```sh
+fd --hidden "\.vhdx$" %HOME% | xargs -I@ cp -v @ E:backup\wsl\
+```
+Поэтому для нормальной работы Cmder потребуется доустанавливать BusyBox, и использовать опцию загрузки `/nix_tools 0`, чтобы по умолчанию не дописывались пути с [Git-for-Windows](https://gitforwindows.org/). Но в таком случае Cmder становится практически идентичен Conemu.
+
+Поэтому, в данном руководстве будут рассмотрены оба варианта настройки терминала: и _Cmder_, и _Conemu+BusyBox_. Если Conemu уже установлен и настроен, то предлагается доустановить и настроить BusyBox и Clink, с тем, чтобы получить удобный консольный терминал. Если же Conemu/Cmder не установлен, то использовать Cmder, как более развивающийся и прогрессивный.
+
+
+## Консольный терминал Cmder/Conemu + Clink
+
+[Conemu](https://conemu.github.io/en/)/[Cmder](https://cmder.app/) -- это универсальный консольный терминал с открытым исходным кодом, позволяющий запускать все консольные приложения: _Far_, _Putty_, _CMD_, _PowerShell_, _WSL_, и пр., в одинаково выглядещем терминальном текстовом окне, с одинаково настроенным типом и размером шрифта, поведением горячих клавиш, размером окна.
+
+[Clink](https://mridgers.github.io/clink/) -- это дополнение для _Cmd.exe_, интегрирующее следующие [возможности](https://chrisant996.github.io/clink/clink.html#features): автодополнение, подсветка синтаксиса, поиск по истории команд, поиск файлов и папок, история переходов по папкам, алиасы. (_Note:_ _Clink_ не работает внутри _Far_, т.е в терминале _Far_ по _\<Ctrl+O\>_ все супер-пупер автодополнения и поиск от Clink не сработают -- для работы _Clink_ должна использоваться отдельная консоль.)
+
+[BusyBox](https://frippery.org/busybox/) -- это набор Linux [команд](https://www.busybox.net/downloads/BusyBox.html), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux. Будет использоваться для настройки _Conemu_.
+
+[Git-for-Windows](https://gitforwindows.org/) -- это _git_,  скомпилированный для Windows; также содержит набор Linux команд, но эти команды не поддерживают wildcard globbing. Устанавливается автоматически при работе со _Scoop_. Используется в _Cmder_.
+
+
+
+
+## Установка консольного терминала Cmder+Clink
+```cmd
+scoop install main/cmder
+scoop install main/clink-flex-prompt
+```
+
+## Установка консольного терминала Conemu+BusyBox+Clink
+
+Установить _Conemu_, если ещё не был установлен:
+```cmd
+scoop bucket add extras
+scoop install extras/conemu
+scoop install extras/conemu-color-themes
+```
+
+Установить остальные утилиты:
+```sh
+scoop install main/busybox
+scoop install main/clink
+scoop install main/clink-completions
+scoop install main/clink-flex-prompt
+```
+
+Для использования _Clink_ в _Conemu_ необходимо добавить вызов самого Clink: в настройках Conemu _Settings > Startup > Tasks:_ модифицировать строку запуска Задачи/Task _{Cmd}_, заменив на
+```sh
+cmd.exe /k "clink inject && %ConEmuBaseDir%\CmdInit.cmd"
+```
+
+### Донастройка Clink
+
+[Настройка Clink](https://github.com/chrisant996/clink-fzf?tab=readme-ov-file#how-to-install) для нечёткого (fuzzy) [поиска](https://github.com/chrisant996/clink-fzf#how-to-use): скопировать соответствующие скрипты в отдельную постоянную папку и настроить Clink на их использование:
+```cmd
+mkdir %HOME%\.config\clink-scripts
+cd %HOME%\.config\clink-scripts
+
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/fzf.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/fuzzy_history.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/cwdhistory.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/tilde_autoexpand.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/vscode_shell_integration.lua
+
+clink installscripts %HOME%\.config\clink-scripts
+clink set fzf.default_bindings true
+clink set autosuggest.strategy match_prev_cmd history completion fuzzy_history
+```
+
+### Использование Clink + Cmder/Conemu
+
+Списки горячих клавиш: [Cmder](https://github.com/cmderdev/cmder#keyboard-shortcuts) ([Conemu](https://conemu.github.io/en/KeyboardShortcuts.html)) и [Clink](https://chrisant996.github.io/clink/clink.html#gettingstarted_keybindings); ниже приведены наиболее часто используемые.
+
+Автодополнение _Clink_ работает как в Linux:
+
+* `Tab`: непосредственно дополнить в случае отсутствия неоднозначностей.  В случае наличия вариантов они будут показаны, выбрать между ними вводом соотвествующего символа и продолжить нажав `Tab`
+* `->` или `End`: принять предложенное в строке автодополнение.
+
+В _Clink_ консоли доступны удобные [навигация и поиск](https://github.com/chrisant996/clink-fzf#how-to-use) по истории команд, навигация и поиск файлов:
+
+* `Ctrl+R` -- интерактивный поиск по истории команд
+* `Ctrl+T` -- интерактивный поиск по файлам и директориям в текущей директории
+* `Alt+C` -- быстрый переход из текущей директории в поддиректорию или к файлу;
+* поиск по `Tab` в `**` -- рекурсивному поиску по директориям и файлам в текущей директории.
+* `F7`: открыть окно со списком последних команд
+* `Up`/`Down`: вверх/вниз по истории команд
+* `PgUp`/`PgDown`: вверх/вниз по истории команд с учётом уже набранной части команды
+* `Shift+PgUp`: интерактивное меню с историей посещённых директорий (при установленном _cwdhistory.lua_)
+* `Ctrl+Alt+U`: эквивалентно `cd ..` -- перейти в директорию выше
+* `..`: эквивалентно `cd ..`
+* `...`: эквивалентно `cd ../..`
+* `cd /` или `cd \`: перейти в корневую директорию
+* `~`: перейти в домашнюю директорию
+* `c:`, `d:`: переключиться на диск _C_, _D_ и т.д.
+* `Ctrl+PgUp`/`Ctrl+PgDown`: скрол консоли вверх/вниз.
+
+
+Также удобное [редактирование](https://chrisant996.github.io/clink/clink.html#the-basics) команд в командной строке:
+
+* `Ctrl+W`: удалить слово слева от курсора
+* `Ctrl+U`: удалить всю команду слева от курсора и положить в "буфер"
+* `Ctrl+Y`: вставить из буфера (удалённое) по месту курсора
+* `End`, `Home`, `Ctrl`+стрелки: навигация по тексту 
+* `Shift+End`, `Shift+Home`, `Shift+Ctrl`+стрелки: выделение текста в командной строке
+* `Shift+Mouse`: выделение мышкой в неприспособленных для этого программах
+
+Управление терминалами Cmder/Conemu:
+
+* **Ctrl+\`**: глобальная комбинация клавиш вызова Cmder, не работает в поле ввода
+* `Ctrl+Shift+T`: диалог открытия новой вкладки/окна (по умолчанию `Ctrl+T`, см. _Настройки Cmder_ ниже)
+* `Ctrl+Shift+W`: закрыть вкладку/окно (по умолчанию `Ctrl+W`, см. _Настройки Cmder_ ниже)
+* `Ctrl+D`: завершить терминальную сессию, эквивалентно команде _exit_
+* `Shift+Alt+#Number`: открыть новую вкладку/окно по быстрому набору из меню открытия новых терминалов, см. `Win+Alt+T`
+* `Alt+Enter`, `Ctrl+Win+Enter`: Full Screen
+
+Управление вкладками Cmder/Conemu работает когда все консоли открыты в одном окне Cmder/Conemu, а не когда каждый терминал в своём собственном окне. Управление вкладками:
+
+* `Ctrl+#Number`: переключиться на вкладку номер #Number
+* `Ctrl+Tab`: переключиться на следующую вкладку
+* `Ctrl+Shift+Tab`: переключиться на предыдущую вкладку
+
+### Настройки Cmder/Conemu
+
+* В Windows11 консольные программы в Cmder/Conemu могут неправильно отображать цвета, глючить -- в таком случае [надо снять галочку](https://github.com/Maximus5/ConEmu/issues/2384#issuecomment-1693076459) _Inject ConEmuHk_ в Cmder/Conemu в _Settings > Features: In-console options_; и выбрать цветовую схему _Monokai_.
+* Для показа иконок в _Taskbar_'е в Windows должна быть включена опция _Show badges on taskbar buttons_ в _Settings > Personalization > Taskbar_.
+* Одним из интересных вариантов интеграции Cmder в Windows будет настройка _Панели задач_ (_Taskbar_) без группировки окон -- чтобы каждый терминал был в отдельном окне Windows; при этом надо установить опции для открытия каждого терминала в новом окне в _Settings > General > Appearance: Generic_ убрать первые две галочки -- _Single instance, Multiple consoles_.
+* Сменить фон на непрозрачный: _Settings > Features > Transparency_.
+* Настроить шрифт: _Settings > General > Fonts_, требуется шрифт с набором иконок [NerdFonts](https://www.nerdfonts.com/font-downloads), любой из них можно установить с помощью [Scoop](https://scoop.sh/#/apps?q=nerd+font).
+* Каждый терминал в своём окне: _Settings > General > Appearance: Generic > Single instance mode_ -- отключить.
+* Разрешить мышку в _Far_: _Settings > Keys&Macro > Mouse: Mouse Options > Send mouse events to console_.
+* При желании Табы можно расположить сверху, а не снизу: _Settings > General: Tabs > Tabs on bottom_.
+* Настроить вид курсора: _Settings > Features > Text cursor_.
+* Отключить проверку обновлений: _Settings > General > Update_.
+* Комбинации `Ctrl+C`, `Ctrl+V`, `Ctrl+W`, `Ctrl+T` для доступности в консольных приложениях следует перенастроить (в настройках в _Cmder(Conemu) > Settings > Keys & Macro_) на варианты с `Shift`, т.е.: `Ctrl+Shift+C`, `Ctrl+Shift+V`, `Ctrl+Shift+W`, `Ctrl+Shift+T` и т.п.
+* Действие клика правой кнопкой мыши настраивается в _Settings > Keys&Macro > Mouse: Mouse button actions_ -> сделать _Paste_.
+* Cmder/Conemu имеет большое количество настроек, поэтому рекомендуется, разок его настроив, сохранить файл настроек ConEmu.xml, и в дальнейшем, применять его на других своих компьютерах.
+* Для полнотекстового поиска по файлам, docx, pdf и т.п. смотри раздел _RipGrep_.
+* [mc](https://scoop.sh/#/apps?q=mc) под Windows: сменить диск: `Alt+D`
+
+### Алиасы для Cmder
+
+В настройках в _Settings > Startup > Environment_ есть поле для стартовых настроек. В это поле можно добавить свои переменные окружения и алиасы:
+```sh
+set LANG=en_US.utf8
+
+unalias ll
+unalias l
+unalias ls
+
+alias ll=ls --show-control-chars -F -l --color --ignore={"NTUSER.DAT*","ntuser.dat*"} $*
+alias l=ls --show-control-chars -CFGNhplrt --color --ignore={"NTUSER.DAT*","ntuser.dat*"} $*
+alias ls=ls --show-control-chars -CFGNhp --color --ignore={"NTUSER.DAT*","ntuser.dat*"} $*
+```
+(Ещё потребуется удалить соответствующие алиасы из файла `%HOME%\scoop\apps\cmder\current\config\user`aliases.cmd`)
+
+В результате в командной строке появятся привычные для Linux алиасы. В данном случае определены:
+`ls` -- выводит простой список файлов и папок,
+`ll` -- выводит подробный список файлов и папок,
+`l` -- подробный список, отсортированный по времени модификации файлов/папок.
+
+### Алиасы для Conemu
+
+Аналогичные алиасы для Conemu+BusyBox, в _Settings > Startup > Environment_:
+```sh
+set HOME=%HOMEDRIVE%%HOMEPATH%
+set LANG=en_US.utf8
+alias ll=ls --color=auto -lF $*
+alias l=ls --color=auto -lrtF $*
+alias ls=ls --color=auto -F $*
+```
+
+### Настройка внешнего вида CommandPrompt для Clink
+
+[Clink поставляется](https://chrisant996.github.io/clink/clink.html#custom-prompts) с несколькими вариантами темы оформления командной строки, их можно попробовать не устанавливая:
+```cmd
+clink config prompt list
+clink config prompt show prompt_name
+```
+
+Для постоянного использования включить тему оформления командой:
+```cmd
+clink config prompt use prompt_name
+```
+
+Так же существует проект [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) настройки вида командной строки для различных терминалов (CMD, PowerShell) с широкими возможностями настройки и [большим списком](https://ohmyposh.dev/docs/themes) уже преднастроенных вариантов. Установка, плюс шрифты, если ещё не были установлены:
+```cmd
+scoop install main/oh-my-posh
+scoop bucket add nerd-fonts
+scoop install nerd-fonts/IosevkaTerm-NF-Mono
+```
+
+Включение темы оформления OhMyPosh в Clink:
+```cmd
+clink config prompt use oh-my-posh
+clink set ohmyposh.theme %HOME%\scoop\apps\oh-my-posh\current\themes\peru.omp.json
+```
+
+Использованная тема оформления [peru](https://ohmyposh.dev/docs/themes#peru) почти идеальна, единственный недостаток -- не отображает текущую папку в заголовоке окна. Это исправляется модификацией темы оформления: сначала скопировать файл исходной темы в новый файл `peru-wtitle.omp.json`:
+```cmd
+mkdir %HOME%\.config\ohmyposh-themes
+cd %HOME%\.config\ohmyposh-themes
+cp %HOME%\scoop\apps\oh-my-posh\current\themes\peru.omp.json peru-wtitle.omp.json
+```
+
+и добавить следующую строчку в файл `peru-wtitle.omp.json` почти в самый конец файла перед строкой `"version": 3`:
+```cmd
+"console_title_template": "{{ .Shell }}: {{ if .Segments.Session.SSHSession }}{{ .UserName }}@{{ .HostName }}{{ end }}{{ if .WSL }}WSL: {{ end }}{{ .PWD }}",
+```
+
+Переключить на новую созданную тему:
+```cmd
+clink config prompt use oh-my-posh
+clink set ohmyposh.theme %HOME%\.config\ohmyposh-themes\peru-wtitle.omp.json
+```
+
+
+### Замечание про _HOME_
+
+Cmder самотоятельно создаёт переменную _HOME_. В _Conemu_ переменную _HOME_ можно определить в настройках _Startup > Environment_ как `HOME=%HOMEDRIVE%%HOMEPATH%`.
+
+
+## ripgrep
+
+https://github.com/BurntSushi/ripgrep
+Универсальный поиск по содержимому файлов из командной строки.
+
+```cmd
+scoop install main/ripgrep
+scoop install main/rga
+```
+
+`rg` -- поиск по текстовым файлам. `rga` (rg all) -- поиск по: текстовым файлам, pdf, docx (но не doc).
+
+Настройка: создать переменную окружения `RIPGREP_CONFIG_PATH` указывающую на файл `%HOME%\\.config\\ripgrep`, создать этот файл с конфигурацией:
+```cmd
+--smart-case
+-g
+!.git
+-g
+!*~
+-g
+!.*
+--auto-hybrid-regex
+--ignore-dot
+
+# https://github.com/BurntSushi/ripgrep/blob/master/FAQ.md#how-do-i-configure-ripgreps-colors
+# Set the colors.
+--colors=line:none
+--colors=line:style:bold
+#--colors=path:style:bold
+--colors=path:fg:blue
+```
+
+## Neovim
+
+[Neovim](https://neovim.io/) это обновлённый _Vim_, конфигурации для которого пишутся на вполне [понятном](https://learnxinyminutes.com/ru/lua/) [Lua](https://neovim.io/doc/user/lua-guide.html).
+
+Установка полноценного Neovim в Windows. Возможно какие-то пакеты уже были установлены -- scoop пропустит повторную установку:
+```cmd
+scoop install main/llvm
+scoop install main/gcc
+scoop install main/wget
+scoop install main/curl
+scoop install main/luarocks
+scoop bucket add versions
+scoop install versions/lua51
+scoop install main/python
+scoop install main/ripgrep
+scoop install main/fzf
+scoop install main/fd
+scoop install main/make
+scoop install main/nodejs-lts
+scoop install main/lua-language-server
+scoop install main/neovim
+```
+
+Выйти и зайти заново в терминал, чтобы прописались пути для _python_ и проч., после выполнить:
+```sh
+python -m pip install --upgrade pynvim
+python -m pip install --upgrade fortls
+npm install -g neovim
+npm install -g pyright
+```
+
+Установить настроенную конфигурацию [kickstart.nvim](https://github.com/denius/kickstart.nvim) с предустановленным набором плагинов, и набор словарей для проверки правописания:
+```cmd
+cd %LOCALAPPDATA%
+git clone https://github.com/denius/kickstart.nvim.git nvim
+
+mkdir %LOCALAPPDATA%\nvim\spell
+cd %LOCALAPPDATA%\nvim\spell
+wget ftp://ftp.vim.org/pub/vim/runtime/spell/ru.utf-8.spl
+wget ftp://ftp.vim.org/pub/vim/runtime/spell/en.utf-8.spl
+wget ftp://ftp.vim.org/pub/vim/runtime/spell/en.utf-8.sug
+wget ftp://ftp.vim.org/pub/vim/runtime/spell/ru.utf-8.sug
+
+cd %HOME%
+```
+
+Запустить:
+```cmd
+nvim
+```
+
+_Note:_ если в Windows11 _nvim_ после запуска покажет чёрный экран, то [надо снять галочку](https://github.com/Maximus5/ConEmu/issues/2384#issuecomment-1693076459) _Inject ConEmuHk_ в Cmder/Conemu в _Settings > Features: In-console options_. И выбрать цветовую схему _Monokai_.
+_Note:_ для 256-цветного терминала, возможно, потребуется [донастройка](https://conemu.github.io/en/VimXterm.html).
+
+Для загрузки и обновления плагинов набрать `:Lazy` и `U`.
+
+После выйти и заново войти в nvim, и набрать `:Mason` для запуска менеджера (LSP) поддерживаемых языков программирования и форматов. В нём найти строчку `clangd` и нажать `i` для установки поддержки языка C/C++; аналогично установить `fortls` для Fortran, `python-lsp-server` и `pyright` для Python. _Note:_ LSP, это плагин для Language-Server-Protocol, обеспечивает проверку корректности кода, поиск ошибок, автодополнение, подсказки.
+
+После всех настроек можно проверить как всё это установилось командой `:checkhealth`. Возможно будет указано несколько Warning: про pyenv, про недостающие языки типа ruby или php, но это не имеет принципиального значения. Основное -- надо убедиться что: а) плагин _treesitter_ нормально заработал (это парсер всевозможных форматов, обеспечивает подсветку синтаксиса), и, что: б) плагин _LSP_ работает.
+
+В установленной конфигурации [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) предустановлен плагин [which-key.nvim](https://github.com/folke/which-key.nvim), показывающий справку по клавишам при нажатии на клавишу _\<Пробел\>_ (в kickstart.nvim на _\<Пробел\>_ настроен _\<Leader\>_). Т.е. после нажатия на пробел будет показан список команд с ведущим _\<Leader\>_. Нажав _BackSpace_ будет показан общий список комбинаций клавиш, причём некоторые из них также многосимвольные (напр. _g_, _z_, _\[_ и пр.), их списки буду раскрыты при нажатии на соответствующий символ.
+
+Также, среди предустановленных плагинов есть плагин [Telescope.nvim](https://github.com/nvim-telescope/telescope.nvim#usage), позволяющий в интерактивном режиме производить поиск по всему что есть в редакторе: файлу, файлам, истории, поиск файлов; посмотреть состояние настроек и переменных, клавиатурные сочетания; позволяет сменить тему оформления: `:Telescope colorscheme` (например _shine_, _wildcharm_). В целом, все данные, которые есть в редакторе доступны через этот плагин.
+
+В установленной конфигурации, включение-выключение подсветки проверки правописания будет происходить по команде `<LocalLeader>s` = `\s`, а переключение языка по `Ctrl-^` в режиме редактирования (INSERT) или режиме команд (COMMAND), в нормальном режиме (NORMAL) команда `Ctrl-^` не работает. Для режима команд индикатор текущей кодировки не отображается.
+
+[Документация](https://neovim.io/doc/user/) по [командам](https://stackoverflow.com/questions/5400806/what-are-the-most-used-vim-commands-keypresses) nvim.
+
+Некоторые команды Neovim:
+
+* стрелки влево/вправо бегают по меню выбора из командной строки, например, набрать `:colorscheme ` и `<Tab>`, появится меню, перемещаться по которому клавишами влево-вправо, `Ctrl-Y` или `<Enter>` -- [выбрать](https://neovim.io/doc/user/options.html#'wildmenu');
+* стрелки вверх/вниз в меню autocomplete при редактировании в режиме INSERT, выбор -- `Ctrl-Y`;
+* `gcc`/`gc`: закоментировать-раскоментировать строку или выбранную область в нормальном и визуальном режимах;
+* `[d` и `]d`: переход к предыдущему или следующему диагностическому сообщению Treesitter/LSP. `<C-W>d`: открыть окошко для вывода сообщения под курсором полностью;
+
+_Note:_ для постоянной смены подсветки её необходимо прописать в конце файла _%HOME%\\.config\\nvim\\init.lua_ в виде строки _vim.cmd.colorscheme 'vscode'_ (здесь _vscode_ -- это название схемы).
+
+_Note:_ в Windows также можно настроить работу Neovim через WSL, и запускать его: `wsl vi somefile`.
+
+## Управление Docker'ом
+
+Docker работает с контейнерами (виртуальными машинами) (containers), образами (images), и томами (volumes). _Контейнер_ -- это набор из _образ_ + _том_.
+
+При скачивании или создании виртуальной машины (контейнера) Docker создаёт _image_, который не изменяется, он _read-only_. _Образ_ -- это специальная файловая система (overlayfs) со слепком операционной системы. _Образ_ состоит из слоёв -- при обновлении виртуалки на него накатываются новые слои, может какие-то слои откатываются и переписываются.
+
+При запуске _контейнера_ все созданные в процессе работы данные записываются в _том_ (_volume_). Если при запуске контейнера была указана опция `--rm`, то использовавшийся при работе _том_ будет удалён после окончания работы контейнера. `docker volume ls` -- список сохранённых томов. Данные постоянно хранятся в томах, в том числе между запусками контейнеров; хранятся пока не будет удалён содержащий их контейнер -- `docker container rm <container id>`, либо не будет удалён вручную -- `docker volume rm <volume id>`.
+
+`docker container ls` -- список запущенных контейнеров, `docker container ls -a` -- список всех контейнеров в системе.
+
+В Windows и образы и тома хранятся в одном файле: `C:\Users\user\AppData\Local\Docker\wsl\disk\docker_data.vhdx` -- удобно для контроля занимаемого места (см. также утилиту _WinDirStat_).
+
+### Запуск Docker контейнеров
+
+Самостоятельно формировать команды запуска Docker контейнеров вряд ли придётся, но для понимания запускаемых строчек краткое пояснение опций запуска команды `docker run `:
+
+* `-t` -- запуск в консольном режиме;
+* `-i` -- запуск в интерактивном режиме;
+* `-d` -- запустить виртуалку в бэкграунде, т.е. она продолжит работать фоновом режиме;
+* `-v path1:path2` -- смонтировать локальный путь `path1` внутри контейнера в точке `path2`; это требуется чтобы работать с локальными данными изнутри контейнера;
+* `--rm` -- удалить созданные контейнером данные после завершения работы контейнера, т.е. удаляется соответствующий том (данные из папок, смонтированных с `-v`, не затрагиваются);
+* `--name some-name` -- создаёт имя для созданного контейнера, по которому, в дальнейшем, можно будет запускать этот контейнер короткой командой `docker start some-name`, при этом все опции запуска будут сохранены.
+
+## Backup/Restore WSL систем
+
+Посмотреть какие WSL системы установлены, какая основная:
+```cmd
+wsl -l -v
+```
+
+Скопировать/забэкапить WSL систему, здесь _Ubuntu_ -- название WSL системы, которая будет забэкаплена:
+```cmd
+wsl --export Ubuntu D:\backup\ubuntu-24.04-20241117.tar
+```
+
+Восстановить из бэкапа, здесь _ubuntu2_ название новой WSL системы, путь `C:\wsl\ubuntu` -- место где будет лежать файл-контейнер _.vhdx_ с новой восстановленной системой (чтобы далеко не прятался и можно было глянуть сколько места занимает):
+```cmd
+wsl --import ubuntu2 C:\wsl\ubuntu D:\backup\some-file.tar
+```
+
+После восстановления из бэкапа новой машины необходимо указать пользователя по-умолчанию: `ubuntu2.exe config --default-user aero`, где _ubuntu2.exe_, это название новой VM, для которой Windows автоматически создаст приложение для запуска.
+
+Сделать _ubuntu2_ основной, запускаемой по умолчанию: `wsl -s ubuntu2`
+
+В дальнейшем можно будет удалить старую WSL машину: `wsl --unregister Ubuntu`, при этом все данные внутри неё будут потеряны. Для безопасности лучше сначала импортировать в новое имя, установить её по-умолчанию, поработать с новой, а потом уже удалять старую -- при работе через команду `wsl` название виртуалки не имеет значения. 
+
+### Установка произвольных Linux
+
+Аналогичным способом, из архива, можно создать [новую Linux систему](https://learn.microsoft.com/ru-ru/windows/wsl/use-custom-distro) на компьютере, скопировав и установив соответствующий дистрибутивный файл Linux-системы с интернета, например со страницы проекта [wsldl](https://wsldl-pg.github.io/docs/Using-wsldl/).
+
+
+
+### Импортирование локальных образов с Docker
+
+Docker также [может импортировать](https://andygreen.phd/2022/01/26/converting-vm-images-to-docker-containers/) бэкапы полноценных Linux систем (не WSL) в виде _.tar.gz_ архива:
+```cmd
+docker import <filename> <repository>:<tag>
+```
+```cmd
+docker import some-linux-backup.tar.gz linux-test:1.0
+```
+
+С последующим запуском
+```cmd
+docker run -i -t <image id> <commands>
+```
+где в качестве _\<commands\>_ для Linux может выступать _/bin/bash_; _\<image id\>_ посмотреть командой `docker images`.
+
+Таким методом можно создавать/копировать и запускать виртуалки с Linux (например, с менеджерами лицензий, и т.п.) из бэкапов, созданных с помощью команды
+```cmd
+tar --one-file-system -cvpzSf /mnt/backup/some-ubuntu-backup.tar.gz / /boot --exclude="/mnt/*"
+```
+
+
