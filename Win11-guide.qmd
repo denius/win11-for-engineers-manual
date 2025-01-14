@@ -116,7 +116,7 @@ MSOffice лучше попробовать установить утилитой
 * Правой клавишей по трею > _Taskbar settings > Other system tray icons_, выбрать постоянно показываемые иконки:\
   _Safely Remove Hardware..._\
   _Windows Update Status_\
-  А остальные спрятать чтобы не мешали.
+  Плюс ещё какие нужные программы, а остальные спрятать чтобы не мешали.
   
 * Настройка вида меню Start: _Settings > Personalization > Start_.
 
@@ -465,7 +465,7 @@ winget install --id=Microsoft.WindowsTerminal -e
 
 * Частоту мигания курсора можно изменить только глобально в настройках Windows: _Change cursor blinking rate_.
 
-* [Opening PuTTY in Windows Terminal](<https://github.com/microsoft/terminal/issues/1917#issuecomment-686786806) (может уже исправили).
+* [Использовать _PuTTY_ в Windows Terminal](https://github.com/microsoft/terminal/issues/1917#issuecomment-737710268): для того, чтобы _PuTTY_ открывал соединение и показывал всё в Windows Terminal, необходимо настроить новый профиль, в котором будет вызываться команда `plink` (_C:\\Program Files\\PuTTY\\plink.exe_), эта команда, собственно, и осуществляет непосредственное соединение для _PuTTY._
 
 * Дополнительные цветовые схемы см. в <https://github.com/mbadolato/iTerm2-Color-Schemes>. [Установка](https://learn.microsoft.com/ru-ru/windows/terminal/customize-settings/color-schemes#creating-your-own-color-scheme) дополнительных схем осуществляется вставкой соответствующего `json`-фрагмента настроек цветовой схемы в секцию `schemes:` в общей конфигурации WindowsTerminal `settings.json`, которая открывается для редактирования по нажатию на "Шестерёнку" в левом нижнем углу в меню _Settings_.\
   Просмотреть цвета текущей схемы можно командой: `colortool -c`,  которая устанавливается: `scoop install main/colortool`.
@@ -837,7 +837,7 @@ scoop install extras/pycharm
 
 ## Julia
 
-Установить [**Julia**](https://julialang.org/):
+[Установить](https://modernjuliaworkflows.org/writing/#installation) [**Julia**](https://julialang.org/):
 ```sh
 winget install --id=Julialang.Juliaup -e
 juliaup add lts
@@ -870,7 +870,7 @@ end
 
 
 
-# Работа с текстом
+# Работа с документами
 
 ## Офисные пакеты
 
@@ -1022,7 +1022,7 @@ winget install --id=SumatraPDF.SumatraPDF -e
 
 {{< pagebreak >}}
 
-# **Этап 3** {.unnumbered .unlisted}
+# **Этап 3: Сложные нужные программы** {.unnumbered .unlisted}
 
 # Инженерные программы
 
@@ -1164,7 +1164,7 @@ scoop install extras/maxima
 
 {{< pagebreak >}}
 
-# **Этап 4: Приложения с ненужными программами** {.unnumbered .unlisted}
+# **Этап 4: Сложные ненужные программы** {.unnumbered .unlisted}
 
 # Приложение: AI/LLM
 
