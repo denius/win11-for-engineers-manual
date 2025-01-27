@@ -461,8 +461,9 @@ scoop install main/7zip
 winget install --id=FarManager.FarManager -e
 ```
 
-* Поменять шрифты можно кликнув правой кнопкой мыши на иконке Far, в свойствах.
-* В Far'е можно открывать [ssh-соединения](#sshputty) с поддержкой [X11 приложений](#x-server), для этого в терминальном окне Far (`Ctrl+O`) вызвать две команды:
+_Note:_ Поменять шрифты можно кликнув правой кнопкой мыши на иконке Far, в свойствах.
+
+_Note:_ В Far'е можно открывать [ssh-соединения](#sshputty) с поддержкой [X11 приложений](#x-server), для этого в терминальном окне Far (`Ctrl+O`) вызвать две команды:
   ```cmd
   set DISPLAY=127.0.0.1:0.0
   ssh -X somename@somehost
@@ -470,7 +471,9 @@ winget install --id=FarManager.FarManager -e
 
 ### Второй уровень сложности
 
-Установить [**Far**](https://www.farmanager.com/) и [**WindowsTerminal**](https://learn.microsoft.com/ru-ru/windows/terminal/install); и запускать Far в WindowsTerminal, в котором можно настроить цвета/палитры, шрифты и т.п. Установка:
+Установить [**Far**](https://www.farmanager.com/) и [**WindowsTerminal**](https://learn.microsoft.com/ru-ru/windows/terminal/install); и запускать Far в WindowsTerminal, в котором можно настроить цвета/палитры, шрифты и т.п.
+
+Установка:
 ```cmd
 scoop install main/7zip
 winget install --id=FarManager.FarManager -e
@@ -497,20 +500,65 @@ winget install --id=Microsoft.WindowsTerminal -e
   cmd.exe /c set DISPLAY=127.0.0.1:0.0& ssh -X somename@somehost
   ```
 
-* [Использовать _PuTTY_ в Windows Terminal](https://github.com/microsoft/terminal/issues/1917#issuecomment-737710268): для того, чтобы _PuTTY_ открывал соединение и показывал всё в Windows Terminal, необходимо [настроить новый профиль](https://superuser.com/questions/1523297/open-putty-ssh-session-in-new-windows-terminal), в котором будет вызываться загрузка соответствующего профиля PuTTY командой `"plink.exe -load \"putty-session\""`. (Команда _C:\\Program Files\\PuTTY\\plink.exe_, это команда которая осуществляет непосредственное соединение для _PuTTY_, с поддержкой ключей и _Pageant_.) Но Windows Terminal очень плохо поддерживает _plink.exe_, поэтому многие клавиши (стрелки) работать не будут.
+* [Использовать _PuTTY_ в Windows Terminal](https://github.com/microsoft/terminal/issues/1917#issuecomment-737710268): для того, чтобы _PuTTY_ открывал соединение и показывал всё в Windows Terminal, необходимо [настроить новый профиль](https://superuser.com/questions/1523297/open-putty-ssh-session-in-new-windows-terminal), в котором будет вызываться загрузка соответствующего профиля PuTTY командой `"plink.exe -load \"putty-session\""`. (Команда _C:\\Program Files\\PuTTY\\plink.exe_, это программа, которая осуществляет непосредственное соединение для _PuTTY_, с поддержкой ключей и _Pageant_.) Но Windows Terminal очень плохо поддерживает _plink.exe_, поэтому многие клавиши (стрелки) работать не будут.
 
 * Дополнительные цветовые схемы см. в <https://github.com/mbadolato/iTerm2-Color-Schemes>. [Установка](https://learn.microsoft.com/ru-ru/windows/terminal/customize-settings/color-schemes#creating-your-own-color-scheme) дополнительных схем осуществляется вставкой соответствующего `json`-фрагмента настроек цветовой схемы в секцию `"schemes":` в общей конфигурации WindowsTerminal `settings.json`, которая открывается для редактирования по нажатию на "Шестерёнку" в левом нижнем углу в меню _Settings_.\
   Просмотреть цвета текущей схемы можно командой: `colortool -c`,  которая устанавливается: `scoop install main/colortool`.
 
-* Для того, чтобы _Far_ показывал другие цветовые схемы кроме синей, необходимо отжать галочку в меню _Far_: _F9 > Options > Colors: Palette > Classic Palette: Off_.
+* Для того, чтобы _Far_ показывал другие цветовые схемы помимо синей, необходимо отжать галочку в меню _Far_: _F9 > Options > Colors: Palette > Classic Palette: Off_.\
+  Из не синих схем интересна схема [Glacier](https://github.com/mbadolato/iTerm2-Color-Schemes/blob/master/windowsterminal/Glacier.json).
 
 * Не показывать Warning на _multiline paste_: [добавить строчку](https://superuser.com/questions/1677982/how-do-i-get-windows-terminal-to-stop-asking-me-every-time-i-paste-something-int) `"multiLinePasteWarning": false,` в самый верх (на первый уровень) конфига `settings.json`.
 
+* Комбинации `Ctrl+C`, `Ctrl+V`, `Ctrl+W`, `Ctrl+T` для доступности в консольных приложениях следует перенастроить (в настройках в _Settings > Actions_) на варианты с `Shift`, т.е.: `Ctrl+Shift+C`, `Ctrl+Shift+V`, `Ctrl+Shift+W`, `Ctrl+Shift+T` и т.п.
+
+* Для показа иконок в _Taskbar_'е в Windows должна быть включена опция _Show badges on taskbar buttons_ в _Settings > Personalization > Taskbar_.
+
+* Одним из интересных вариантов интеграции WindowsTerminal в Windows будет настройка _Панели задач_ (_Taskbar_) без группировки окон --- чтобы каждый терминал был в отдельном окне Windows; при этом надо установить опции для открытия каждого терминала в новом окне в _Settings > Startup > New instance behavior: Create a new window_.
+
+* Для полнотекстового поиска по файлам, docx, pdf и т.п. смотри раздел [_RipGrep_](#ripgrep-и-rga).
+
+* [mc](https://scoop.sh/#/apps?q=mc) под Windows: сменить диск: `Alt+D`
+
+
+#### Использование WindowsTerminal
+
+\<TBD\>
+
+Списки горячих клавиш: [Cmder](https://github.com/cmderdev/cmder#keyboard-shortcuts) ([Conemu](https://conemu.github.io/en/KeyboardShortcuts.html)) и [Clink](https://chrisant996.github.io/clink/clink.html#gettingstarted_keybindings); ниже приведены наиболее часто используемые.
+
+* `Ctrl-Shift-P`: открыть _Command Palette_ --- панель действий
+* `Ctrl+Shift+T`: открыть новую вкладку с терминалом по умолчанию
+* `Ctrl+Shift+N`: открыть новое окно с терминалом по умолчанию
+* `Ctrl+Shift+Space`: открыть селектор открытия новой вкладки
+
+
+
+
+Управление терминалами:
+
+* ``Ctrl+` ``: глобальная комбинация клавиш вызова Cmder, не работает в поле ввода
+* `Ctrl+Shift+T`: диалог открытия новой вкладки/окна (по умолчанию `Ctrl+T`, см. _Настройки Cmder_ ниже)
+* `Ctrl+Shift+W`: закрыть вкладку/окно (по умолчанию `Ctrl+W`, см. _Настройки Cmder_ ниже)
+* `Ctrl+D`: завершить терминальную сессию, эквивалентно команде _exit_
+* `Shift+Alt+#Number`: открыть новую вкладку/окно по быстрому набору из меню открытия новых терминалов, см. `Win+Alt+T`
+* `Alt+Enter`, `Ctrl+Win+Enter`: Full Screen
+
+Управление вкладками Cmder/Conemu работает когда все консоли открыты в одном окне Cmder/Conemu, а не когда каждый терминал в своём собственном окне. Управление вкладками:
+
+* `Ctrl+#Number`: переключиться на вкладку номер #Number
+* `Ctrl+Tab`: переключиться на следующую вкладку
+* `Ctrl+Shift+Tab`: переключиться на предыдущую вкладку
 
 
 ### Невероятный уровень сложности
 
-В принципе, на этом можно и остановиться, но для полноценной разработки/программирования рекомендуется установить и настроить нормальный shell [Clink](https://chrisant996.github.io/clink/). В [приложении показана настройка](#консольный-терминал-windowsterminal-clink) Clink в WindowsTerminal.
+В принципе, на этом можно и остановиться, но для полноценной разработки/программирования рекомендуется установить и настроить нормальную командную оболочку (shell) [**Clink**](https://chrisant996.github.io/clink/).
+
+В [приложении показана настройка Clink](#консольная-оболочка-clink-и-утилиты-busybox). После установки и настройки Clink останется только настроить профиль в WindowsTerminal, который проще всего получить сдублировав профиль для _cmd.exe_, после чего в новом профиле в качестве запускаемой команды прописать:
+```cmd
+%SystemRoot%\System32\cmd.exe /k "clink inject"
+```
 
 
 ## Многокарманный буфер обмена
@@ -1353,11 +1401,11 @@ ffmpeg -i "velmagfield-%03d.png" -r 20 -hide_banner -c:a copy -c:v libx264 -crf 
 [Применяемые опции](https://trac.ffmpeg.org/wiki/Encode/H.264):
 
 * `-r 20` --- задать частоту кадров видео (соответствует шагу по времени 0.05 секунды);
-* `-vf scale=-1:1080` --- отмасштабировать видео до *1080p*;
+* `-vf scale=-1:1080` --- отмасштабировать видео до *1080p*; результирующее разрешение должно делиться на два;
 * `-c:a copy -c:v libx264` --- задают аудио и видеокодеки, в данном случае аудиокодек будет отсутствовать (он скопирован из входных изображений, где его нет), видеокодек --- *H.264*;
 * `-crf 18` --- задаёт качество картинки видео (в ущерб размеру); по умолчанию _23_, _17_ --- видео неотличимо от исходных изображений;
 * `-preset veryslow` --- кодировать видео с особой тщательностью, в ущерб времени; другие варианты: medium, fast, slow;
-* `-vf format=yuv420p` --- кодировать видео в [цветовое пространство "4:2:0"](https://trac.ffmpeg.org/wiki/Encode/H.264#Encodingfordumbplayers), а не в современный вариант "4:4:4", тогда полученный мультик должен проигрываться в PowerPoint и других устаревших плеерах;
+* `-vf format=yuv420p` или `-pix_fmt yuv420p` --- кодировать видео в [цветовое пространство "4:2:0"](https://trac.ffmpeg.org/wiki/Encode/H.264#Encodingfordumbplayers), а не в современный вариант "4:4:4", тогда полученное видео должно проигрываться в PowerPoint и других устаревших плеерах;
 * формат выходного файла определяется его расширением; при этом, размер файла практически не зависит от расширения.
 
 Чтобы видео загружалось в _Telegram_ как видео, а не GIF, необходимо, чтобы в нём был аудиопоток^[<https://awesomeprogrammer.com/blog/2023/01/15/how-to-force-telegram-to-upload-mp4-as-mp4-and-not-gifs/>]; закодировать видео с добавлением беззвучного аудиопотока^[<https://stackoverflow.com/questions/12368151/adding-silent-audio-in-ffmpeg#answer-18700245>] и всеми настройками совместимости с TG^[<https://stackoverflow.com/questions/38702981/which-video-format-is-right-for-sendvideo-method-in-telegram-bot-api/77255128#77255128>]:
@@ -1441,7 +1489,7 @@ OpenFOAM будет запускаться из docker-контейнера из
 docker pull openfoam/openfoam11-paraview510:latest
 ```
 
-Установка: в WSL скачивается запускающий _OpenFOAM_ скрипт из официального каталога <http://dl.openfoam.org/docker/> и настраивается; для этого выполнить следующие команды в WSL терминале (открывается командой `wsl` или в таске WSL в Cmder/Conemu):
+Установка: в WSL скачивается запускающий _OpenFOAM_ скрипт из официального каталога <http://dl.openfoam.org/docker/> и настраивается; для этого выполнить следующие команды в WSL терминале (открывается командой `wsl` или в таске WSL в WT/Conemu/Cmder):
 ```sh
 mkdir -p $HOME/software
 cd $HOME/software
@@ -1571,13 +1619,13 @@ scoop install extras/maxima
 `scoop install extras/veusz`
 
 ### Matplotlib
-\<TBD\>
+\<TBD\>\
 [matplotlib.org](https://matplotlib.org/stable/plot_types/index.html)\
 Библиотека для Python для построения графиков, удобна для постоянных пользователей Python; [установка](https://matplotlib.org/stable/install/index.html):\
 `python -m pip install -U matplotlib`
 
 ### Gnuplot
-\<TBD\>
+\<TBD\>\
 [www.gnuplot.info](http://www.gnuplot.info/)\
 Консольная программа для построения графиков с широкими возможностями. [Примеры](http://www.gnuplot.info/demo_6.0/), [обзор на русском](https://habr.com/ru/companies/ruvds/articles/517450/).\
 `scoop install main/gnuplot`
@@ -1815,26 +1863,28 @@ vllm serve Qwen/Qwen2.5-Coder-14B-Instruct --port 8081
 
 Глава для продвинутых пользователей. В этой главе установка и настройка следующего:
 
-* консольный терминал Windows Terminal + Clink --- \<TBD\>
-* консольный терминал Conemu+Clink/Cmder
+* консольный терминал Windows Terminal + Clink
+* консольный терминал Conemu+Clink / Cmder
 * RipGrep --- быстрый поиск по содержимому файлов, в том числе docx и pdf
 * Neovim
 * управление Docker'ом
 * Backup/Restore WSL систем
 
+_Note:_ Далее в тексте будет применяться сокращение _WT_ --- _Windows Terminal_.
+
 ## Ограничения командной строки Windows
 
 В Windows `*` (wildcard) [не](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) [раскрывается](https://github.com/chrisant996/clink/discussions/548#discussioncomment-8137898) перед запуском программ, а передаётся прямо как звёздочка, и, скажем, обычная Linux команда `ls *` скажет, что нет такого файла `*`. У этого ограничения есть несколько решений:
 
-* Использовать [BusyBox](https://frippery.org/busybox/), где в каждую [команду](https://www.busybox.net/downloads/BusyBox.html) встроен свой [глоббинг](https://frippery.org/busybox/globbing.html) и правильное распознавание `\` | `/` в путях, и, тот же `ls`, из состава BusyBox, сработает как в Linux. BusyBox, это альтернатива сборкам [Git-for-Windows](https://gitforwindows.org/)/[MSYS2](https://www.msys2.org/). Этот вариант подходит для использования с _Conemu_.
+* Использовать [BusyBox](https://frippery.org/busybox/), где в каждую [команду](https://www.busybox.net/downloads/BusyBox.html) встроен свой [глоббинг](https://frippery.org/busybox/globbing.html) и правильное распознавание `\` | `/` в путях, и, тот же `ls`, из состава BusyBox, сработает как в Linux. BusyBox, это альтернатива сборкам [Git-for-Windows](https://gitforwindows.org/)/[MSYS2](https://www.msys2.org/). Этот вариант подходит для использования с _WT_/_Conemu_.
 
 * Использовать доработанный _Conemu_ --- [Cmder](), где глоббинг встроен в консольные скрипты, которые перед запуском команд осуществляют подмену _wildcards_ на аргументы, как в Linux shell.
 
-* Другие варианты --- это использовать настоящий Linux shell, например, в виде терминала с WSL в Cmder/Conemu, или, использовать bash/zsh из проектов [Git-for-Windows](https://gitforwindows.org/)/[MSYS2](https://www.msys2.org/) или [BusyBox](https://frippery.org/busybox/).
+* Другие варианты --- это использовать настоящий Linux shell, например, в виде терминала с WSL в WT/Conemu/Cmder, или, использовать bash/zsh из проектов [Git-for-Windows](https://gitforwindows.org/)/[MSYS2](https://www.msys2.org/) или [BusyBox](https://frippery.org/busybox/).
 
-### Отступление о Cmder vs. Conemu
+### Отступление о WT/Conemu vs. Cmder {.unnumbered .unlisted}
 
-[**Cmder**](https://cmder.app/) --- это [донастроенный](https://conemu.github.io/en/cmder.html) [**Conemu**](https://conemu.github.io/en/), со встроенным набором стандартных [Linux утилит](https://gitforwindows.org/), плюс [Clink](https://mridgers.github.io/clink/). Т.е. Cmder всё необходимое ~~носит с собой~~ при установке скачивает заодно.  При запуске Cmder автоматически ищет установленные утилиты из _Git-for-Windows_ и прописывает их в пути (контролируется [опцией](https://github.com/cmderdev/cmder#command-line-arguments-for-initbat) _/nix_tools_). В случае с Conemu эти утилиты изначально необходимо доустанавливать, и, возможно, прописывать вручную пути. Ещё у _Cmder_ есть некоторое преимущество --- это его мобильность ([portable](https://github.com/cmderdev/cmder/tree/master#single-user-portable-config)), т.е., что его можно носить и запускать преднастроенным с флешки. Из минусов Cmder --- настройки по умолчанию для интерфейса весьма сомнительные, их обязательно придётся править.
+[**Cmder**](https://cmder.app/) --- это [донастроенный](https://conemu.github.io/en/cmder.html) [**Conemu**](https://conemu.github.io/en/), со встроенным набором стандартных [Linux утилит](https://gitforwindows.org/), плюс [Clink](https://mridgers.github.io/clink/). Т.е. Cmder всё необходимое ~~носит с собой~~ при установке скачивает заодно.  При запуске Cmder автоматически ищет установленные утилиты из _Git-for-Windows_ и прописывает их в пути (контролируется [опцией](https://github.com/cmderdev/cmder#command-line-arguments-for-initbat) _/nix_tools_). В случае с WT/Conemu эти утилиты изначально необходимо доустанавливать, и, возможно, прописывать вручную пути. Ещё у _Cmder_ есть некоторое преимущество --- это его мобильность ([portable](https://github.com/cmderdev/cmder/tree/master#single-user-portable-config)), т.е., что его можно носить и запускать преднастроенным с флешки. Из минусов Cmder --- настройки по умолчанию для интерфейса весьма сомнительные, их обязательно придётся править.
 
 Но, Cmder, при стандартной установке с [Git-for-Windows](https://gitforwindows.org/), не умеет распознавать направление слешей: прямой и обратный, и, например, не сможет отработать такую команду:
 ```cmd
@@ -1842,65 +1892,141 @@ fd --hidden "\.vhdx$" %HOME% | xargs -I@ cp -v @ E:\backup\wsl\
 ```
 Поэтому для нормальной работы Cmder потребуется доустанавливать BusyBox, и использовать опцию загрузки `/nix_tools 0`, чтобы по умолчанию не дописывались пути с [Git-for-Windows](https://gitforwindows.org/). Но в таком случае Cmder становится практически идентичен Conemu.
 
-Поэтому, в данном руководстве будут рассмотрены оба варианта настройки терминала: и _Cmder_, и _Conemu+BusyBox_. Если Conemu уже установлен и настроен, то предлагается доустановить и настроить BusyBox и Clink, с тем, чтобы получить удобный консольный терминал. Если же Conemu/Cmder не установлен, то использовать Cmder, как более активно развивающийся и прогрессивный.
+> В общем, Cmder это достаточно противоречивая утилита, подкупающая портативностью и преднастроенностью. Но, при должной настройке, Windows Terminal или Conemu будут даже лучше, чем Cmder.
+
+В данном руководстве будут рассмотрены оба варианта настройки терминала: и _WT/Conemu+Clink+BusyBox_, и _Cmder_. Если Cmder уже установлен и настроен, то предлагается настроить [Windows Terminal на его использование](https://github.com/cmderdev/cmder/wiki/Seamless-Windows-Terminal-Integration). Если Cmder не установлен, то предлагается доустановить и настроить Clink и BusyBox, с тем, чтобы получить универсальную командную оболочку, которая будет работать и в WT, и в Conemu. *В целом, Главы про настройку Conemu и Cmder приведены, в большей мере, по историческим причинам, чтобы не утерять данную информацию.*
+
+## Консольная оболочка Clink и утилиты BusyBox
+
+[**Clink**](https://mridgers.github.io/clink/) --- это дополнение для _Cmd.exe_, интегрирующее следующие [возможности](https://chrisant996.github.io/clink/clink.html#features): автодополнение, подсветка синтаксиса, история команд и поиск по ней, поиск файлов и папок, история переходов по папкам, алиасы.
+
+[**BusyBox**](https://frippery.org/busybox/) --- это набор Linux [команд](https://www.busybox.net/downloads/BusyBox.html), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux. Будет использоваться для настройки _Windows Terminal_ и _Conemu_.
+
+_Note:_ _Clink_ не работает внутри _Far_, т.е в терминале _Far_ по `<Ctrl+O>` все супер-пупер автодополнения и поиск от Clink не сработают --- для работы _Clink_ должна использоваться отдельная консоль.
 
 
-## Консольный терминал Cmder/Conemu + Clink
+### Установка Clink+BusyBox
 
-[**Conemu**](https://conemu.github.io/en/)/[**Cmder**](https://cmder.app/) --- это универсальный консольный терминал с открытым исходным кодом, позволяющий запускать все консольные приложения: _Far_, _Putty_, _CMD_, _PowerShell_, _WSL_, и пр., в одинаково выглядещем терминальном текстовом окне, с одинаково настроенным типом и размером шрифта, поведением горячих клавиш, размером окна.
-
-[**Clink**](https://mridgers.github.io/clink/) --- это дополнение для _Cmd.exe_, интегрирующее следующие [возможности](https://chrisant996.github.io/clink/clink.html#features): автодополнение, подсветка синтаксиса, история команд и поиск по ней, поиск файлов и папок, история переходов по папкам, алиасы. (_Note:_ _Clink_ не работает внутри _Far_, т.е в терминале _Far_ по `<Ctrl+O>` все супер-пупер автодополнения и поиск от Clink не сработают --- для работы _Clink_ должна использоваться отдельная консоль.)
-
-[**BusyBox**](https://frippery.org/busybox/) --- это набор Linux [команд](https://www.busybox.net/downloads/BusyBox.html), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux. Будет использоваться для настройки _Conemu_.
-
-[Git-for-Windows](https://gitforwindows.org/) --- это _git_,  скомпилированный для Windows; также содержит набор Linux команд, но эти команды не поддерживают wildcard globbing. Устанавливается автоматически при работе со _Scoop_. Используется в _Cmder_.
-
-
-
-
-### Установка консольного терминала Cmder+Clink
-```cmd
-scoop install main/cmder
-scoop install main/clink-flex-prompt
-```
-
-### Установка консольного терминала Conemu+BusyBox+Clink
-
-Установить _Conemu_, если ещё не был установлен:
-```cmd
-scoop bucket add extras
-scoop install extras/conemu
-scoop install extras/conemu-color-themes
-```
-
-Установить остальные утилиты:
+Установить:
 ```cmd
 scoop install main/busybox
 scoop install main/clink
 scoop install main/clink-completions
 scoop install main/clink-flex-prompt
+scoop install main/oh-my-posh
+scoop bucket add nerd-fonts
+scoop install nerd-fonts/IosevkaTerm-NF-Mono
 ```
 
-Для использования _Clink_ в _Conemu_ необходимо добавить вызов самого Clink: в настройках Conemu _Settings > Startup > Tasks:_ модифицировать строку запуска Задачи/Task _{Cmd}_, заменив на
+### Настройка Clink
+
+[Настройка Clink](https://github.com/chrisant996/clink-fzf?tab=readme-ov-file#how-to-install) для нечёткого (fuzzy) [поиска](https://github.com/chrisant996/clink-fzf#how-to-use), автоподстановки `~` и переменных окружения, интеграции с VSCode: скопировать соответствующие скрипты в отдельную постоянную папку и настроить Clink на их использование:
 ```cmd
-cmd.exe /k "clink inject && %ConEmuBaseDir%\CmdInit.cmd"
+mkdir %UserProfile%\.config\clink-scripts
+cd %UserProfile%\.config\clink-scripts
+
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/fzf.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/fuzzy_history.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/cwdhistory.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/tilde_autoexpand.lua
+wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/vscode_shell_integration.lua
+
+clink installscripts %UserProfile%\.config\clink-scripts
+clink set fzf.default_bindings true
+clink set autosuggest.strategy match_prev_cmd history completion fuzzy_history
+
+clink set history.max_lines 100000
 ```
 
-### Использование Clink + Cmder/Conemu
+### Алиасы для Clink
 
-Списки горячих клавиш: [Cmder](https://github.com/cmderdev/cmder#keyboard-shortcuts) ([Conemu](https://conemu.github.io/en/KeyboardShortcuts.html)) и [Clink](https://chrisant996.github.io/clink/clink.html#gettingstarted_keybindings); ниже приведены наиболее часто используемые.
+Алиасы в Windows создаются командой [`doskey`](https://learn.microsoft.com/ru-ru/windows-server/administration/windows-commands/doskey). В стартап-файле для Clink\
+`%LOCALAPPDATA%\clink\clink_start.cmd` прописать соответствующие `doskey` команды:
+```cmd
+@echo off
 
-Автодополнение _Clink_ работает как в Linux:
+set HOME=%UserProfile%
+set LANG=en_US.utf8
+
+doskey ll=ls --color=auto -lF $*
+doskey l=ls --color=auto -lrtF $*
+doskey ls=ls --color=auto -F $*
+```
+
+В результате в командной строке появятся привычные для Linux алиасы. В данном случае определены:\
+`ls` --- выводит простой список файлов и папок,\
+`ll` --- выводит подробный список файлов и папок,\
+`l` --- подробный список, отсортированный по времени модификации файлов/папок.
+
+_Note:_ В этом стартап файле также можно прописать другие вещи, например переменные окружения.
+
+### Настройка внешнего вида CommandPrompt для Clink
+
+[Clink поставляется](https://chrisant996.github.io/clink/clink.html#custom-prompts) с несколькими вариантами темы оформления командной строки, их можно попробовать не устанавливая:
+```cmd
+clink config prompt list
+clink config prompt show <prompt_name>
+```
+
+Для постоянного использования включить тему оформления командой:
+```cmd
+clink config prompt use <prompt_name>
+```
+
+Так же существует проект [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) для настройки вида командной строки для различных терминалов (CMD, PowerShell) с широкими возможностями настройки и [большим списком](https://ohmyposh.dev/docs/themes) уже преднастроенных вариантов. Установка, плюс шрифты, если ещё не были установлены:
+```cmd
+scoop install main/oh-my-posh
+scoop bucket add nerd-fonts
+scoop install nerd-fonts/IosevkaTerm-NF-Mono
+```
+
+Включение темы оформления OhMyPosh в Clink:
+```cmd
+clink config prompt use oh-my-posh
+clink set ohmyposh.theme %UserProfile%\scoop\apps\oh-my-posh\current\themes\peru.omp.json
+```
+
+Использованная тема оформления [peru](https://ohmyposh.dev/docs/themes#peru) почти идеальна, единственный недостаток --- не отображает текущую папку в заголовке окна. Это исправляется модификацией темы оформления: сначала скопировать файл исходной темы в новый файл `peru-wtitle.omp.json`:
+```cmd
+mkdir %UserProfile%\.config\ohmyposh-themes
+cd %UserProfile%\.config\ohmyposh-themes
+cp %UserProfile%\scoop\apps\oh-my-posh\current\themes\peru.omp.json peru-wtitle.omp.json
+```
+
+и добавить следующую строчку в файл `peru-wtitle.omp.json` почти в самый конец файла перед строкой `"version": 3`:
+```cmd
+"console_title_template": "{{ .Shell }}: {{ if .Segments.Session.SSHSession }}
+{{ .UserName }}@{{ .HostName }}{{ end }}{{ if .WSL }}WSL: {{ end }}{{ .PWD }}",
+```
+(это одна строка, только она не помещается на ширину формата текста, поэтому записана в две строки).
+
+Переключить на новую созданную тему:
+```cmd
+clink config prompt use oh-my-posh
+clink set ohmyposh.theme %UserProfile%\.config\ohmyposh-themes\peru-wtitle.omp.json
+```
+
+_Note:_ suppress Clink startup message: `clink set clink.logo none`
+
+
+### Использование Clink
+
+[Списки горячих клавиш Clink](https://chrisant996.github.io/clink/clink.html#gettingstarted_keybindings); ниже приведены наиболее часто используемые.
+
+_Автодополнение_ _Clink_ работает как в Linux:
 
 * `Tab`: непосредственно дополнить в случае отсутствия неоднозначностей.  В случае наличия вариантов они будут показаны, выбрать между ними вводом соответствующего символа и продолжить нажав `Tab`
-* `->` или `End`: принять предложенное в строке автодополнение.
+* `<Right>` или `End`: принять предложенное в строке автодополнение до конца строки
+* `Alt+<Right>`: принять предложенное в строке автодополнение на одно слово
 
 В _Clink_ консоли доступны удобные [навигация и поиск](https://github.com/chrisant996/clink-fzf#how-to-use) по истории команд, навигация и поиск файлов:
 
 * `Ctrl+R` -- интерактивный поиск по истории команд
 * `Ctrl+T` -- интерактивный поиск по файлам и директориям в текущей директории
-* `Alt+C` -- быстрый переход из текущей директории в поддиректорию или к файлу;
-* поиск по `Tab` в `**` -- рекурсивному поиску по директориям и файлам в текущей директории.
+* `Alt+C` -- быстрый переход из текущей директории в поддиректорию или к файлу
+* `Alt+B` -- интерактивный поиск доступным горячим клавишам, и применение этих команд
+* `Ctrl+Space` -- интерактивный поиск по текущему автодополнению
+* поиск по `Tab` после `**` -- рекурсивному поиску по директориям и файлам в текущей директории
 * `F7`: открыть окно со списком последних команд
 * `Up`/`Down`: вверх/вниз по истории команд
 * `PgUp`/`PgDown`: вверх/вниз по истории команд с учётом уже набранной части команды
@@ -1919,9 +2045,47 @@ cmd.exe /k "clink inject && %ConEmuBaseDir%\CmdInit.cmd"
 * `Ctrl+W`: удалить слово слева от курсора
 * `Ctrl+U`: удалить всю команду слева от курсора и положить в "буфер"
 * `Ctrl+Y`: вставить из буфера (удалённое) по месту курсора
-* `End`, `Home`, `Ctrl`+стрелки: навигация по тексту
-* `Shift+End`, `Shift+Home`, `Shift+Ctrl`+стрелки: выделение текста в командной строке
+* `End`, `Home`, `Ctrl+<Left/Right>`: навигация по тексту
+* `Shift+End`, `Shift+Home`, `Shift+Ctrl+<Left/Right>`: выделение текста в командной строке
 * `Shift+Mouse`: выделение мышкой в неприспособленных для этого программах
+
+
+## Консольный терминал WindowsTerminal + Clink
+
+После [установки и настройки Clink](#консольная-оболочка-clink-и-утилиты-busybox) останется только настроить профиль в WindowsTerminal.
+
+Профиль для Clink в WindowsTerminal проще всего получить сдублировав профиль для _cmd.exe_, после чего в новом профиле в качестве запускаемой команды прописать:
+```cmd
+%SystemRoot%\System32\cmd.exe /k "clink inject"
+```
+
+
+## Консольный терминал Cmder/Conemu + Clink
+
+[**Conemu**](https://conemu.github.io/en/)/[**Cmder**](https://cmder.app/) --- это универсальный консольный терминал с открытым исходным кодом, позволяющий запускать все консольные приложения: _Far_, _Putty_, _CMD_, _PowerShell_, _WSL_, и пр., в одинаково выглядящем терминальном текстовом окне, с одинаково настроенным типом и размером шрифта, поведением горячих клавиш, размером окна.
+
+[Git-for-Windows](https://gitforwindows.org/) --- это _git_,  скомпилированный для Windows; также содержит набор Linux команд, но эти команды не поддерживают wildcard globbing. Устанавливается автоматически при работе со _Scoop_. Используется в _Cmder_.
+
+
+После [установки _Clink_ и _BusyBox_](#консольная-оболочка-clink-и-утилиты-busybox), установить _Cmder_ или _Conemu_:
+```cmd
+scoop install main/cmder
+```
+```cmd
+scoop bucket add extras
+scoop install extras/conemu
+scoop install extras/conemu-color-themes
+```
+
+Для использования _Clink_ в _Conemu_ необходимо добавить вызов самого Clink: в настройках Conemu _Settings > Startup > Tasks:_ модифицировать строку запуска Задачи/Task _{Cmd}_, заменив на
+```cmd
+cmd.exe /k "clink inject && %ConEmuBaseDir%\CmdInit.cmd"
+```
+
+### Использование Cmder/Conemu
+
+Списки горячих клавиш: [Cmder](https://github.com/cmderdev/cmder#keyboard-shortcuts) ([Conemu](https://conemu.github.io/en/KeyboardShortcuts.html)) и [Clink](https://chrisant996.github.io/clink/clink.html#gettingstarted_keybindings); ниже приведены наиболее часто используемые.
+
 
 Управление терминалами Cmder/Conemu:
 
@@ -1973,14 +2137,9 @@ alias ls=ls --show-control-chars -CFGNhp --color --ignore={"NTUSER.DAT*","ntuser
 (Ещё потребуется удалить соответствующие алиасы из файла\
 `%HOME%\scoop\apps\cmder\current\config\user_aliases.cmd`)
 
-В результате в командной строке появятся привычные для Linux алиасы. В данном случае определены:
-`ls` --- выводит простой список файлов и папок,
-`ll` --- выводит подробный список файлов и папок,
-`l` --- подробный список, отсортированный по времени модификации файлов/папок.
-
 ### Алиасы для Conemu
 
-Аналогичные алиасы для Conemu+BusyBox, в _Settings > Startup > Environment_:
+Аналогичные алиасы для Conemu, в _Settings > Startup > Environment_:
 ```cmd
 set HOME=%HOMEDRIVE%%HOMEPATH%
 set LANG=en_US.utf8
@@ -1989,106 +2148,17 @@ alias l=ls --color=auto -lrtF $*
 alias ls=ls --color=auto -F $*
 ```
 
-### Донастройка Clink
-
-[Настройка Clink](https://github.com/chrisant996/clink-fzf?tab=readme-ov-file#how-to-install) для нечёткого (fuzzy) [поиска](https://github.com/chrisant996/clink-fzf#how-to-use): скопировать соответствующие скрипты в отдельную постоянную папку и настроить Clink на их использование:
-```cmd
-mkdir %HOME%\.config\clink-scripts
-cd %HOME%\.config\clink-scripts
-
-wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/fzf.lua
-wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/fuzzy_history.lua
-wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/cwdhistory.lua
-wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/tilde_autoexpand.lua
-wget https://raw.githubusercontent.com/chrisant996/clink-gizmos/refs/heads/main/vscode_shell_integration.lua
-
-clink installscripts %HOME%\.config\clink-scripts
-clink set fzf.default_bindings true
-clink set autosuggest.strategy match_prev_cmd history completion fuzzy_history
-```
-
-
-### Настройка внешнего вида CommandPrompt для Clink
-
-[Clink поставляется](https://chrisant996.github.io/clink/clink.html#custom-prompts) с несколькими вариантами темы оформления командной строки, их можно попробовать не устанавливая:
-```cmd
-clink config prompt list
-clink config prompt show <prompt_name>
-```
-
-Для постоянного использования включить тему оформления командой:
-```cmd
-clink config prompt use <prompt_name>
-```
-
-Так же существует проект [oh-my-posh](https://github.com/JanDeDobbeleer/oh-my-posh) настройки вида командной строки для различных терминалов (CMD, PowerShell) с широкими возможностями настройки и [большим списком](https://ohmyposh.dev/docs/themes) уже преднастроенных вариантов. Установка, плюс шрифты, если ещё не были установлены:
-```cmd
-scoop install main/oh-my-posh
-scoop bucket add nerd-fonts
-scoop install nerd-fonts/IosevkaTerm-NF-Mono
-```
-
-Включение темы оформления OhMyPosh в Clink:
-```cmd
-clink config prompt use oh-my-posh
-clink set ohmyposh.theme %HOME%\scoop\apps\oh-my-posh\current\themes\peru.omp.json
-```
-
-Использованная тема оформления [peru](https://ohmyposh.dev/docs/themes#peru) почти идеальна, единственный недостаток --- не отображает текущую папку в заголовке окна. Это исправляется модификацией темы оформления: сначала скопировать файл исходной темы в новый файл `peru-wtitle.omp.json`:
-```cmd
-mkdir %HOME%\.config\ohmyposh-themes
-cd %HOME%\.config\ohmyposh-themes
-cp %HOME%\scoop\apps\oh-my-posh\current\themes\peru.omp.json peru-wtitle.omp.json
-```
-
-и добавить следующую строчку в файл `peru-wtitle.omp.json` почти в самый конец файла перед строкой `"version": 3`:
-```cmd
-"console_title_template": "{{ .Shell }}: {{ if .Segments.Session.SSHSession }}
-{{ .UserName }}@{{ .HostName }}{{ end }}{{ if .WSL }}WSL: {{ end }}{{ .PWD }}",
-```
-(это одна строка, только она не помещается на ширину формата, поэтому записана в две строки).
-
-Переключить на новую созданную тему:
-```cmd
-clink config prompt use oh-my-posh
-clink set ohmyposh.theme %HOME%\.config\ohmyposh-themes\peru-wtitle.omp.json
-```
-
-_Note:_ suppress Clink startup message: `clink set clink.logo none`
-
-## Консольный терминал WindowsTerminal + Clink
-
-Для настройки Clink в WindowsTerminal для использования без Cmder/Conemu надо воспользоваться рецептом установки [Conemu+BusyBox+Clink](#установка-консольного-терминала-conemubusyboxclink), но без Conemu:
-```cmd
-scoop install main/busybox
-scoop install main/clink
-scoop install main/clink-completions
-scoop install main/clink-flex-prompt
-```
-
-Все вышеизложенные [настройки относительно Clink](#донастройка-clink) актуальны, останется только настроить алиасы и профиль в WindowsTerminal.
-
-* Алиасы в Windows создаются командой [`doskey`](https://learn.microsoft.com/ru-ru/windows-server/administration/windows-commands/doskey). В стартап-файле для Clink\
-  `%LOCALAPPDATA%\clink\clink_start.cmd` прописать `doskey` команды:
-  ```cmd
-  @echo off
-  doskey ll=ls --color=auto -lF $*
-  doskey l=ls --color=auto -lrtF $*
-  doskey ls=ls --color=auto -F $*
-  ```
-
-* Профиль для Clink в WindowsTerminal проще всего получить сдублировав профиль для _cmd.exe_, после чего в новом профиле в качестве запускаемой команды прописать:
-  ```cmd
-  cmd.exe /k "clink inject"
-  ```
+А можно использовать те алиасы, что настроены в _Clink_.
 
 ## Замечание про _HOME_ {.unnumbered .unlisted}
+
+* Для _Clink_ переменную _HOME_ можно прописать в стартап файле `%LOCALAPPDATA%\clink\clink_start.cmd`, см. раздел [Алиасы для Clink](#алиасы-для-clink).
 
 * _Cmder_ самостоятельно создаёт переменную _HOME_.
 
 * В _Conemu_ переменную _HOME_ можно определить в настройках _Startup > Environment_ как `HOME=%HOMEDRIVE%%HOMEPATH%` или `HOME=%UserProfile%`.
 
-* В случае с _WindowsTerminal_ переменную _HOME_ можно задать в переменных среды окружения для пользователя.
+* В случае с _WindowsTerminal_ переменную _HOME_ можно задать в переменных среды окружения для пользователя, либо при использовании _Clink_ она в нём будет прописана.
 
 ## Полезные консольные утилитки
 
@@ -2116,6 +2186,10 @@ tldr robocopy
 ```cmd
 scoop install extras/mc
 ```
+
+_Note:_ Сменить диск: `Alt+D`
+
+_Note:_ Терминал в `mc` по `Ctrl+O` нормально не работает.
 
 ### fd -- поиск файлов
 
@@ -2268,7 +2342,6 @@ _Note:_ Установка _parallel_ в _WSL_: `wsl sudo apt install parallel`.
 ```cmd
 scoop install main/llvm
 scoop install main/gcc
-scoop install main/wget
 scoop install main/curl
 scoop install main/luarocks
 scoop bucket add versions
@@ -2322,6 +2395,8 @@ _Note:_ в Neovim за _синтаксис_ отвечает плагин [_tree
 После выйти и заново войти в nvim, и набрать `:Mason` для запуска менеджера _LSP_-сервисов для настройки поддерживаемых языков программирования и форматов. В нём найти (`/`) строчку `clangd` и нажать `i` для установки поддержки языка C/C++; аналогично установить `fortls` для Fortran, `python-lsp-server` и `pyright` для Python. Для установки других форматов их следует поискать в списке существующих [LSP серверов](https://microsoft.github.io/language-server-protocol/implementors/servers/].
 
 После всех настроек можно проверить как всё это установилось командой `:checkhealth`. Возможно будет указано несколько Warning: про pyenv, про недостающие языки типа ruby или php, но это не имеет принципиального значения. Основное --- надо убедиться что: а) плагин _treesitter_ (парсер) нормально заработал, и, что: б) плагин _LSP_ для данного типа файлов работает --- он будет выводить разную диагностику для разных типов файлов.
+
+_Note:_ Входящие в _BusyBox_ утилиты имеют некоторые параметры аргументов несколько отличающиеся от Linux. Поэтому, один из плагинов Neovim (Mason.nvim), в _:checkhealth_ сообщает о не настроенных программах _wget_, _unzip_, _gzip_, это сообщение _можно игнорировать_ если установлен _BusyBox_. (CHECKME: проверить именно неработоспособность Neovim (Mason.nvim) в чистом BusyBox. \<TBD\>) В случае, если ошибка всё же _реально_ проявляется, можно переустановить эти программы с целью замены на оригинальные; но, следует помнить, что при этом они перестанут нормально понимать пути файлов и глоббинг в Windows и использовать их надо будет с осторожность. _scoop install unzip_, _scoop install gzip_, _scoop install wget_. В данном случае, это [баг со стороны Neovim](https://github.com/williamboman/mason.nvim/issues/1601), который собираются исправлять.
 
 ### Использование
 
