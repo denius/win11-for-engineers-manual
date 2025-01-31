@@ -73,35 +73,35 @@ from: markdown+tex_math_single_backslash
 
 # Установка Windows 11 и MSOffice
 
-_Disclaimer:_ в последние годы стало возможным приобрести недорогие OEM лицензии на продукты Microsoft, на Озоне или Вайлбериз, поэтому у пользователей появился выбор между вознёй со скачиванием и применением KMS утилит, и спокойной установкой лицензионного софта. Из минусов установки лицензионных продуктов --- потребуется создание учётной записи на сайте Microsoft для онлайн регистрации продуктов --- регистрация оффлайн стала практически невозможна. Ну, и, лицензии необходимо покупать только у проверенных продавцов со множеством отзывов, но это обычные издержки электронной торговли.
+_Disclaimer:_ В последние годы стало возможным приобрести недорогие OEM лицензии на продукты Microsoft, на Озоне или Вайлбериз, поэтому у пользователей появился выбор между применением KMS сервисов, и установкой OEM лицензий. Из минусов установки OEM лицензий --- потребуется создание учётной записи на сайте Microsoft для онлайн регистрации продуктов --- регистрация оффлайн стала практически невозможна. Ну, и, OEM лицензии необходимо покупать только у проверенных продавцов со множеством отзывов, но это обычные издержки электронной торговли.
 
 
-*\<TBD\>* OEM
+_Note:_ Лицензии OEM --- это лицензии на ПО, поставляемые производителями и сборщиками техники вместе с новыми ноутбуками и компьютерами. Microsoft выделяет производителям техники целые пулы OEM лицензий по небольшой цене. Но, по Европейским законам, производители могут продавать не только продукт целиком, но и комплектующие к нему, и, в данном случае, они могут продавать эти лицензии отдельно от компьютерной техники. Каждая OEM лицензия входит в какой-то конкретный пул лицензий, который закреплён за конкретным производителем, т.е., OEM, это не какая-то абстрактная безликая лицензия, а выпущенная определённым производителем. В целом, покупка OEM лицензии достаточно безопасна, случаев отзыва пулов лицензий очень и очень немного. Из особенностей OEM лицензии следует отметить, что она, в отличии от Retail или Volume лицензий, "одноразовая", то есть, активировав её один раз, _ключ_ нельзя применить второй раз, и программу нельзя будет переустановить или перенести на другой компьютер.
+
+_Note:_ KMS активация. Volume (корпоративные) лицензии можно активировать с помощью KMS сервисов по сети. В интернете есть несколько компаний, бесплатно предоставляющих такие лицензии; их можно использовать, указав в качестве адреса сервера активации сайты этих компаний. Конечно, в случае прекращения работы такого сайта, активация программы останавливается. Активации с помощью KMS сервиса по локальной сети, это совершенно стандартная процедура, которая происходит автоматически для продуктов с Volume лицензией при правильной настройке свойств локального сетевого подключения (необходимо указать в качестве DNS сервера адрес KMS сервиса). В случае подсоединения через интернет, возможность KMS активации ограничена, и, регистрировать онлайн KMS сервис необходимо с помощью специальных утилит.
+
 
 ## Скачать официальные установщики пакетов Windows и MSOffice
 
-На данный момент все инсталяторы для продуктов Microsoft скачиваются с интернета, это официальный рекомендуемый способ установки --- диски отошли в прошлое.
+На данный момент все инсталяторы для [продуктов Microsoft загружаются через интернет](https://www.microsoft.com/en-us/download), это официальный рекомендуемый способ установки --- диски отошли в прошлое. [Windows](https://www.microsoft.com/en-us/download/windows), [Office](https://www.microsoft.com/en-us/download/office).
 
-*\<TBD\>* Download Windows
-См. [Приложение: UUP](#приложение-uup-unified-update-platform).
-
-*\<TBD\>* Download MSOffice
-См. [Приложение: ODT](#приложение-odt-office-download-tool).
+> В данном руководстве приходится расписывать процедуры загрузки продуктов Microsoft из-за санкций, которые ограничивают загрузку напрямую, непосредственно с сайта Microsoft (хотя никакого запрета на продажу или использование лицензий Microsoft не существует).\
+  \
+  См. главу [UUP — Unified Update Platform — загрузка MS Windows](#uup-unified-update-platform-загрузка-ms-windows).\
+  \
+  См. главу [ODT — Office Deployment Tool — загрузка MS Office](#odt-office-deployment-tool-загрузка-ms-office).
 
 ## Выбор версии Windows
 
 _Note:_ Поддержка Windows 10 закончится осенью 2025, после чего, скорее всего, интернет заполонят вирусы для этой версии Windows из-за отсутствия обновлений безопасности. Поэтому рекомендуется изначально устанавливать Windows 11.
 
-Windows 11 устанавливать следует _En_ версию Windows 11 Pro. [Скачать](https://uupdump.net/download.php?id=07dd20c8-a2de-4792-a336-2ab01b43a160&pack=en-us&edition=professional) установочный ~~диск~~ скрипт для создания iso-диска версии _build 22631.3296_ (_23H2_) с официального сайта <https://uupdump.net/> --- Unified Update Platform (UUP) (подробности в Приложении). Это версия, с одной стороны, достаточно свежая, чтобы были драйвера для новых ноутов, а с другой стороны, эта версия всё ещё позволяет при установке создать локальную учётную запись без необходимости онлайн регистрации учётной записи Microsoft (можно использовать и более новые версии при настройке с помощью Rufus, см. далее), а также не пытается удалить КМС при активации.
+Windows 11 устанавливать следует _En_ версию Windows 11 Pro. [Скачать](https://uupdump.net/download.php?id=07dd20c8-a2de-4792-a336-2ab01b43a160&pack=en-us&edition=professional) установочный ~~диск~~ скрипт для создания iso-диска версии _build 22631.3296_ (_23H2_) с официального сайта <https://uupdump.net/> --- Unified Update Platform (UUP) (подробности в [Приложении](#uup-unified-update-platform-загрузка-ms-windows)). Это версия, с одной стороны, достаточно свежая, чтобы были драйвера для новых ноутов, а с другой стороны, эта версия всё ещё позволяет при установке создать локальную учётную запись без необходимости онлайн регистрации учётной записи Microsoft (можно использовать и более новые версии при настройке с помощью Rufus, см. далее), а также не пытается удалить КМС при активации.
 
 Подготовить загрузочную флешку можно с помощью утилиты [Rufus](https://rufus.ie/) под Windows, или [mkusb](https://help.ubuntu.com/community/mkusb) под Linux. Rufus позволяет при создании сделать _Customize Windows Installation_, а именно _запрет_ на: проверку ограничений, сбор данных (телеметрию), онлайн регистрацию. При выборе типа загрузки следует выбирать _GPT/SecureBoot_, а не _MBR/Legacy_, который предназначен для очень старых компьютеров.
 
 ## Выбор версии MSOffice
 
 *\<TBD\>* Чем новее версия, тем лучше.
-
-LTSC () --- это версия Офиса для корпоративного сегмента, где после установки в процессе эксплуатации не должен как-либо меняться функционал или даже настройки, поэтому эта версия Офиса с обновлениями безопасности, но без обновления функционала. Поэтому, при возможности выбора, лучше установить полноценную версию; но, если LTSC-версия уже установлена, то и ладно.
-
 
 ## Установка с лицензией
 
@@ -188,10 +188,10 @@ MSOffice лучше попробовать установить утилитой
 
 ### Остальные команды
 
-`Ctrl+D` --- свернуть все окна
-`Ctrl+Esc` --- меню Start (Пуск)
-`Ctrl+Shift+Esc` --- вызвать Task Manager (Менеджер Задач)
-`Win+E` --- открыть новый File Explorer (Проводник)
+* `Ctrl+D` --- свернуть все окна
+* `Ctrl+Esc` --- меню Start (Пуск)
+* `Ctrl+Shift+Esc` --- вызвать Task Manager (Менеджер Задач)
+* `Win+E` --- открыть новый File Explorer (Проводник)
 
 
 _Note:_ [Руководство](https://www.geeksforgeeks.org/enable-and-disable-keyboard-shortcuts/), как включить или выключить те или иные комбинаций клавиш быстрого доступа Windows.
@@ -205,15 +205,15 @@ _Note:_ Для очень продвинутых пользователей мо
 
 Существует [UniGetUI](https://github.com/marticliment/UniGetUI) --- графический интерфейс к большинству менеджеров программ -- но не всегда ставится (из-за санкций), не надёжен.
 
-Все консольные программы надо устанавливать через Scoop, при этом программы будут установлены в домашнюю папку, и пути будут добавлены в переменную _PATH_, что автоматически позволит запускать эти программы из командной строки.
+Все консольные программы надо устанавливать через _Scoop_, при этом программы будут установлены в домашнюю папку, и пути будут добавлены в переменную _PATH_, что автоматически позволит запускать эти программы из командной строки.
 
-Графические программы следует устанавливать либо через _WinGet_, либо через _Chocolatey_ --- примерно одно и тоже. Через winget стоит устанавливать те программы, которым не требуется регулярное обновление, либо которые умеют сами обновляться, например Telegram --- установил и забыл. Если программы требуют регулярного контроля над обновлениями, то это удобнее делать через ChocolateyGUI.
+Графические программы следует устанавливать либо через _WinGet_, либо через _Chocolatey_ --- примерно одно и тоже. Через _winget_ стоит устанавливать те программы, которым не требуется регулярное обновление, либо которые умеют сами обновляться, например Telegram --- установил и забыл. Если программы требуют регулярного контроля над обновлениями, то это удобнее делать через _ChocolateyGUI._
 
 > В общем, все консольные программы устанавливать через _Scoop_, все не консольные программы ставить через _WinGet_, а через _Chocolatey_ устанавливать то, чего нет в _WinGet_.
 
-_Note:_ *Видимость установленных программ менеджерами программ.* Scoop "видит" только те программы, что установил сам. Winget помимо программ, которые были им установлены, также "видит" программы, установленные через Chocolatey; для Chocolatey обратное неверно --- если программа установлена не через Chocolatey, то она её не "видит".
+_Note:_ *Видимость установленных программ менеджерами программ.* _Scoop_ "видит" только те программы, что установил сам. _Winget_ помимо программ, которые были им установлены, также "видит" программы, установленные через _Chocolatey_; для _Chocolatey_ обратное неверно --- если программа установлена не через _Chocolatey_, то она её не "видит".
 
-**_Note:_ Далее в этом руководстве будут рассматриваться _только программы с открытым исходным кодом_, за исключением следующих _проприетарных_ программ: MacriumReflect, PyCharm, LMStudio.**
+**_Note:_ Большинство программ в этом руководстве являются _программами с открытым исходным кодом_. Обо всех _проприетарных_ программах есть явная пометка об этом.**
 
 **_Note:_ В данном руководстве везде предполагается использование _cmd.exe_ (_Clink_) в качестве терминала для выполнения команд, если только явно не указано иное.**
 
@@ -223,7 +223,7 @@ _Note:_ *Видимость установленных программ мене
 
 <https://scoop.sh/#/apps> --- сайт-каталог доступных программ.
 
-Установка scoop с сайта <https://scoop.sh/> --- запустить две строчки в PowerShell (не Admin!):
+Установка scoop с сайта <https://scoop.sh/> --- запустить две строчки в _PowerShell_ (не Admin!):
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
@@ -252,6 +252,7 @@ scoop install main/btop
 scoop install main/7zip
 scoop install main/wget
 scoop install main/curl
+scoop install main/aria2
 scoop install main/gcc
 scoop install main/gdb
 scoop install main/make
@@ -343,80 +344,65 @@ sudo choco update all -y
 winget update --all
 ```
 
-* _Scoop_ может обновить только то, что он сам установил: `scoop list`, вывести список обновляемого: `scoop update`, обновить всё: `scoop update --all`.
+* _Scoop_ может обновить только то, что он сам установил: `scoop list`. Вывести список обновляемого: `scoop update`. Обновить всё: `scoop update --all`.
 
 * _Chocolatey_ может обновить только то, что он сам установил. В ChocolateyGUI при запуске он покажет, что можно обновить: нажать иконку-звёздочку. Обновить из CLI: `choco update all -y`.
 
 * _Winget_ может обновить программы, которые были установлены и через winget, и через Chocolatey, список установленного: `winget list`, при наличии обновления эта команда укажет новую версию; либо, сразу показать список с доступными обновлениями: `winget update`. Обновить всё: `winget update --all`.
 
 
-_Note_: Есть утилита, [**topgrade**](https://github.com/topgrade-rs/topgrade), которая апдейтит _абсолютно всё_: обновления Windows, драйвера, прошивки, scoop/choco/winget программы, всё вплоть до плагинов VSCode. Перед применением обязательно сделать бекап (например с помощью MacriumReflect), иначе, _topgrade_ порой такое обновляет, что совсем не радует, например, до последнего обновления Win11. По хорошему, topgrade необходимо сначала поконфигурить, что обновлять, а что нет, и только потом запускать. Установка: `scoop install main/topgrade`, запуск: `topgrade`.
+_Note_: Есть утилита, [**topgrade**](https://github.com/topgrade-rs/topgrade), которая апдейтит _абсолютно всё_: обновления Windows, драйвера, прошивки, scoop/choco/winget программы, всё вплоть до плагинов VSCode. Перед применением обязательно сделать бекап (например с помощью MacriumReflect), иначе, _topgrade_ порой такое обновляет, что совсем не радует, например, до последнего обновления Win11. По хорошему, _topgrade_ необходимо сначала поконфигурить, что обновлять, а что нет, и только потом запускать. Установка: `scoop install main/topgrade`, запуск: `topgrade`.
 
 
 ## Некоторые программы и утилиты
 
-Несколько слов о разных программах и утилитах, которые не требуют подробного описания установки или использования. Большинство из них были в списках установки выше, т.е. _уже_ были установлены, кроме OpenVPN.
+Несколько слов о разных программах и утилитах, которые не требуют подробного описания установки или использования. Большинство из них были в списках установки выше, т.е. _уже_ были установлены.
 
-
-### OpenVPN
-
-
-[**OpenVPN**](https://en.wikipedia.org/wiki/OpenVPN).
-
-```cmd
-winget install --id=OpenVPNTechnologies.OpenVPN -e
-```
-
-_Настройка:_ проще всего скопировать ключи прямо вместе с их папкой, в `C:\Program Files\OpenVPN\config`; OpenVPN увидит их (после перезапуска?) и будет показывать в виде отдельной папки конфигурации (появится возможность выбирать из нескольких ключей).
-
-_Warning:_ И ни в коем случае не пытаться загрузить ключи через меню интерфейса _Import > Import File..._, потому что в этом случае будет скопирован только один файл из трёх!
-
-#### Legacy OpenVPN {.unnumbered .unlisted}
-
-OpenVPN версии 2.6.xy не работает с более старыми ключами, т.к. в них изменились некоторые параметры (при использовании ключей в устаревшем формате появляется запрос на ввод пароля).
-Поэтому, либо скачать предыдущую версию 2.5.xy (2.5.10) с сайта <https://openvpn.net/community-downloads/> и после установки зафиксировать эту версию:
-```cmd
-winget pin add OpenVPNTechnologies.OpenVPN
-```
-
-Либо ~~отредактировать _.ovpn_ файл~~ скачать ключики заново -- они будут уже в новом формате.
 
 ### Программы для картинок
 
-[**nomacs**](<https://nomacs.org/>) --- программа для просмотра изображений, а также для их модификации, с широчайшими возможностями: конвертация, масштабирование, вращение, обрезка, работа с цветом, баланс белого, работа с raw форматами, интерактивная обработка синхронно нескольких изображений. Конечно, не фотошоп, но для обычного пользователя 99% необходимого функционала обеспечивает.
+[**nomacs**](<https://nomacs.org/>) --- программа для просмотра изображений; а также для их модификации, с широчайшими возможностями: конвертация, масштабирование, вращение, обрезка, работа с цветом, баланс белого, работа с raw форматами, интерактивная обработка синхронно нескольких изображений. Конечно, не фотошоп, но для обычного пользователя 99% необходимого функционала обеспечивает.
 
 ```cmd
 winget install --id=nomacs.nomacs -e
 ```
 
-[**Gimp**](https://docs.gimp.org/2.4/ru/gimp-concepts-usage.html) --- opensource замена фотошопу; программа для тех, кому не достаточно возможностей **nomacs**.
+[**Gimp**](https://docs.gimp.org/2.4/ru/gimp-concepts-usage.html) --- opensource замена фотошопу; программа для тех, кому не достаточно возможностей *nomacs*.
 
 ```cmd
 winget install --id=GIMP.GIMP -e
 ```
 
+### pdf-viewer
+
+Если бы не было просмотра pdf в каждом браузере, то можно было бы установить [Sumatra PDF](https://www.sumatrapdfreader.org/free-pdf-reader):
+```cmd
+winget install --id=SumatraPDF.SumatraPDF -e
+```
+но сейчас это уже излишне.
+
+
 
 ### Программки для работы с текстом
 
-Офисные программы рассмотрены в отдельной главе. Написание программных кодов предполагается в VSCode, настройка которого рассмотрена в отдельной главе.
+Офисные программы рассмотрены в отдельной [главе](#офисные-пакеты). Написание программных кодов предполагается в _VSCode_, настройка которого рассмотрена в отдельной главе.
 
-* [**Notepad++**](https://notepad-plus-plus.org/) --- легковесная замена блокнота и ультраэдита, с подсветкой синтаксиса и проч. Устанавливается: `scoop install extras/notepadplusplus`.
+* [**Notepad++**](https://notepad-plus-plus.org/) --- легковесная замена блокнота, ультраэдита, и проч., с подсветкой синтаксиса, широкими возможностями редактирования. Устанавливается: `scoop install extras/notepadplusplus`.
 
-* [**Meld**](https://meldmerge.org/) и [**WinMerge**](https://winmerge.org/) --- это программы для сравнения и редактирования файлов бок о бок, наиболее популярные из открытых. Используются, в том числе, для разрешения конфликтов при слияниях **git**. Устанавливаются, соответственно: `winget install --id=Meld.Meld -e` и `scoop install extras/winmerge`.
+* [**Meld**](https://meldmerge.org/) и [**WinMerge**](https://winmerge.org/) --- это программы для сравнения и редактирования файлов бок о бок, наиболее популярные из открытых. Используются, в том числе, для разрешения конфликтов при слияниях *git*. Устанавливаются, соответственно: `winget install --id=Meld.Meld -e` и `scoop install extras/winmerge`.
 
 * [**GoldenDict-ng**](https://xiaoyifang.github.io/goldendict-ng/) --- локальные словари для перевода. По умолчанию активируется (переводит) по двойному нажатию на `<Ctrl+C>`. [Устанавливается](https://winstall.app/apps/xiaoyifang.GoldenDict-ng) так: `winget install --id=xiaoyifang.GoldenDict-ng -e`; но при установке никаких словарей не ставится, их необходимо дополнительно скачать и указать программе где они, скачанные, лежат.
-  Свободные словари:
+  Свободные словари: *\<TBD\>*
   - dict-freedict-eng-rus  - English-Russian dictionary for the dict server/client
   - mueller7-dict          - Mueller English/Russian dictionary in dict format
 
-
 ### Утилиты для работы с дисками
 
-* [**WinDirStat**](https://windirstat.net/) --- утилита для контроля занимаемого места файлами на диске, установка: `winget install --id=WinDirStat.WinDirStat -e`
+* [**WinDirStat**](https://windirstat.net/) --- утилита для контроля занимаемого места файлами на диске, показывает размер файлов в виде плиток. Установка: `winget install --id=WinDirStat.WinDirStat -e`
 
 * [**Rufus**](https://rufus.ie/) --- утилита для создания загрузочных флешек, для установки операционных систем Windows, Linux и пр. Установка: `choco install -y rufus`.
 
-* [**GSmartControl**](https://gsmartcontrol.shaduri.dev/) --- утилита для получения информации S.M.A.R.T. SSD/HDD, в частности, для контроля истирания **SSD**. Установка: `winget install --id=AlexanderShaduri.GSmartControl -e`
+* [**GSmartControl**](https://gsmartcontrol.shaduri.dev/) --- утилита для получения информации *S.M.A.R.T.* SSD/HDD, в частности, для контроля истирания **SSD**. Установка: `winget install --id=AlexanderShaduri.GSmartControl -e`
 
 * обновление прошивок **SSD**:
   - _[Samsung](https://semiconductor.samsung.com/consumer-storage/support/tools/)_: `choco install -y samsung-magician`
@@ -427,7 +413,7 @@ winget install --id=GIMP.GIMP -e
   - _[Crucial](https://www.crucial.com/support/storage-executive)_: `winget install --id=Crucial.StorageExecutive -e`
   - _[WD](https://support-en.wd.com/app/answers/detailweb/a_id/31759)_: `winget install --id=WesternDigital.Dashboard -e`
 
-### Прочее
+### Прочие системные утилиты
 
 * для ноутбуков **Lenovo** есть утилита [Lenovo System Update](https://support.lenovo.com/us/en/downloads/ds012808-lenovo-system-update-for-windows-10-7-32-bit-64-bit-desktop-notebook-workstation), которая может скачать/обновить BIOS и специфичные драйвера для Windows. Установка: `winget install --id=Lenovo.SystemUpdate -e`. [Ещё](https://winstall.app/apps/Lenovo.UpdateRetriever).
 
@@ -435,7 +421,20 @@ winget install --id=GIMP.GIMP -e
 
 * [**FanControl**](https://getfancontrol.com/) --- утилита для настройки скорости вращения вентиляторов, актуально для ноутбуков, подходит не для всех ноутбуков, особенно свежих моделей; [установка](https://winstall.app/apps/Rem0o.FanControl): `winget install --id=Rem0o.FanControl -e`.
 
-* Быстрый переход в конкретные приложения по горячим клавишам: [autohotkey](https://github.com/AutoHotkey/AutoHotkey) (для продвинутых пользователей  --- трудно настроить).
+
+### Драйвера
+
+Если какое-то устройство не работает, или знаки вопроса в _Device Manager_, то можно попробовать поставить драйвера (без гарантии что заработает и ничего не сломается, и сначала сделать бэкап).
+
+[**HW-Info**](https://www.hwinfo.com/) --- бесплатная проприетарная утилита, выводит список наличных аппаратных устройств:
+```cmd
+winget install --id=REALiX.HWiNFO -e
+```
+
+**SDIO** <https://www.snappy-driver-installer.org/>^[не ~~**SDI**~~!] --- Установщик драйверов:
+```cmd
+winget install --id=samlab-ws.SnappyDriverInstaller -e
+```
 
 
 ## Backup операционной системы Windows
@@ -452,6 +451,19 @@ choco install -y reflect-free
 Для возможности восстановления из бэкапов необходимо создать загрузочную запись, либо на флешке, либо на самом диске с установленной операционной системой. Это делается в меню _Other Tasks > Create Rescue Media_.
 
 В меню _Other Tasks > Edit Defaults and Settings > Update Settings_ отключить проверку обновлений --- очень часто обновляется, будет раздражать. Рядом в _Backup Defaults > Retension Rules_, стоит отключить автоматическое удаление старых бэкапов.
+
+### duplicati
+
+*\<TBD\>*
+
+Open-source program, with _VSS_ support!
+
+<https://duplicati.com/>
+<https://docs.duplicati.com/>
+
+```cmd
+winget install --id=Duplicati.Duplicati  -e
+```
 
 ## Браузеры
 
@@ -497,11 +509,11 @@ choco install -y reflect-free
 [_Runet Censorship Bypass_](https://chromewebstore.google.com/detail/%D0%BE%D0%B1%D1%85%D0%BE%D0%B4-%D0%B1%D0%BB%D0%BE%D0%BA%D0%B8%D1%80%D0%BE%D0%B2%D0%BE%D0%BA-%D1%80%D1%83%D0%BD%D0%B5%D1%82%D0%B0/npgcnondjocldhldegnakemclmfkngch)\
 [_Snowflake_](https://chromewebstore.google.com/detail/snowflake/mafpmfcccpbjnhfhjnllmmalhifmlcie)
 
-Есть плагин [uBlacklist](https://github.com/iorate/ublacklist#ublacklist), который позволяет исключить из выдачи поисковиков (google.com и т.д.) некоторые сайты --- заблокировать их от показа.
+Есть плагин [_uBlacklist_](https://github.com/iorate/ublacklist#ublacklist), который позволяет исключить из выдачи поисковиков (google.com и т.д.) некоторые сайты --- заблокировать их от показа.
 
 ## Far Manager и консольный терминал
 
-### Первый уровень сложности настройки
+### Нулевой уровень сложности настройки
 
 Если [**Far**](https://www.farmanager.com/) ещё не установлен, то установить:
 ```cmd
@@ -511,11 +523,11 @@ winget install --id=FarManager.FarManager -e
 
 _Note:_ Поменять шрифты можно кликнув правой кнопкой мыши на иконке Far, в свойствах.
 
-_Note:_ В Far'е можно открывать [ssh-соединения](#sshputty) с поддержкой [X11 приложений](#x-server), для этого в терминальном окне Far (`Ctrl+O`) вызвать две команды:
-  ```cmd
-  set DISPLAY=127.0.0.1:0.0
-  ssh -X somename@somehost
-  ```
+_Note:_ В Far'е можно открывать [ssh-соединения](#sshputty) с поддержкой [X11 приложений](#x-server), для этого в окне терминала Far (`Ctrl+O`) вызвать две команды:
+```cmd
+set DISPLAY=127.0.0.1:0.0
+ssh -X somename@somehost
+```
 
 ### Второй уровень сложности
 
@@ -531,7 +543,7 @@ winget install --id=Microsoft.WindowsTerminal -e
 
 #### Настройка Windows Terminal
 
-* Добавить профиль для запуска Far: открыть WindowsTerminal _Settings_, в меню слева выбрать (внизу) _+ Add a new profile_, нажать _+ New empty profle_, задать имя профиля _Far_, в пункте _Command line_ задать выполняемую команду, выбрав файл _C:\\Program Flies\\Far Manager\\Far.exe_, в пункте _Starting directory_ отжать галочку (станет _%USERPROFILE%_), для отображения иконки выбрать тот же самый _C:\\Program Flies\\Far Manager\\Far.exe_ -- иконка будет браться непосредственно из _.exe_; сохранить. Выбрать профиль _Far_ для старта: в меню _Settings_ самый первый пункт. (Всё то же самое можно сделать через [редактирование файла конфигурации](https://learn.microsoft.com/ru-ru/windows/terminal/dynamic-profiles#far-manager) `settings.json`, подробнее чуть ниже в Пункте про схемы)
+* Добавить профиль для запуска Far: открыть WindowsTerminal _Settings_, в меню слева выбрать (внизу) _+ Add a new profile_, нажать _+ New empty profle_, задать имя профиля _Far_, в пункте _Command line_ задать выполняемую команду, выбрав файл _"C:\\Program Flies\\Far Manager\\Far.exe"_, в пункте _Starting directory_ отжать галочку (станет _%USERPROFILE%_), для отображения иконки выбрать тот же самый _"C:\\Program Flies\\Far Manager\\Far.exe"_ -- иконка будет браться непосредственно из _.exe_; сохранить. Выбрать профиль _Far_ для старта: в меню _Settings_ самый первый пункт. (Всё то же самое можно сделать через [редактирование файла конфигурации](https://learn.microsoft.com/ru-ru/windows/terminal/dynamic-profiles#far-manager) `settings.json`, подробнее чуть ниже в Пункте про схемы)
 
 * Настроить запуск WindowsTerminal по умолчанию для всех консольных команд и приложений: в настройках Windows в _Settings > Update & Security > For developers: Terminal > Windows Terminal_.
 
@@ -560,6 +572,8 @@ winget install --id=Microsoft.WindowsTerminal -e
 * Для того, чтобы _Far_ показывал другие цветовые схемы помимо синей, необходимо отжать галочку в меню _Far_: _F9 > Options > Colors: Palette > Classic Palette: Off_.\
   Из не синих схем интересна схема [Glacier](https://github.com/mbadolato/iTerm2-Color-Schemes/blob/master/windowsterminal/Glacier.json), например.
 
+* Для автоматического копирования в буфер обмена выделенного мышкой включить опцию _Settings > Interaction: Automatically copy selection to clipboard_. \<new-01\>
+
 * Не показывать Warning на _multiline paste_: [добавить строчку](https://superuser.com/questions/1677982/how-do-i-get-windows-terminal-to-stop-asking-me-every-time-i-paste-something-int) `"multiLinePasteWarning": false,` в самый верх (на первый уровень) конфига `settings.json`.
 
 * Комбинации `Ctrl+C`, `Ctrl+V`, `Ctrl+W`, `Ctrl+T` для доступности в консольных приложениях следует перенастроить (в настройках в _Settings > Actions_) на варианты с `Shift`, т.е.: `Ctrl+Shift+C`, `Ctrl+Shift+V`, `Ctrl+Shift+W`, `Ctrl+Shift+T` и т.п.
@@ -575,8 +589,30 @@ winget install --id=Microsoft.WindowsTerminal -e
   setx HOME "%UserProfile%"
   ```
 
+* Алиасы. Для каждой оболочки свои методы создания:
+  + *\<TBD\>* https://stackoverflow.com/questions/17404165/how-to-run-a-command-on-command-prompt-startup-in-windows https://superuser.com/questions/1134368/create-permanent-doskey-in-windows-cmd
+  + Для _PowerShell_: [Guide](https://www.sharepointdiary.com/2021/08/powershell-alias-beginners-guide.html) как задать постоянные [алиасы](https://learn.microsoft.com/ru-ru/powershell/module/microsoft.powershell.utility/set-alias) в [профиле](https://learn.microsoft.com/ru-ru/powershell/module/microsoft.powershell.core/about/about_profiles) PS.
+
+* У WindowsTerminal есть возможность настроить глобальную горячую клавишу на вызов WindowsTerminal откуда угодно. Для этого в `settings.json` прописать команду [`"globalSummon"`](https://learn.microsoft.com/en-gb/windows/terminal/customize-settings/actions#global-summon) в разделе `"actions":`:
+  ```json
+  "actions": [
+    {
+      "command": {
+        "action": "globalSummon"
+      },
+      "keys": "alt+t"
+    }
+  ]
+  ```
+* Для WindowsTerminal доступны некоторые [параметры запуска из командной строки](https://learn.microsoft.com/ru-ru/windows/terminal/command-line-arguments), например, можно настроить открывать отдельный WindowsTerminal (новое окно) на запуск какого-то конкретного приложения, со специально настроенным профилем, например, создать алиас `doskey vi=wt -d %CD% -p "wt-nvim" -- nvim $*` и профиль с именем _"wt-nvim"_ с командой `%SystemRoot%\System32\cmd.exe /c nvim`, тогда по команде `vi test-01.cpp` откроется новое окно с WindowsTerminal с открытым файлом _test-01.cpp_ в редакторе _nvim._
+
+* [Список всех действий WindowsTerminal](https://learn.microsoft.com/ru-ru/windows/terminal/customize-settings/actions), любое из них можно настроить на желаемую комбинацию клавиш.
+
+
 
 #### Использование WindowsTerminal
+
+См. также главу [_Полезные консольные утилитки_](#полезные-консольные-утилитки).
 
 *\<TBD\>*
 
@@ -592,23 +628,9 @@ WindowsTerminal умеет открывать терминалы не тольк
 
 [Список всех действий WindowsTerminal](https://learn.microsoft.com/ru-ru/windows/terminal/customize-settings/actions), любое из них можно настроить на желаемую комбинацию клавиш.
 
-Для WindowsTerminal доступны некоторые параметры запуска из командной строки, например, можно настроить открывать отдельный WindowsTerminal (новое окно) на запуск какого-то конкретного приложения, со специально настроенным профилем, например, создать алиас `doskey vi=wt -d %CD% -p "wt-nvim" -- nvim $*` и профиль с именем _"wt-nvim"_ с командой `%SystemRoot%\System32\cmd.exe /c nvim`, тогда по команде `vi test-01.cpp` будет открываться новое окно с WindowsTerminal с открытым файлом _test-01.cpp_ в редакторе _nvim._
-
-У WindowsTerminal есть возможность настроить глобальную горячую клавишу на вызов WindowsTerminal откуда угодно. Для этого в `settings.json` прописать команду [`"globalSummon"`](https://learn.microsoft.com/en-gb/windows/terminal/customize-settings/actions#global-summon) в разделе `"actions":`:
-```json
-"actions": [
-  {
-    "command": {
-      "action": "globalSummon"
-    },
-    "keys": "alt+w"
-  }
-]
-```
-
 _Links:_ [WT by MS](https://learn.microsoft.com/ru-ru/windows/terminal/), [WT actions](https://learn.microsoft.com/en-gb/windows/terminal/customize-settings/actions), [doskey](https://learn.microsoft.com/ru-ru/windows-server/administration/windows-commands/doskey), [Guide](https://freshman.tech/windows-terminal-guide/).
 
-### Невероятный уровень сложности
+### Финальный уровень сложности
 
 В принципе, на этом можно и остановиться, но для полноценной разработки/программирования рекомендуется установить и настроить нормальную командную оболочку (shell) [**Clink**](https://chrisant996.github.io/clink/).
 
@@ -619,190 +641,8 @@ _Links:_ [WT by MS](https://learn.microsoft.com/ru-ru/windows/terminal/), [WT ac
 %SystemRoot%\System32\cmd.exe /k "clink inject"
 ```
 
-Так же в приложении показано [использование оболочки **Clink**](#использование-clink).
-
-
-## Полезные консольные утилитки
-
-### _TL;DR --- Too Long; Didn't Read_
-
-[**tldt**](https://github.com/tldr-pages/tldr) -- <https://tldr.sh/>.
-
-Набор небольших справок по командам Windows, Linux, и т.д., по страничке буквально. В ней более 5000 справок, и, скорее всего, есть справки по всем командам, которые упоминаются в этом руководстве.
-
-[Установка](https://scoop.sh/#/apps?o=true&q=tldr):
-```cmd
-scoop install main/tlrc
-tldr --gen-config > %UserProfile%\AppData\Roaming\tlrc\config.toml
-```
-После отредактировать в конфиге `%UserProfile%\AppData\Roaming\tlrc\config.toml` в секции `[cache]` опцию `languages = ['ru','en']`, чтобы, по возможности, были справки на русском. _Note:_ при первом запуске скачивает с инета архив со справками, и распаковывает, занимает меньше минуты.
-
-Использование:
-```cmd
-tldr robocopy
-```
-
-### mc --- Midnight Commander
-
-Классика на Windows тоже работает, и умеет _Shell link..._.
-```cmd
-scoop install extras/mc
-```
-
-_Note:_ Сменить диск: `Alt+D`
-
-_Note:_ Терминал в `mc` по `Ctrl+O` нормально не работает.
-
-### fd -- поиск файлов
-
-Установка:
-```cmd
-scoop install main/fd
-```
-
-#### Использование
-
-Утилита [`fd`](https://github.com/sharkdp/fd#how-to-use) в качестве шаблона поиска файлов использует [регулярные выражения](https://docs.rs/regex/latest/regex/#syntax) (по умолчанию), поэтому вместо классического шаблона `find -iname '*PATTERN*'` следует использовать ~~банальный~~ удобный:
-```cmd
-fd PATTERN
-```
-то есть для поиска курсовой набрать: `fd курсов`, или, если не нашлось, может так поможет: `fd kursov`.
-
-`fd` считает свой шаблон в режиме _ignorecase_, если только в шаблоне нет заглавных букв, иначе шаблон _casesensitive_. Опция `-i` задаёт режим _ignorecase_.
-
-Для поиска по привычным шаблонам со звёздочкой (`*`) применяется опция `-g`/`--glob`:
-```cmd
-fd --glob "task*.py"
-fd -g "task*.{h,c,c++,cpp}" Projects
-```
-Эта же опция применяется для поиска по точному имени.
-
-Поиск файлов по расширению:
-```cmd
-fd --extension docx
-fd -e docx
-```
-
-Включить в поиск скрытые (системные) папки и файлы:
-```cmd
-fd --hidden -g "*.conf" %UserProfile%
-```
-
-Поиск с одновременным выполнением какой-либо команды над найденным файлом:
-```cmd
-fd -e doc %HOME% --exec soffice -convert-to docx {}
-```
-```cmd
-fd --hidden "\.vhdx$" C:\ --exec ls -l {}
-```
-
-Опция `-t`, `--type` позволяет искать отдельно папки, файлы, и т.д., по типу: `f`/`file`, `d`/`directory`, `l`/`symlink`, `x`/`executable`, `e`/`empty`, например, найти все _git_ репозитории на диске _C:_ :
-```cmd
-fd --hidden -g "\.git" C:\ -t d
-```
-
-_Note:_ `fd` в поиске учитывает спецификации настроек проектов, _git_, и прочего; то есть, если в `.gitignore` указаны файлы или папки, то `fd` пропустит их, даже если они удовлетворяют критериям поиска. Для обхода есть опция `-I`, `--no-ignore`.
-
-### ripgrep и rga
-
-[**ripgrep**](https://github.com/BurntSushi/ripgrep) (`rg`)\
-Быстрый поиск по текстовым файлам.
-
-[**rga**](https://github.com/phiresky/ripgrep-all)\
-_rg all_ --- поиск по документам: pdf, docx (но не doc), html, ipynb, внутри архивов. `rga` внутри использует `rg` для поиска по распакованному содержимому документов, и, все опции `rg`, это и опции `rga`.
-
-```cmd
-scoop install main/ripgrep
-scoop install main/pandoc
-scoop install main/poppler
-scoop install main/rga
-```
-
-Настройка: создать переменную окружения `RIPGREP_CONFIG_PATH` указывающую на файл `%HOME%\.config\ripgreprc`, создать этот файл с конфигурацией:
-```cmd
---smart-case
---auto-hybrid-regex
---glob=!*~
---glob=!*~?
-# https://github.com/BurntSushi/ripgrep/blob/master/FAQ.md#how-do-i-configure-ripgreps-colors
---colors=path:fg:blue
-```
-
-С такой конфигурацией, если в шаблоне нет заглавных букв, то `rg` будет считать шаблон _ignorecase_, иначе шаблон _casesensitive_. Строчка конфигурации _\-\-auto-hybrid-regex_ указывает применять разные библиотеки _regex_ в зависимости от сложности шаблона --- для простых шаблонов это значительно ускоряет поиск.
-
-#### Использование
-
-Как и `fd`, `rg` производит поиск по шаблонам в форме [регулярных выражений](https://docs.rs/regex/1.11.1/regex/#syntax), поэтому не нужны какие-либо звёздочки, а надо прямо набирать:
-```cmd
-rg sometext
-```
-
-Поиск по файлам определённого типа опцией `g`/`--glob`:
-```cmd
-rg --glob "*.py" задача
-rg -g "*.py" -g "*.ipynb" задача
-rg задача -g "*.{c,c++,h}"
-```
-```cmd
-rga -g "*.{docx,pdf}" отчет
-```
-
-_Note:_ Для `rga` тип документов для поиска можно задать выбором адаптера (просмотрщика) с помощью опций таких как `rga --rga-adapters=pandoc,zip`, но, это достаточно широкие классы документов, поэтому лучше задавать по расширению, как было сделано выше. Адаптеры `rga`:
-
-* pandoc отвечает за: .epub, .odt, .docx, .fb2, .ipynb, .html, .htm;
-* poppler за .pdf;
-* decompress: .als, .bz2, .gz, .tbz, .tbz2, .tgz, .xz, .zst;
-* tar: tar;
-* zip: .zip, .jar
-
-
-Поиск по целым словам опцией `-w`/`--word-regexp`:
-```cmd
-rg -w argparse -g "*.py"
-```
-
-Вывести только имена файлов содержащих искомое --- опция `-l`/`--files-with-matches`.
-
-Вывести контекст найденного, это опции `A`/`B`/`C` -- _After_, _Before_, _Context_. Следующее выражение выводит полную историю команд, а затем `rg` ищет команды над _init.lua_ и выводит не только саму команду, но и ближайшие 5. Это выражение, так же, показывает особенность регулярных выражений -- в них точка обозначает любой символ, а вот для поиска самой точки её необходимо экранировать:
-```cmd
-history | rg -C5 "init\.lua"
-```
-
-Опять же, аналогично `fd`, поиск по скрытым файлам с опцией `-h`/`--hidden`.
-
-### parallel
-
-[GNU **parallel**](https://www.gnu.org/software/parallel/), это утилита, которая: запускает в параллель несколько задач; отслеживает их завершение, чтобы запустить следующую в очереди задачу; отслеживает вывод на экран, чтобы информация не выводилась вперемешку; может разбивать большие файлы для обработки в параллель по кусочкам; и многое другое. [Википедиа](https://ru.wikipedia.org/wiki/GNU_parallel), [Tutorial](https://www.gnu.org/software/parallel/parallel_tutorial.html).
-
-В Windows может использоваться `parallel` из _WSL_:
-
-```cmd
-wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080  resized_{}" ::: *.jpg
-```
-
-```cmd
-ls -1 *.jpg | wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080 {.}.png"
-```
-
-В этих командах утилита обработки изображений _magick_ (из пакета _ImageMagick_) запускается в параллель. Здесь:
-
-* `-j4` определяет число параллельно запускаемых задач;
-* `:::` отделяет запускаемую команду от аргументов для _parallel_;
-* `{}` --- [строка замены](https://www.gnu.org/software/parallel/parallel.html#options), на место которой будет подставлен аргумент для распараллеливаемой команды;
-* `{.}` --- строка замены, в которой будет удалено расширение файла;
-* используется `cmd.exe /c` чтобы не пришлось прописывать полные пути до запускаемой команды, так как `wsl` не знает путей _PATH_ Windows;
-
-_Note:_ Установка _parallel_ в _WSL_: `wsl sudo apt install parallel`.
-
-### time
-
-**time** --- утилита из мира Linux, позволяющая измерить время выполнения программы.\
-Установка: `scoop install main/time`.
-
-Использование вполне обычное, только необходимо использовать команду `timecmd`, т.к. имя _time_ занято --- это встроенная команда Windows с другим функционалом:
-```cmd
-timecmd make all
-```
+Так же в Приложении есть краткая справка по [использованию оболочки **Clink**](#использование-clink).\
+См. также главу [_Полезные консольные утилитки_](#полезные-консольные-утилитки).
 
 
 ## Многокарманный буфер обмена
@@ -864,7 +704,7 @@ _Note:_ установленные в WSL2 графические Linux прил
 winget install --id=Bostrot.WSLManager -e
 ```
 
-#### Отступление про использование _WSL_: {.unnumbered .unlisted}
+#### _Отступление_ про использование _WSL_: {.unnumbered .unlisted}
 
 Аргументы _some commands_ после слова _wsl_ в команде `wsl some commands` будут запущены внутри WSL виртуалки: например, команда `wsl rg "some-phrase"` запустит Linux утилиту `rg`, которая, в данном случае, будет выполнять полнотекстовый поиск _"some-phrase"_ в текущей папке. Т.е. в любом терминале Windows можно выполнить команду Linux, в том числе для действий над своими файлами/данными лежащими на локальных дисках _C:_, _D:_ и т.п.
 
@@ -966,7 +806,7 @@ ssh -X somename@somehost
 ```
 тогда проброс (Forwarding) протокола *X11*  заработает ([guide](https://x410.dev/cookbook/built-in-ssh-x11-forwarding-in-powershell-or-windows-command-prompt/)).
 
-Ненужные пояснения:
+_Ненужные пояснения:_
 
 * Здесь *127.0.0.1:0.0* --- это IP-адрес *localhost*'а, на котором наш запущенный локальный X-сервер ожидает данных, и указание на номер дисплея (*0.0*) X-сервера. Здесь применяется явный IP-адрес, а не имя *localhost* потому что последний может быть и IPv6.
 * Опция `-X` или `-Y` указывает утилите `ssh` на создание X-Forwarding. `-X` --- это вариант опции со включёнными ограничениями безопасности; `-Y` означает, что X11 приложение будет иметь полный доступ к отображаемому на локальном мониторе, этого варианта следует избегать, или применять только для доверенных удалённых хостов и доверенных X11 приложений.
@@ -991,6 +831,30 @@ ssh -X somename@somehost
 ```cmd
 winget install --id=RustDesk.RustDesk -e
 ```
+
+
+## OpenVPN
+
+
+[**OpenVPN**](https://en.wikipedia.org/wiki/OpenVPN).
+
+```cmd
+winget install --id=OpenVPNTechnologies.OpenVPN -e
+```
+
+_Настройка:_ Проще всего скопировать ключи прямо вместе с их папкой, в "_C:\\Program Files\\OpenVPN\\config_". OpenVPN увидит их (после перезапуска?) и будет показывать в виде отдельной папки конфигурации (появится возможность выбирать из нескольких ключей).
+
+_Warning:_ Ни в коем случае не пытаться загрузить ключи через меню интерфейса _Import > Import File..._, потому что в этом случае будет скопирован только один файл из трёх!
+
+#### Legacy OpenVPN {.unnumbered .unlisted}
+
+OpenVPN версии 2.6.xy не работает с более старыми ключами, т.к. в них [изменились некоторые параметры](https://community.openvpn.net/openvpn/wiki/DeprecatedOptions) (при использовании ключей в устаревшем формате появляется запрос на ввод пароля).
+Поэтому, либо скачать предыдущую версию 2.5.xy (2.5.10) с сайта <https://openvpn.net/community-downloads/> и после установки зафиксировать эту версию:
+```cmd
+winget pin add OpenVPNTechnologies.OpenVPN
+```
+
+Либо ~~отредактировать _.ovpn_ файл~~ скачать ключики заново -- они будут уже в новом формате.
 
 
 {{< pagebreak >}}
@@ -1291,7 +1155,7 @@ winget install --id=Julialang.Juliaup -e
 juliaup add lts
 julia
 ```
-```julia-repl
+```julia
 ] add Revise, OhMyREPL, Unitful, Roots,
       DataStructures, Plots, Chairmarks, Debugger
 ```
@@ -1563,10 +1427,10 @@ _Note:_ префикс `magick` можно опускать и применят�
 |                                                 | Обратите внимание, что положительные смещения _X_ и _Y_\                                        |
 |                                                 | направлены внутрь к центру изображения для всех опций _-gravity_,\                              |
 |                                                 | кроме 'Center'.\                                                                                |
-|                                                 | Для 'East' _+X_ — влево. Для 'South' _+Y_ — вверх.\                                             |
-|                                                 | Для 'SouthEast' _+X_ — влево и _+Y_ — вверх.\                                                   |
+|                                                 | Для 'East' _+X_ -- влево. Для 'South' _+Y_ -- вверх.\                                           |
+|                                                 | Для 'SouthEast' _+X_ -- влево и _+Y_ -- вверх.\                                                 |
 |                                                 | Для 'Center' используется обычное направление _X_ и _Y_\                                        |
-|                                                 | (_+X_ — вправо, _+Y_ — вниз).                                                                   |
+|                                                 | (_+X_ -- вправо, _+Y_ -- вниз).                                                                 |
 +-------------------------------------------------+-------------------------------------------------------------------------------------------------+
 
 : Указание [размеров изображения](https://imagemagick.org/script/command-line-processing.php#geometry) для утилит _ImageMagick_ (далее показаны на примерах). {tbl-colwidths="[20,80]"}
@@ -1574,7 +1438,7 @@ _Note:_ префикс `magick` можно опускать и применят�
 [^фактическое]: Фактическое поведение может варьироваться в зависимости от различных опций и настроек.
 [^gravity]: Подробности для опции _-gravity_ см. в [руководстве по программе](https://imagemagick.org/script/command-line-options.php#gravity).
 
-> Отступление об особенностях экранирования аргументов команд в командной строке в Windows и Linux. Помимо обычных символов перенаправления потоков (`>`, `<`, `|`) в Windows особое значение имеют символы: `^`, `%` (`^` используется для экранирования других символов, а `%` используется для разыменования переменных). Они могут быть использованы в качестве аргументов следующим способом: там где нужен `%` надо писать `%%`, а `^` должен быть экранирован кавычками, иначе будет проигнорирован. В Linux особые символы `!`, `(`, `)`, `\`; для использования в качестве аргументов они должны быть экранированы либо кавычками, либо с помощью `\`; и сам символ `\` тоже должен быть экранирован как `\\`. Также, в Windows и Linux одинарные и двойные кавычки имеют противоположную роль: в Linux одинарные кавычки более "сильные", чем двойные; в Windows наоборот. Поэтому при использовании в Windows команд из мира Linux надо заменять `'` на `"`, и наоборот.
+> _Отступление_ об особенностях экранирования аргументов команд в командной строке в [Windows](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/cmd#remarks) и [Linux](https://www.gnu.org/software/bash/manual/html_node/Quoting.html). Помимо обычных символов перенаправления потоков (`>`, `<`, `|`) в Windows особое значение имеют символы: `^`, `%` (`^` используется для экранирования других символов, а `%` используется для разыменования переменных). Они могут быть использованы в качестве аргументов следующим способом: там где нужен `%` надо писать `%%`, а `^` должен быть экранирован кавычками, иначе будет проигнорирован. В Linux особые символы `!`, `(`, `)`, `\`; для использования в качестве аргументов они должны быть экранированы либо кавычками, либо с помощью `\`; и сам символ `\` тоже должен быть экранирован как `\\`. Также, в Windows и Linux одинарные и двойные кавычки имеют противоположную роль: в Linux одинарные кавычки более "сильные", чем двойные; в Windows наоборот. Поэтому при использовании в Windows команд из мира Linux надо заменять `'` на `"`, и наоборот.
 
 #### Примеры
 
@@ -1673,7 +1537,7 @@ _Note:_ У _ffmpeg_ очень много опций: `ffmpeg --help full`, по
 
 *\<TBD\>*
 
-#### Отступление: Создание видео в древнем avi формате {.unnumbered .unlisted}
+#### _Отступление:_ Создание видео в древнем avi формате {.unnumbered .unlisted}
 
 Это устаревший способ кодирования видео, и он вам не потребуется; нужен только на старых серверах.
 
@@ -1701,13 +1565,263 @@ HandBrakeCLI --preset "Production Standard" --encoder x264 -i export.avi -o expo
 ```
 
 
-## pdf-viewer
+## Полезные консольные утилитки
 
-Если бы не было просмотра pdf в каждом браузере, то можно было бы установить [Sumatra PDF](https://www.sumatrapdfreader.org/free-pdf-reader):
+### _TL;DR --- Too Long; Didn't Read_
+
+[**tldt**](https://github.com/tldr-pages/tldr) -- <https://tldr.sh/>.
+
+Набор небольших справок по командам Windows, Linux, и т.д., по страничке буквально. В ней более 5000 справок, и, скорее всего, есть справки по всем командам, которые упоминаются в этом руководстве.
+
+[Установка](https://scoop.sh/#/apps?o=true&q=tldr):
 ```cmd
-winget install --id=SumatraPDF.SumatraPDF -e
+scoop install main/tlrc
+tldr --gen-config > %UserProfile%\AppData\Roaming\tlrc\config.toml
 ```
-но сейчас это уже излишне.
+После отредактировать в конфиге `%UserProfile%\AppData\Roaming\tlrc\config.toml` в секции `[cache]` опцию `languages = ['ru','en']`, чтобы, по возможности, были справки на русском. _Note:_ при первом запуске скачивает с инета архив со справками, и распаковывает, занимает меньше минуты.
+
+Использование:
+```cmd
+tldr robocopy
+```
+
+
+### fd -- поиск файлов
+
+Установка:
+```cmd
+scoop install main/fd
+```
+
+#### Использование
+
+Утилита [`fd`](https://github.com/sharkdp/fd#how-to-use) в качестве шаблона поиска файлов использует [регулярные выражения](https://docs.rs/regex/latest/regex/#syntax) (по умолчанию), поэтому вместо классического шаблона `find -iname '*PATTERN*'` следует использовать ~~банальный~~ удобный:
+```cmd
+fd PATTERN
+```
+то есть для поиска курсовой набрать: `fd курсов`, или, если не нашлось, может так поможет: `fd kursov`.
+
+`fd` считает свой шаблон в режиме _ignorecase_, если только в шаблоне нет заглавных букв, иначе шаблон _casesensitive_. Опция `-i` задаёт режим _ignorecase_.
+
+Для поиска по привычным шаблонам со звёздочкой (`*`) применяется опция `-g`/`--glob`:
+```cmd
+fd --glob "task*.py"
+fd -g "task*.{h,c,c++,cpp}" Projects
+```
+Эта же опция применяется для поиска по точному имени.
+
+Поиск файлов по расширению:
+```cmd
+fd --extension docx
+fd -e docx
+```
+
+Включить в поиск скрытые (системные) папки и файлы:
+```cmd
+fd --hidden -g "*.conf" %UserProfile%
+```
+
+Поиск с одновременным выполнением какой-либо команды над найденным файлом:
+```cmd
+fd -e doc %HOME% --exec soffice -convert-to docx {}
+```
+```cmd
+fd --hidden "\.vhdx$" C:\ --exec ls -l {}
+```
+
+Опция `-t`, `--type` позволяет искать отдельно папки, файлы, и т.д., по типу: `f`/`file`, `d`/`directory`, `l`/`symlink`, `x`/`executable`, `e`/`empty`, например, найти все _git_ репозитории на диске _C:_ :
+```cmd
+fd --hidden -g "\.git" C:\ -t d
+```
+
+_Note:_ `fd` в поиске учитывает спецификации настроек проектов, _git_, и прочего; то есть, если в `.gitignore` указаны файлы или папки, то `fd` пропустит их, даже если они удовлетворяют критериям поиска. Для обхода есть опция `-I`, `--no-ignore`.
+
+
+### ripgrep и rga
+
+[**ripgrep**](https://github.com/BurntSushi/ripgrep) (`rg`)\
+Быстрый поиск по текстовым файлам.
+
+[**rga**](https://github.com/phiresky/ripgrep-all)\
+_rg all_ --- поиск по документам: pdf, docx (но не doc), html, ipynb, внутри архивов. `rga` внутри использует `rg` для поиска по распакованному содержимому документов, и, все опции `rg`, это и опции `rga`.
+
+```cmd
+scoop install main/ripgrep
+scoop install main/pandoc
+scoop install main/poppler
+scoop install main/rga
+```
+
+Настройка: создать переменную окружения `RIPGREP_CONFIG_PATH` указывающую на файл `%HOME%\.config\ripgreprc`, создать этот файл с конфигурацией:
+```cmd
+--smart-case
+--auto-hybrid-regex
+--glob=!*~
+--glob=!*~?
+# https://github.com/BurntSushi/ripgrep/blob/master/FAQ.md#how-do-i-configure-ripgreps-colors
+--colors=path:fg:blue
+```
+
+С такой конфигурацией, если в шаблоне нет заглавных букв, то `rg` будет считать шаблон _ignorecase_, иначе шаблон _casesensitive_. Строчка конфигурации _\-\-auto-hybrid-regex_ указывает применять разные библиотеки _regex_ в зависимости от сложности шаблона --- для простых шаблонов это значительно ускоряет поиск.
+
+#### Использование
+
+Как и `fd`, `rg` производит поиск по шаблонам в форме [регулярных выражений](https://docs.rs/regex/1.11.1/regex/#syntax), поэтому не нужны какие-либо звёздочки, а надо прямо набирать:
+```cmd
+rg sometext
+```
+
+Поиск по файлам определённого типа опцией `g`/`--glob`:
+```cmd
+rg --glob "*.py" задача
+rg -g "*.py" -g "*.ipynb" задача
+rg задача -g "*.{c,c++,h}"
+```
+```cmd
+rga -g "*.{docx,pdf}" отчет
+```
+
+_Note:_ Для `rga` тип документов для поиска можно задать выбором адаптера (просмотрщика) с помощью опций таких как `rga --rga-adapters=pandoc,zip`, но, это достаточно широкие классы документов, поэтому лучше задавать по расширению, как было сделано выше. Адаптеры `rga`:
+
+* pandoc отвечает за: .epub, .odt, .docx, .fb2, .ipynb, .html, .htm;
+* poppler за .pdf;
+* decompress: .als, .bz2, .gz, .tbz, .tbz2, .tgz, .xz, .zst;
+* tar: tar;
+* zip: .zip, .jar
+
+
+Поиск по целым словам опцией `-w`/`--word-regexp`:
+```cmd
+rg -w argparse -g "*.py"
+```
+
+Вывести только имена файлов содержащих искомое --- опция `-l`/`--files-with-matches`.
+
+Вывести контекст найденного, это опции `A`/`B`/`C` -- _After_, _Before_, _Context_. Следующее выражение выводит полную историю команд, а затем `rg` ищет команды над _init.lua_ и выводит не только саму команду, но и ближайшие 5. Это выражение, так же, показывает особенность регулярных выражений -- в них точка обозначает любой символ, а вот для поиска самой точки её необходимо экранировать:
+```cmd
+history | rg -C5 "init\.lua"
+```
+
+Опять же, аналогично `fd`, поиск по скрытым файлам с опцией `--hidden`.
+
+
+### parallel
+
+[GNU **parallel**](https://www.gnu.org/software/parallel/), это утилита, которая: запускает в параллель несколько задач; отслеживает их завершение, чтобы запустить следующую в очереди задачу; отслеживает вывод на экран, чтобы информация не выводилась вперемешку; может разбивать большие файлы для обработки в параллель по кусочкам; и многое другое. [Википедиа](https://ru.wikipedia.org/wiki/GNU_parallel), [Tutorial](https://www.gnu.org/software/parallel/parallel_tutorial.html).
+
+В Windows может использоваться `parallel` из _WSL_:
+
+```cmd
+wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080  resized_{}" ::: *.jpg
+```
+
+```cmd
+ls -1 *.jpg | wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080 {.}.png"
+```
+
+В этих командах утилита обработки изображений _magick_ (из пакета _ImageMagick_) запускается в параллель. Здесь:
+
+* `-j4` определяет число параллельно запускаемых задач;
+* `:::` отделяет запускаемую команду от аргументов для _parallel_;
+* `{}` --- [строка замены](https://www.gnu.org/software/parallel/parallel.html#options), на место которой будет подставлен аргумент для распараллеливаемой команды;
+* `{.}` --- строка замены, в которой будет удалено расширение файла;
+* используется `cmd.exe /c` чтобы не пришлось прописывать полные пути до запускаемой команды, так как `wsl` не знает путей _PATH_ Windows;
+
+_Note:_ Установка _parallel_ в _WSL_: `wsl sudo apt install parallel`.
+
+
+### time
+
+**time** --- утилита из мира Linux, позволяющая измерить время выполнения программы.\
+Установка: `scoop install main/time`.
+
+Использование вполне обычное, только необходимо использовать команду `timecmd`, т.к. имя _time_ занято --- это встроенная команда Windows с другим функционалом:
+```cmd
+timecmd make all
+```
+
+_Note:_ При использовании современной темы оформления оболочки (shell) подобная утилита не требуется, так как сам терминал пишет затраченное время.
+
+
+### mc --- Midnight Commander
+
+Классика на Windows тоже работает, и умеет _Shell link..._.
+```cmd
+scoop install extras/mc
+```
+
+_Note:_ Сменить диск: `Alt+D`
+
+_Note:_ Терминал в `mc` по `Ctrl+O` нормально не работает.
+
+
+### Остальные Linux утилиты
+
+Большое количество стандартных Linux консольных утилит входит в пакет _BusyBox_.
+
+_Note:_ [**BusyBox**](https://frippery.org/busybox/) --- это набор Linux [_команд_](https://www.busybox.net/downloads/BusyBox.html#commands), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux.
+
+Установка:
+```cmd
+scoop install main/busybox
+```
+
+Общие опции:
+
+* `-h` -- [h]uman, размер в _Kb (KiB)_, _Mb (MiB)_, и т.д., а не в байтах;
+
+Некоторые утилиты:
+
+
+
+#### du и df
+
+`du` --- Disk Usage --- показывает объём, занимаемый файлами и/или папками; опция `-s` -- суммарный размер, а не каждого элемента.
+`df` --- Disk Full --- показывает объём дисков, полный, свободный, занятый.
+
+Посмотреть занимаемое место файлами и/или папками:
+```cmd
+du -sh .
+du -sh some-folder
+du -sh * | sort -h
+```
+
+Посмотреть общее и занятое место на дисках:
+```cmd
+df -h
+```
+
+#### head & tail
+
+`head -n3 *.txt` --- вывести первые три строки;\
+`head -n-3 *.txt` --- вывести все строки кроме последних трёх;\
+`tail -n3 *.txt` --- вывести три последних строки;\
+`tail -n+3 *.txt` --- вывести все строки кроме первых трёх;\
+\
+`tail -n+1 *.txt` --- вывести содержимое всех файлов, предварив названием файла.
+
+
+#### watch
+
+TBD
+
+`watch df -h` --- отслеживать заполненность дисков;
+
+`watch -d 'cat /proc/vmstat | grep numa'` --- отслеживать результат периодического выполнения команды.
+
+
+#### совпадающие системные имена
+
+С помощью алиасов можно настроить нормальные имена для Linux утилит, имена которых совпадают с именами системных Windows утилит.
+
+Например, настроить имя для утилит `sort`, `time`. Для _Clink_ добавить строчки в *"%LOCALAPPDATA%\\clink\\clink_start.cmd"*:
+```cmd
+doskey time=%UserProfile%\scoop\shims\sort.exe $*
+doskey time=%UserProfile%\scoop\shims\time.exe $*
+```
+
+
+_Note:_ Для PowerShell смотри соответствующий пункт главы [Настройки Windows Terminal](#настройка-windows-terminal).
 
 {{< pagebreak >}}
 
@@ -1745,7 +1859,7 @@ cd some-project-dir
 wsl openfoam11-linux -x
 ```
 
-_Note:_ если изначально OpenFOAM не был закачен с помощью _docker pull ..._, то OpenFOAM будет скачан при первом запуске.
+_Note:_ если изначально OpenFOAM не был закачен с помощью _docker pull ..._, то OpenFOAM будет загружен при первом запуске.
 
 _Note:_ скрипт запуска _openfoam11-linux_ имеет небольшой баг: после его запуска и выхода, запуск в этом же терминале `wsl` (без параметров) будет произведён в последней mount-point OpenFOAM контейнера; это абсолютно ни на что не влияет, просто к сведению.
 
@@ -1827,7 +1941,7 @@ scoop install main/octave
 
 Устанавливается с помощью docker из репозитория <https://hub.docker.com/r/sagemath/sagemath>^[размер скачиваемого образа 1.5&nbsp;Гбайт]:
 ```cmd
-docker run -p8888:8888 sagemath/sagemath:latest sage-jupyter
+docker run --name sage -p8888:8888 sagemath/sagemath:latest sage-jupyter
 ```
 
 В консоли появится сообщение вида
@@ -1839,20 +1953,22 @@ To access the server, open this file in a browser:
 ```
 По этой ссылке будет доступно запущенное SageMath приложение. В нём создать новую сессию: кнопка _New_ справа сверху, из выпадающего списка выбрать SageMath. Созданный Jupyter NoteBook после работы сохранить в виде .ipynb файла, и скачать (_Download_) в файловом менеджере на первой странице, чтобы сохранить копию в своих папках, помимо сохранённой версии в docker контейнере.
 
+В последующем, для запуска _SageMath_ набирать столь сложную команду не потребуется: контейнер можно будет запускать либо из интерфейса _DockerDesktop_, либо из командной строки командой `docker start sage` (см. [Управление Docker](#управление-dockerом)).
+
 ## Maxima
 
-Ещё есть CAS программа для символьной математики [**Maxima**](https://maxima.sourceforge.io/)/[**WxMaxima**](https://github.com/wxMaxima-developers/wxmaxima), использование которой [достаточно](https://maxima.sourceforge.io/documentation.html) [не тривиально](https://wxmaxima-developers.github.io/wxmaxima/wxmaxima.pdf), но это, возможно, наилучшая открытая [CAS](https://en.wikipedia.org/wiki/List_of_computer_algebra_systems).
+Ещё есть *CAS (Computer Algebra Systems)* программа для символьной математики [**Maxima**](https://maxima.sourceforge.io/)/[**WxMaxima**](https://github.com/wxMaxima-developers/wxmaxima), использование которой [достаточно](https://maxima.sourceforge.io/documentation.html) [не тривиально](https://wxmaxima-developers.github.io/wxmaxima/wxmaxima.pdf), но это, возможно, [наилучшая открытая _CAS_](https://en.wikipedia.org/wiki/List_of_computer_algebra_systems).
 ```cmd
 scoop install extras/maxima
 ```
 
-В дополнение можно установить чуть более новый GUI со страницы [wxMaxima-developers](https://github.com/wxMaxima-developers/wxmaxima/releases).
+Дополнительно можно установить чуть более новый GUI со страницы [wxMaxima-developers](https://github.com/wxMaxima-developers/wxmaxima/releases).
 
 ## Построение графиков
 
 ### LabPlot
 [labplot.kde.org](https://labplot.kde.org/)\
-Открытая программа для построения графиков по табличным данным, альтернатива Origin/Grapher. Понимает [Markdown](https://ru.wikipedia.org/wiki/Markdown) и [LaTeX](https://en.wikibooks.org/wiki/LaTeX/Mathematics) формулы; умеет загружать данные напрямую из Jupyter Notebook, включая Python, Julia, Maxima. Умеет Digitization картинок -- вытаскивать данные из графиков с картинок.\
+Открытая программа для построения графиков по табличным данным, альтернатива Origin/Grapher. Понимает [Markdown](https://ru.wikipedia.org/wiki/Markdown) и [LaTeX](https://en.wikibooks.org/wiki/LaTeX/Mathematics) формулы; умеет загружать данные напрямую из Jupyter Notebook, включая Python, Julia, Maxima. Умеет _Digitization_ картинок -- вытаскивать данные из графиков с картинок.\
 `winget install --id=KDE.LabPlot -e`
 
 ### Veusz
@@ -1879,7 +1995,7 @@ scoop install extras/maxima
 
 # Приложение: AI/LLM
 
-_Note:_ Далее предполагается работа только с локальными моделями LLM --- которые хранятся и запускаются непосредственно на компьютере.
+_Note:_ Далее предполагается работа только с локальными моделями _LLM_ --- которые хранятся и запускаются непосредственно на компьютере.
 
 ## Рекомендации по выбору моделей
 
@@ -1897,17 +2013,17 @@ _Note:_ Далее предполагается работа только с л�
 
 ## Программы для работы с локальными LLM
 
-Существует небольшое число инструментов, непосредственно выполняющих LLM: [llama.cpp](https://github.com/ggerganov/llama.cpp), [vLLM](https://github.com/vllm-project/vllm), [Ollama](https://github.com/ollama/ollama) (llama.cpp под капотом?), плюс какие-то графические --- это LLM провайдеры. Но абсолютное большинство [программ](https://github.com/vince-lam/awesome-local-llms#open-source-local-llm-projects) для запуска LLM --- это  интерфейсы, графические "оболочки", которые запускают тот или иной LLM провайдер.
+Существует небольшое число инструментов, непосредственно выполняющих LLM: [llama.cpp](https://github.com/ggerganov/llama.cpp), [vLLM](https://github.com/vllm-project/vllm), [transformers](https://github.com/huggingface/transformers), плюс какие-то графические --- это LLM провайдеры. Есть менеджеры библиотек LLM моделей: [Ollama](https://github.com/ollama/ollama), [huggingface_hub](https://github.com/huggingface/huggingface_hub). И, есть большое количество [программ](https://github.com/vince-lam/awesome-local-llms#open-source-local-llm-projects) для запуска LLM --- это  интерфейсы, графические "оболочки", которые запускают тот или иной LLM провайдер, и используют менеджеры библиотек LLM.
 
-При передаче модели запроса используются [_шаблоны_](https://huggingface.co/docs/transformers/main/en/chat_templating), которые преобразуют запрос в специфически отформатированный текст, лучше распознаваемый моделями. Некоторые программы используют свои шаблоны (LM Studio), некоторые используют шаблоны, предоставляемые авторами модели, или предоставляемые библиотеками (Ollama). От шаблона очень сильно зависит качество ответа модели, поэтому, при использовании одной и той же модели в разных приложениях результаты могут сильно разниться.
+_Note:_ При передаче запроса для модели используются [_шаблоны_](https://huggingface.co/docs/transformers/main/en/chat_templating), которые преобразуют запрос в специально отформатированный текст, на формате которых обучались модели --- у каждой модели обычно свой шаблон, и отступление от конкретного формата запроса сильно влияет на качество ответа. Существуют шаблоны шаблонов ([jinja](https://huggingface.co/docs/transformers/v4.34.0/en/chat_templating#how-do-chat-templates-work)) с широкими возможностями форматирования запроса в целевой формат шаблона (применяется в LM Studio). Поэтому, один и тот же запрос в разных программах может выдавать очень разные по качеству ответы, в зависимости от применяемых шаблонов и шаблонов шаблонов.
 
-Далее рассмотрены несколько таких программ, из тех что попроще.
+Далее рассмотрены несколько программ для применения LLM, из тех что попроще.
 
 ### LM Studio
 
 Сайт <https://lmstudio.ai/> возможно под санкциями, поэтому [webarchive](https://web.archive.org/web/20241112235033/https://lmstudio.ai/).
 
-Удобная программа "По одной кнопке". Удобный встроенный поиск моделей, возможность настройки параметров модели при запуске. Умеет загружать pdf/txt прямо при запросе. Но есть два больших минуса: не opensorce -- _проприетарная_, и _лицензия запрещает коммерческое применение!_ А так да, для "поиграться", самое то.
+Удобная программа "По одной кнопке". Удобный встроенный поиск моделей, возможность настройки параметров модели при запуске. Умеет загружать pdf/txt прямо при запросе. Но есть два больших минуса: не opensorce -- _проприетарная_, и _лицензия запрещает любое коммерческое применение!_ А так да, для "поиграться", самое то.
 
 Установить:
 ```cmd
@@ -1933,7 +2049,7 @@ winget install --id=ElementLabs.LMStudio -e
 > _Отступление про отображение математических выражений._\
   В Markdown все математические выражения (формулы) записываются с использованием языка разметки LaTeX. Для выделения в тексте LaTeX выражений используются два типа нотаций. Современная нотация выделения формул использует символы `\(` | `\)` для встроенных (inline) формул, и `\[` | `\]` для блочных (display) формул; и устаревшая нотация, введённая ещё Д.Кнутом, использует символы `$` | `$` для встроенных формул, и `$$` | `$$` для блочных, т.е. у устаревшей нет разделения на открывающие и закрывающие выделители формул, что нехорошо в контексте длинных или неточных текстов, где в случае потери только лишь одного символа весь последующий текст становится нечитабельным. Все языковые модели, а также большинство программ, используют надёжную современную нотацию выделения формул, но LMStudio (пока?) использует устаревшую нотацию, поэтому, в LMStudio при запросах связанных с математикой, необходимо явно указывать использовать устаревшие символы, добавляя к запросу фразу: _(Use dollar and double dollar signs for math in answer)_.
 
-_Note:_ Существует opensource аналог --- Jan, но, конечно, с более урезанным функционалом.
+_Note:_ Существует opensource аналог --- _Jan_, но, конечно, с более урезанным функционалом.
 
 ### Open WebUI (with Ollama)
 
@@ -1999,7 +2115,11 @@ winget install --id=Ollama.Ollama -e
 *\<TBD\>*
 
 <https://github.com/vllm-project/vllm>\
-LLM провайдер поддерживающий большое количество форматов моделей. Его главное преимущество --- он может запускать исходные модели в формате SafeTensors, без преобразования в упрощённые форматы типа GGUF, без каких-либо изменений.
+LLM провайдер, поддерживающий большое количество форматов моделей, мультимодальные модели. Его главное преимущество --- он может запускать исходные модели в формате _SafeTensors_, без преобразования в упрощённые форматы типа GGUF, без каких-либо изменений.
+
+Может использоваться приложениями в той же роли что и Ollama.
+
+#### Установка и запуск, вариант попроще {.unnumbered .unlisted}
 
 Установка:
 ```cmd
@@ -2011,8 +2131,23 @@ pipx install vllm huggingface_hub[cli]
 vllm serve Qwen/Qwen2.5-Coder-3B-Instruct --port 8081
 ```
 
-Может использоваться приложениями в той же роли что и Ollama.
+#### Установка и запуск {.unnumbered .unlisted}
 
+```cmd
+docker run --name vllm--Qwen--Qwen2.5-Coder-3B-Instruct --runtime nvidia --gpus all -v ~/.cache/huggingface:/root/.cache/huggingface -p 8088:8000 --ipc=host vllm/vllm-openai:latest --model Qwen/Qwen2.5-Coder-3B-Instruct
+```
+
+И запуск в дальнейшем
+```cmd
+docker start vllm--Qwen--Qwen2.5-Coder-3B-Instruct
+```
+```cmd
+docker stop vllm--Qwen--Qwen2.5-Coder-3B-Instruct
+```
+
+Т.е. на каждую модель свой контейнер. Конечно, быстро модельки так не по-перебираешь, но _vLLM_ на такое и не рассчитан, это скорее про постоянно работающий сервис.
+
+_Note:_ Удалить docker контейнер: `docker container rm vllm--Qwen--Qwen2.5-Coder-3B-Instruct`. Переименовать docker контейнер: `docker container rename vllm--Qwen--Qwen2.5-Coder-3B-Instruct new-name`.
 
 
 ## Примеры запросов
@@ -2075,11 +2210,13 @@ _Note:_ за один запрос модель вряд ли сможет вы�
 
 ## Помощники
 
-### Continue
+### _Continue_
+
+<https://www.continue.dev/> <https://github.com/continuedev/continue>
 
 *\<TBD\>*
 
-[Внедряем AI Code Assistant в разработку бесплатно и без вендорлока — Инструкция](https://habr.com/ru/articles/875816/):
+[Внедряем AI Code Assistant в разработку бесплатно и без вендорлока --- Инструкция](https://habr.com/ru/articles/875816/):
 
 ## Работа с документами
 
@@ -2153,9 +2290,9 @@ fd --hidden "\.vhdx$" %HOME% | xargs -I@ cp -v @ E:\backup\wsl\
 
 [**Clink**](https://mridgers.github.io/clink/) --- это дополнение оболочки (shell) для _Cmd.exe_, интегрирующее следующие [возможности](https://chrisant996.github.io/clink/clink.html#features): автодополнение, подсветка синтаксиса, история команд и поиск по ней, поиск файлов и папок, история переходов по папкам, алиасы.
 
-[**BusyBox**](https://frippery.org/busybox/) --- это набор Linux [команд](https://www.busybox.net/downloads/BusyBox.html), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux. Будет использоваться для настройки _Windows Terminal_ (или _Conemu_).
+[**BusyBox**](https://frippery.org/busybox/) --- это набор Linux [_команд_](https://www.busybox.net/downloads/BusyBox.html#commands), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux. Будет использоваться для настройки _Windows Terminal_ (или _Conemu_).
 
-_**Note**:_ _Clink_ не работает внутри _Far_, т.е, в терминале _Far_ по `<Ctrl+O>` все супер-пупер автодополнения и поиск от Clink не сработают --- для работы _Clink_ должна использоваться отдельная консоль.
+_**Note**:_ _Clink_ не работает внутри _Far_, т.е, в терминале _Far_ по `<Ctrl+O>` все супер-пупер автодополнения и поиск от _Clink_ не сработают --- для работы _Clink_ должна использоваться отдельная консоль.
 
 
 ### Установка Clink+BusyBox
@@ -2205,6 +2342,9 @@ set LANG=en_US.utf8
 doskey ll=ls --color=auto -lF $*
 doskey l=ls --color=auto -lrtF $*
 doskey ls=ls --color=auto -F $*
+
+doskey time=%UserProfile%\scoop\shims\time.exe $*
+
 ```
 
 В результате в командной строке появятся привычные для Linux алиасы. В данном случае определены:\
@@ -2310,6 +2450,7 @@ _Автодополнение_ _Clink_ работает как в Linux:
 
 [Git-for-Windows](https://gitforwindows.org/) --- это _git_,  скомпилированный для Windows; также содержит набор Linux команд, но эти команды не поддерживают wildcard globbing. Устанавливается автоматически при работе со _Scoop_. Используется в _Cmder_.
 
+Some links: [WSL](https://conemu.github.io/en/wsl.html), [Pageant](https://github.com/cmderdev/cmder/wiki/Integrate-SSH-Agent-or-PuTTY-Agent), [Msys](https://conemu.github.io/en/CygwinMsysConnector.html), [256colors](https://conemu.github.io/en/Xterm256Colors.html).
 
 После [установки _Clink_ и _BusyBox_](#консольная-оболочка-clink-и-утилиты-busybox), установить _Cmder_ или _Conemu_:
 ```cmd
@@ -2558,7 +2699,7 @@ Docker работает с контейнерами (виртуальными м
 * `-d` -- запустить виртуалку в бэкграунде, т.е. она продолжит работать фоновом режиме;
 * `-v path1:path2` -- смонтировать локальный путь `path1` внутри контейнера в точке `path2`; это требуется чтобы работать с локальными данными изнутри контейнера;
 * `--rm` -- удалить созданные контейнером данные после завершения работы контейнера, т.е. удаляется соответствующий том (данные из папок, смонтированных с `-v`, не затрагиваются);
-* `--name some-name` -- создаёт имя для созданного контейнера, по которому, в дальнейшем, можно будет запускать этот контейнер короткой командой `docker start some-name`, при этом все опции запуска будут сохранены.
+* `--name some-container-name` -- создаёт имя для созданного контейнера, по которому, в дальнейшем, можно будет запускать этот контейнер короткой командой `docker start some-container-name`, при этом все опции запуска будут сохранены; `docker stop some-container-name` --- остановить контейнер.
 
 ## Backup/Restore WSL систем
 
@@ -2610,38 +2751,180 @@ docker run -i -t <image id> <commands>
 tar --one-file-system -cvpzSf /mnt/backup/some-ubuntu-backup.tar.gz / /boot --exclude="/mnt/*"
 ```
 
+# Приложение: Загрузка продуктов Microsoft
 
-# Приложение: UUP --- Unified Update Platform
-
-
-*\<TBD\>*
-
-_Note:_ Это официальный способ получения обновлений для продуктов Microsoft.
-
-_Note:_ После создания ISO-образа следует использовать утилиту Rufus для создания загрузочной флешки.
-
-* [**UUPMediaCreator**](https://github.com/gus33000/UUPMediaCreator) позволяет ~~скачать~~ создать установочный ISO-образ с операционной системой Windows. Это образ созданный по официальной методике получения образов и обновления c Unified Update Platform, скачанных с официального сайта Microsoft. [Установка](https://winstall.app/apps/ITDevTeam.UUPMediaCreator):
-  ```
-  winget install --id=ITDevTeam.UUPMediaCreator -e
-  ```
-  После установки запустить _UUPMediaCreator_, выбрать образ, после чего компоненты скачаются и будет создан ISO-образ.
-
-* **<https://uupdump.net/>** сайт для создания скрипта, который создаст загрузочный образ Windows. Сайт, возможно, недоступен в России, в этом случае следует воспользоваться другим вариантом из этого раздела.\
-  Использование: на сайте выбрать желаемую версию, понажимать далее, в процессе отказаться от скачивания последних обновлений, и, скачать архив. Этот архив распаковать в папку на диске с достаточным количеством свободного места (10&nbsp;Гб?), и запустить скрипт из распакованного архива, `uup_download_windows.cmd` от имени Администратора. [Руководство](https://www.comss.ru/page.php?id=9320).
-
-
-# Приложение: [ODT](https://www.microsoft.com/en-us/download/details.aspx?id=49117) --- Office Download Tool
+## UUP --- Unified Update Platform --- загрузка MS Windows
 
 
 *\<TBD\>*
 
-Изменить регион для ODT на US:
+_Note:_ Скачивание с сайта Microsoft Unified Update Platform, это официальный способ получения установочных пакетов и обновлений для продуктов Microsoft.
+
+_Note:_ После создания ISO-образа следует использовать утилиту _Rufus_ для создания загрузочной флешки.
+
+### uupdump.net
+
+**<https://uupdump.net/>** -- это сайт для создания скрипта, который скачает с сайта Microsoft и создаст загрузочный iso-образ Windows. Сайт <https://uupdump.net/>, возможно, недоступен в России, в этом случае следует воспользоваться другим вариантом.
+
+Использование: на сайте выбрать желаемую версию, понажимать далее, в процессе отказаться от скачивания последних обновлений, и, скачать zip-архив (небольшой). Этот архив распаковать в папку на диске с достаточным количеством свободного места (12&nbsp;Гб?), и запустить скрипт из распакованного архива, `uup_download_windows.cmd` (выполняется около часа). Если есть сомнения какую версию выбрать, то вот [ссылка](https://uupdump.net/download.php?id=07dd20c8-a2de-4792-a336-2ab01b43a160&pack=en-us&edition=professional) на Windows11 23H2 (4.8&nbsp;Гб). ([Руководство](https://www.comss.ru/page.php?id=9320).)
+
+
+### UUPMediaCreator
+
+[**UUPMediaCreator**](https://github.com/gus33000/UUPMediaCreator), кроссплатформенная утилита, которая позволяет скачать и создать установочный ISO-образ с операционной системой Windows. Этот iso-образ создаётся по официальной методике получения образов и обновлений c официального сайта Microsoft Unified Update Platform.
+
+Установка:
+```cmd
+scoop bucket add hoilc_scoop-lemon https://github.com/hoilc/scoop-lemon
+scoop install hoilc_scoop-lemon/uupmediacreator
+```
+
+[Использование](https://www.comss.ru/page.php?id=9724). Перейти в папку, где будет создаваться загрузочный iso-образ, выполнить загрузку^[Потребуется до 12 Гб свободного места] (22631.3296 соответствует 23H2):
+```cmd
+UUPDownload -s Professional -v 10.0.22621.1 --r Retail -b Retail -c ni_release -t amd64 -l en-us -y 10.0.22631.3296
+```
+
+Запустить сборку iso-диска (здесь надо подставить путь куда скачались файлы):
+```cmd
+sudo UUPMediaConverter -l en-us -u "path-to-downloaded-files" -i Win11-23H2.iso -e Professional
+```
+
+_Note:_ UUPMediaConverter выполняется полчаса.
+
+
+
+## ODT --- Office Deployment Tool --- загрузка MS Office
+
+[**ODT**](https://www.microsoft.com/en-us/download/details.aspx?id=49117) --- _Office Deployment Tool_, _Средство Развертывания Office_, используется для выбора конфигурации MSOffice для загрузки, загрузки MSOffice, и установки. [Официальный обзор](https://learn.microsoft.com/ru-ru/microsoft-365-apps/admin-center/overview-office-customization-tool).
+
+### Выбор версии MSOffice
+
+_LTSC (Long-Term Servicing Channel)_ --- это версия Офиса для корпоративного сегмента, где после установки в процессе эксплуатации не должен как-либо меняться функционал или преднастройки, поэтому, это версия Офиса с обновлениями безопасности, но без обновления функционала. Поэтому, при возможности выбора, лучше установить полноценную версию; но, если LTSC-версия уже установлена, то и ладно.
+
+_Office 365_ --- это офис с ежемесячной или ежегодной подпиской, требует постоянного подключения к интернету. Не стоит связываться, если есть такая возможность. _Note:_ Сейчас Microsoft старается продвигать только _Office 365_, а все упоминания об обычном бессрочном автономном Офисе удалены со страниц сайта Microsoft.
+
+#### OEM, Retail или Volume?
+
+* OEM --- может быть установлена только один раз. Эту лицензию нельзя перенести на другой компьютер. Должна быть активирована в течении месяца с момента установки.
+* Retail --- привычная "коробочная" версия из магазина, сейчас может поставляться в виде электронного ESD ключа. Эту лицензию можно переустановить (не более трёх раз?) на другой компьютер (на старом, естественно, Офис перестанет работать). Должна быть активирована в течении месяца с момента установки. Не может быть активирована сервисом KMS.
+* Volume --- для большого количества лицензий (от 5 штук). Использует не ключи, а сервисы лицензий KMS. Нет ограничений на перенос на другой компьютер.
+
+#### Версии автономного MSOffice:
+
+* Office Home & Student --- Word, Excel, PowerPoint, OneNote;
+* Office Home & Business --- + Outlook;
+* ~~Office Standard --- + Publisher, Web Apps;~~ сейчас не продаётся;
+* ~~Office Professional --- + Access, SharePoint Workspace;~~ сейчас не продаётся;
+* Office Professional Plus --- + InfoPath, Skype for Business или Lync или Microsoft Teams, OneDrive for Business (ранее был SharePoint Workspace).
+
+**Итого, если не используется MS Access, то Office Home _абсолютно достаточно!_**
+
+_Note:_ Раньше редактор математических формул был только в Professional версии, как обстоит дело сейчас давно никто не проверял.
+
+
+### Загрузка
+
+Получение утилиты развёртывания _ODT_:
+
+* Либо скачать по [ссылке](https://www.microsoft.com/en-us/download/details.aspx?id=49117) _officedeploymenttool.exe_ и распаковать этот самораспаковывающийся архив в папку куда будет загружаться офис;
+
+* Либо установить
+  ```cmd
+  winget install --id=Microsoft.OfficeDeploymentTool -e
+  ```
+  и скопировать файлы из *"C:\\Program Files\\OfficeDeploymentTool"* в нужную папку.
+
+В любом случае в папке для закачки будут необходимы два файла: _setup.exe_ и _configuration-Office365-x64.xml_.
+
+Поставляемый `configuration-Office365-x64.xml` скопировать в `configuration.xml`, и отредактировать спецификацию загружаемого офиса, [инструкция](https://learn.microsoft.com/ru-ru/microsoft-365-apps/deploy/office-deployment-tool-configuration-options).
+
+* При выборе загружаемой версии офиса потребуется его идентификатор, который можно найти на сайте ["Список идентификаторов продуктов, поддерживаемых средством развертывания Office для запуска"](https://learn.microsoft.com/ru-ru/microsoft-365/troubleshoot/installation/product-ids-supported-office-deployment-click-to-run).
+* [Список возможных исключений](https://learn.microsoft.com/ru-ru/microsoft-365-apps/deploy/office-deployment-tool-configuration-options#id-attribute-part-of-excludeapp-element): _"Access"_, _"Bing"_, _"Excel"_, _"Groove"_, _"Lync"_, _"OneDrive"_, _"OneNote"_, _"Outlook"_, _"OutlookForWindows"_, _"PowerPoint"_, _"Publisher"_, _"Teams"_, _"Word"_.
+* Опция  _\<Remove All="True" /\>_ указывает перед установкой удалить все установленные версии MSOffice.
+
+Пара примеров конфигурации `configuration.xml`.
+
+```xml
+<Configuration>
+  <Add OfficeClientEdition="64" Channel="Current">
+    <Product ID="ProPlus2024Volume">
+      <Language ID="ru-ru" />
+      <Language ID="en-us" />
+      <!-- <ExcludeApp ID="Access "/> -->
+      <ExcludeApp ID="Bing "/>
+      <ExcludeApp ID="Groove "/>
+      <ExcludeApp ID="Lync "/>
+      <ExcludeApp ID="OneDrive "/>
+      <ExcludeApp ID="OneNote "/>
+      <ExcludeApp ID="Outlook "/>
+      <ExcludeApp ID="OutlookForWindows "/>
+      <ExcludeApp ID="Publisher "/>
+      <ExcludeApp ID="Teams "/>
+    </Product>
+    <Product ID="VisioPro2024Volume">
+      <Language ID="ru-ru" />
+      <Language ID="en-us" />
+    </Product>
+    <Product ID="ProjectPro2024Volume">
+      <Language ID="ru-ru" />
+      <Language ID="en-us" />
+    </Product>
+  </Add>
+  <Remove All="True" />
+  <!--  <RemoveMSI All="True" /> -->
+  <!--  <Display Level="None" AcceptEULA="TRUE" />  -->
+  <!--  <Property Name="AUTOACTIVATE" Value="1" />  -->
+</Configuration>
+```
+
+```xml
+<Configuration>
+  <Add OfficeClientEdition="64" Channel="Current">
+    <Product ID="Word2024Volume">
+      <Language ID="ru-ru" />
+      <Language ID="en-us" />
+      <ExcludeApp ID="OneDrive "/>
+    </Product>
+    <Product ID="PowerPoint2024Volume">
+      <Language ID="ru-ru" />
+      <Language ID="en-us" />
+      <ExcludeApp ID="OneDrive "/>
+    </Product>
+    <Product ID="Excel2024Volume">
+      <Language ID="ru-ru" />
+      <Language ID="en-us" />
+      <ExcludeApp ID="OneDrive "/>
+    </Product>
+  </Add>
+  <Remove All="True" />
+  <!--  <RemoveMSI All="True" /> -->
+  <!--  <Display Level="None" AcceptEULA="TRUE" />  -->
+  <!--  <Property Name="AUTOACTIVATE" Value="1" />  -->
+</Configuration>
+```
+
+Перед скачиванием [изменить регион для _ODT_ на _US_](https://habr.com/ru/articles/820343/), иначе из-за санкций утилита не начнёт загрузку:
 ```cmd
 reg add "HKCU\Software\Microsoft\Office\16.0\Common\ExperimentConfigs\Ecs" /v "CountryCode" /t REG_SZ /d "std::wstring|US" /f
 ```
-[Список идентификаторов продуктов, поддерживаемых средством развертывания Office для запуска](https://learn.microsoft.com/ru-ru/microsoft-365/troubleshoot/installation/product-ids-supported-office-deployment-click-to-run), из списка интересует `ProPlus2024Volume`.
 
-LTSC () --- это версия Офиса для корпоративного сегмента, где после установки в процессе эксплуатации не должен как-либо меняться функционал или даже настройки, поэтому эта версия Офиса с обновлениями безопасности, но без обновления функционала. Поэтому, при возможности выбора, лучше установить полноценную версию; но, если LTSC-версия уже установлена, то и ладно.
+Запустить загрузку:
+```cmd
+setup.exe /download configuration.xml
+```
+
+Установить загруженный офис:
+```cmd
+setup.exe /configure configuration.xml
+```
+
+### Office Tools Plus
+
+Ещё есть программа с графическим интерфейсом _Office Tool Plus_ <https://otp.landian.vip/en-us/>, в которой все вышеописанные действия можно сделать в графическом интерфейсе. Также, умеет активировать Офис с помощью KMS сервисов, расположенных в интернете.
+
+```cmd
+scoop install extras/office-tool-plus
+```
 
 # Приложение: Документация и ссылки
 
