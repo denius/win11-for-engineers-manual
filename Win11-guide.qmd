@@ -249,15 +249,17 @@ scoop install main/ripgrep
 scoop install main/fzf
 scoop install main/ccat
 scoop install main/btop
+scoop install main/wttop
 scoop install main/7zip
 scoop install main/wget
 scoop install main/curl
-scoop install main/aria2
+#scoop install main/aria2
 scoop install main/gcc
 scoop install main/gdb
 scoop install main/make
 scoop install main/cmake
 scoop install main/time
+scoop install main/busybox
 scoop install main/clipboard
 scoop install main/imagemagick
 scoop install main/ffmpeg
@@ -1176,9 +1178,274 @@ end
 
 После установки создать новый `test1.jl` файл, набрать в нём `1+1`, и нажать `Ctrl+Enter`, должно появиться всплывающее сообщение с ответом `2`, по `Esc` пропадёт; в открывшемся терминале также должен появиться ответ `2` (при первом запуске, или после обновления, период ожидания до ответа может быть продолжительным).
 
-## Neovim
+## Neovim extension
 
-Пользователи Vim могут воспользоваться [плагином VSCode Neovim](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim), который запускает полноценную версию Neovim в редакторе VSCode. Будут доступны обычный _init.lua_ и [большинство](https://github.com/vscode-neovim/vscode-neovim/wiki/Plugins) привычных Vim плагинов.
+Пользователи Vim могут воспользоваться [расширением VSCode Neovim](https://marketplace.visualstudio.com/items?itemName=asvetliakov.vscode-neovim), который запускает полноценную версию Neovim в редакторе VSCode. Будут доступны обычный _init.lua_ и [большинство](https://github.com/vscode-neovim/vscode-neovim/wiki/Plugins) привычных Vim плагинов.
+
+
+## Полезные консольные утилитки
+
+### _TL;DR --- Too Long; Didn't Read_
+
+[**tldt**](https://github.com/tldr-pages/tldr) -- <https://tldr.sh/>.
+
+Набор небольших справок по командам Windows, Linux, и т.д., по страничке буквально. В ней более 5000 справок, и, скорее всего, есть справки по всем командам, которые упоминаются в этом руководстве.
+
+[Установка](https://scoop.sh/#/apps?o=true&q=tldr):
+```cmd
+scoop install main/tlrc
+tldr --gen-config > %UserProfile%\AppData\Roaming\tlrc\config.toml
+```
+После отредактировать в конфиге `%UserProfile%\AppData\Roaming\tlrc\config.toml` в секции `[cache]` опцию `languages = ['ru','en']`, чтобы, по возможности, были справки на русском. _Note:_ при первом запуске скачивает с инета архив со справками, и распаковывает, занимает меньше минуты.
+
+Использование:
+```cmd
+tldr robocopy
+```
+
+
+### fd -- поиск файлов
+
+Установка:
+```cmd
+scoop install main/fd
+```
+
+#### Использование
+
+Утилита [`fd`](https://github.com/sharkdp/fd#how-to-use) в качестве шаблона поиска файлов использует [регулярные выражения](https://docs.rs/regex/latest/regex/#syntax) (по умолчанию), поэтому вместо классического шаблона `find -iname '*PATTERN*'` следует использовать ~~банальный~~ удобный:
+```cmd
+fd PATTERN
+```
+то есть для поиска курсовой набрать: `fd курсов`, или, если не нашлось, может так поможет: `fd kursov`.
+
+`fd` считает свой шаблон в режиме _ignorecase_, если только в шаблоне нет заглавных букв, иначе шаблон _casesensitive_. Опция `-i` задаёт режим _ignorecase_.
+
+Для поиска по привычным шаблонам со звёздочкой (`*`) применяется опция `-g`/`--glob`:
+```cmd
+fd --glob "task*.py"
+fd -g "task*.{h,c,c++,cpp}" Projects
+```
+Эта же опция применяется для поиска по точному имени.
+
+Поиск файлов по расширению:
+```cmd
+fd --extension docx
+fd -e docx
+```
+
+Включить в поиск скрытые (системные) папки и файлы:
+```cmd
+fd --hidden -g "*.conf" %UserProfile%
+```
+
+Поиск с одновременным выполнением какой-либо команды над найденным файлом:
+```cmd
+fd -e doc %HOME% --exec soffice -convert-to docx {}
+```
+```cmd
+fd --hidden "\.vhdx$" C:\ --exec ls -l {}
+```
+
+Опция `-t`, `--type` позволяет искать отдельно папки, файлы, и т.д., по типу: `f`/`file`, `d`/`directory`, `l`/`symlink`, `x`/`executable`, `e`/`empty`, например, найти все _git_ репозитории на диске _C:_ :
+```cmd
+fd --hidden -g "\.git" C:\ -t d
+```
+
+_Note:_ `fd` в поиске учитывает спецификации настроек проектов, _git_, и прочего; то есть, если в `.gitignore` указаны файлы или папки, то `fd` пропустит их, даже если они удовлетворяют критериям поиска. Для обхода есть опция `-I`, `--no-ignore`.
+
+
+### ripgrep и rga
+
+[**ripgrep**](https://github.com/BurntSushi/ripgrep) (`rg`)\
+Быстрый поиск по текстовым файлам.
+
+[**rga**](https://github.com/phiresky/ripgrep-all)\
+_rg all_ --- поиск по документам: pdf, docx (но не doc), html, ipynb, внутри архивов. `rga` внутри использует `rg` для поиска по распакованному содержимому документов, и, все опции `rg`, это и опции `rga`.
+
+```cmd
+scoop install main/ripgrep
+scoop install main/pandoc
+scoop install main/poppler
+scoop install main/rga
+```
+
+Настройка: создать переменную окружения `RIPGREP_CONFIG_PATH` указывающую на файл `%HOME%\.config\ripgreprc`, создать этот файл с конфигурацией:
+```cmd
+--smart-case
+--auto-hybrid-regex
+--glob=!*~
+--glob=!*~?
+# https://github.com/BurntSushi/ripgrep/blob/master/FAQ.md#how-do-i-configure-ripgreps-colors
+--colors=path:fg:blue
+```
+
+С такой конфигурацией, если в шаблоне нет заглавных букв, то `rg` будет считать шаблон _ignorecase_, иначе шаблон _casesensitive_. Строчка конфигурации _\-\-auto-hybrid-regex_ указывает применять разные библиотеки _regex_ в зависимости от сложности шаблона --- для простых шаблонов это значительно ускоряет поиск.
+
+#### Использование
+
+Как и `fd`, `rg` производит поиск по шаблонам в форме [регулярных выражений](https://docs.rs/regex/1.11.1/regex/#syntax), поэтому не нужны какие-либо звёздочки, а надо прямо набирать:
+```cmd
+rg sometext
+```
+
+Поиск по файлам определённого типа опцией `g`/`--glob`:
+```cmd
+rg --glob "*.py" задача
+rg -g "*.py" -g "*.ipynb" задача
+rg задача -g "*.{c,c++,h}"
+```
+```cmd
+rga -g "*.{docx,pdf}" отчет
+```
+
+_Note:_ Для `rga` тип документов для поиска можно задать выбором адаптера (просмотрщика) с помощью опций таких как `rga --rga-adapters=pandoc,zip`, но, это достаточно широкие классы документов, поэтому лучше задавать по расширению, как было сделано выше. Адаптеры `rga`:
+
+* pandoc отвечает за: .epub, .odt, .docx, .fb2, .ipynb, .html, .htm;
+* poppler за .pdf;
+* decompress: .als, .bz2, .gz, .tbz, .tbz2, .tgz, .xz, .zst;
+* tar: tar;
+* zip: .zip, .jar
+
+
+Поиск по целым словам опцией `-w`/`--word-regexp`:
+```cmd
+rg -w argparse -g "*.py"
+```
+
+Вывести только имена файлов содержащих искомое --- опция `-l`/`--files-with-matches`.
+
+Вывести контекст найденного, это опции `A`/`B`/`C` -- _After_, _Before_, _Context_. Следующее выражение выводит полную историю команд, а затем `rg` ищет команды над _init.lua_ и выводит не только саму команду, но и ближайшие 5. Это выражение, так же, показывает особенность регулярных выражений -- в них точка обозначает любой символ, а вот для поиска самой точки её необходимо экранировать:
+```cmd
+history | rg -C5 "init\.lua"
+```
+
+Опять же, аналогично `fd`, поиск по скрытым файлам с опцией `--hidden`.
+
+
+### parallel
+
+[GNU **parallel**](https://www.gnu.org/software/parallel/), это утилита, которая: запускает в параллель несколько задач; отслеживает их завершение, чтобы запустить следующую в очереди задачу; отслеживает вывод на экран, чтобы информация не выводилась вперемешку; может разбивать большие файлы для обработки в параллель по кусочкам; и многое другое. [Википедиа](https://ru.wikipedia.org/wiki/GNU_parallel), [Tutorial](https://www.gnu.org/software/parallel/parallel_tutorial.html).
+
+В Windows может использоваться `parallel` из _WSL_:
+
+```cmd
+wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080  resized_{}" ::: *.jpg
+```
+
+```cmd
+ls -1 *.jpg | wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080 {.}.png"
+```
+
+В этих командах утилита обработки изображений _magick_ (из пакета _ImageMagick_) запускается в параллель. Здесь:
+
+* `-j4` определяет число параллельно запускаемых задач;
+* `:::` отделяет запускаемую команду от аргументов для _parallel_;
+* `{}` --- [строка замены](https://www.gnu.org/software/parallel/parallel.html#options), на место которой будет подставлен аргумент для распараллеливаемой команды;
+* `{.}` --- строка замены, в которой будет удалено расширение файла;
+* используется `cmd.exe /c` чтобы не пришлось прописывать полные пути до запускаемой команды, так как `wsl` не знает путей _PATH_ Windows;
+
+_Note:_ Установка _parallel_ в _WSL_: `wsl sudo apt install parallel`.
+
+
+### time
+
+**time** --- утилита из мира Linux, позволяющая измерить время выполнения программы.\
+Установка: `scoop install main/time`.
+
+Использование вполне обычное, только необходимо использовать команду `timecmd`, т.к. имя _time_ занято --- это встроенная команда Windows с другим функционалом:
+```cmd
+timecmd make all
+```
+
+_Note:_ При использовании современной темы оформления оболочки (shell) подобная утилита не требуется, так как сам терминал пишет затраченное время.
+
+### top
+
+Утилиты схожие с `top`: `btop`, `wttop`
+```cmd
+scoop install btop
+scoop install wttop
+```
+
+
+### mc --- Midnight Commander
+
+Классика на Windows тоже работает, и умеет _Shell link..._.
+```cmd
+scoop install extras/mc
+```
+
+_Note:_ Сменить диск: `Alt+D`
+
+_Note:_ Терминал в `mc` по `Ctrl+O` нормально не работает.
+
+
+### Остальные Linux утилиты
+
+Большое количество стандартных Linux консольных утилит входит в пакет _BusyBox_.
+
+_Note:_ [**BusyBox**](https://frippery.org/busybox/) --- это набор Linux [_команд_](https://www.busybox.net/downloads/BusyBox.html#commands), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux.
+
+Установка:
+```cmd
+scoop install main/busybox
+```
+
+Общие опции:
+
+* `-h` --- [h]uman, выводить размеры в _Kb (KiB)_, _Mb (MiB)_, и т.д., а не в байтах;
+
+#### совпадающие системные имена
+
+С помощью алиасов можно настроить нормальные имена для Linux утилит, имена которых совпадают с именами системных Windows утилит.
+
+Например, настроить имя для утилит `sort`, `time`. Для _Clink_ добавить строчки в *"%LOCALAPPDATA%\\clink\\clink_start.cmd"*:
+```cmd
+doskey time=%UserProfile%\scoop\shims\sort.exe $*
+doskey time=%UserProfile%\scoop\shims\time.exe $*
+```
+
+_Note:_ Для _PowerShell_ смотри соответствующий пункт главы [Настройки Windows Terminal](#настройка-windows-terminal).
+
+
+#### _Некоторые утилиты:_ {.unnumbered .unlisted}
+
+
+#### du и df
+
+`du` --- Disk Usage --- показывает объём, занимаемый файлами и/или папками; опция `-s` -- суммарный размер, а не каждого элемента.\
+`df` --- Disk Full --- показывает объём дисков, полный, свободный, занятый.
+
+Посмотреть занимаемое место файлами и/или папками:
+```cmd
+du -sh .
+du -sh some-folder
+du -sh * | sort -h
+```
+
+Посмотреть общее и занятое место на дисках:
+```cmd
+df -h
+```
+
+#### head и tail
+
+`head -n3 *.txt` --- вывести первые три строки;\
+`head -n-3 *.txt` --- вывести все строки кроме последних трёх;\
+`tail -n3 *.txt` --- вывести три последних строки;\
+`tail -n+3 *.txt` --- вывести все строки кроме первых трёх;\
+\
+`tail -n+1 *.txt` --- вывести содержимое всех файлов, предварив названием файла.
+
+
+#### watch
+
+`watch df -h` --- отслеживать заполненность дисков;
+
+TBD
+
+`watch -d 'cat /proc/vmstat | grep numa'` --- отслеживать результат периодического выполнения команды.
 
 
 
@@ -1564,264 +1831,6 @@ HandBrakeCLI --preset "Production Standard" --encoder mpeg4 -i export.avi -o exp
 HandBrakeCLI --preset "Production Standard" --encoder x264 -i export.avi -o export.mp4
 ```
 
-
-## Полезные консольные утилитки
-
-### _TL;DR --- Too Long; Didn't Read_
-
-[**tldt**](https://github.com/tldr-pages/tldr) -- <https://tldr.sh/>.
-
-Набор небольших справок по командам Windows, Linux, и т.д., по страничке буквально. В ней более 5000 справок, и, скорее всего, есть справки по всем командам, которые упоминаются в этом руководстве.
-
-[Установка](https://scoop.sh/#/apps?o=true&q=tldr):
-```cmd
-scoop install main/tlrc
-tldr --gen-config > %UserProfile%\AppData\Roaming\tlrc\config.toml
-```
-После отредактировать в конфиге `%UserProfile%\AppData\Roaming\tlrc\config.toml` в секции `[cache]` опцию `languages = ['ru','en']`, чтобы, по возможности, были справки на русском. _Note:_ при первом запуске скачивает с инета архив со справками, и распаковывает, занимает меньше минуты.
-
-Использование:
-```cmd
-tldr robocopy
-```
-
-
-### fd -- поиск файлов
-
-Установка:
-```cmd
-scoop install main/fd
-```
-
-#### Использование
-
-Утилита [`fd`](https://github.com/sharkdp/fd#how-to-use) в качестве шаблона поиска файлов использует [регулярные выражения](https://docs.rs/regex/latest/regex/#syntax) (по умолчанию), поэтому вместо классического шаблона `find -iname '*PATTERN*'` следует использовать ~~банальный~~ удобный:
-```cmd
-fd PATTERN
-```
-то есть для поиска курсовой набрать: `fd курсов`, или, если не нашлось, может так поможет: `fd kursov`.
-
-`fd` считает свой шаблон в режиме _ignorecase_, если только в шаблоне нет заглавных букв, иначе шаблон _casesensitive_. Опция `-i` задаёт режим _ignorecase_.
-
-Для поиска по привычным шаблонам со звёздочкой (`*`) применяется опция `-g`/`--glob`:
-```cmd
-fd --glob "task*.py"
-fd -g "task*.{h,c,c++,cpp}" Projects
-```
-Эта же опция применяется для поиска по точному имени.
-
-Поиск файлов по расширению:
-```cmd
-fd --extension docx
-fd -e docx
-```
-
-Включить в поиск скрытые (системные) папки и файлы:
-```cmd
-fd --hidden -g "*.conf" %UserProfile%
-```
-
-Поиск с одновременным выполнением какой-либо команды над найденным файлом:
-```cmd
-fd -e doc %HOME% --exec soffice -convert-to docx {}
-```
-```cmd
-fd --hidden "\.vhdx$" C:\ --exec ls -l {}
-```
-
-Опция `-t`, `--type` позволяет искать отдельно папки, файлы, и т.д., по типу: `f`/`file`, `d`/`directory`, `l`/`symlink`, `x`/`executable`, `e`/`empty`, например, найти все _git_ репозитории на диске _C:_ :
-```cmd
-fd --hidden -g "\.git" C:\ -t d
-```
-
-_Note:_ `fd` в поиске учитывает спецификации настроек проектов, _git_, и прочего; то есть, если в `.gitignore` указаны файлы или папки, то `fd` пропустит их, даже если они удовлетворяют критериям поиска. Для обхода есть опция `-I`, `--no-ignore`.
-
-
-### ripgrep и rga
-
-[**ripgrep**](https://github.com/BurntSushi/ripgrep) (`rg`)\
-Быстрый поиск по текстовым файлам.
-
-[**rga**](https://github.com/phiresky/ripgrep-all)\
-_rg all_ --- поиск по документам: pdf, docx (но не doc), html, ipynb, внутри архивов. `rga` внутри использует `rg` для поиска по распакованному содержимому документов, и, все опции `rg`, это и опции `rga`.
-
-```cmd
-scoop install main/ripgrep
-scoop install main/pandoc
-scoop install main/poppler
-scoop install main/rga
-```
-
-Настройка: создать переменную окружения `RIPGREP_CONFIG_PATH` указывающую на файл `%HOME%\.config\ripgreprc`, создать этот файл с конфигурацией:
-```cmd
---smart-case
---auto-hybrid-regex
---glob=!*~
---glob=!*~?
-# https://github.com/BurntSushi/ripgrep/blob/master/FAQ.md#how-do-i-configure-ripgreps-colors
---colors=path:fg:blue
-```
-
-С такой конфигурацией, если в шаблоне нет заглавных букв, то `rg` будет считать шаблон _ignorecase_, иначе шаблон _casesensitive_. Строчка конфигурации _\-\-auto-hybrid-regex_ указывает применять разные библиотеки _regex_ в зависимости от сложности шаблона --- для простых шаблонов это значительно ускоряет поиск.
-
-#### Использование
-
-Как и `fd`, `rg` производит поиск по шаблонам в форме [регулярных выражений](https://docs.rs/regex/1.11.1/regex/#syntax), поэтому не нужны какие-либо звёздочки, а надо прямо набирать:
-```cmd
-rg sometext
-```
-
-Поиск по файлам определённого типа опцией `g`/`--glob`:
-```cmd
-rg --glob "*.py" задача
-rg -g "*.py" -g "*.ipynb" задача
-rg задача -g "*.{c,c++,h}"
-```
-```cmd
-rga -g "*.{docx,pdf}" отчет
-```
-
-_Note:_ Для `rga` тип документов для поиска можно задать выбором адаптера (просмотрщика) с помощью опций таких как `rga --rga-adapters=pandoc,zip`, но, это достаточно широкие классы документов, поэтому лучше задавать по расширению, как было сделано выше. Адаптеры `rga`:
-
-* pandoc отвечает за: .epub, .odt, .docx, .fb2, .ipynb, .html, .htm;
-* poppler за .pdf;
-* decompress: .als, .bz2, .gz, .tbz, .tbz2, .tgz, .xz, .zst;
-* tar: tar;
-* zip: .zip, .jar
-
-
-Поиск по целым словам опцией `-w`/`--word-regexp`:
-```cmd
-rg -w argparse -g "*.py"
-```
-
-Вывести только имена файлов содержащих искомое --- опция `-l`/`--files-with-matches`.
-
-Вывести контекст найденного, это опции `A`/`B`/`C` -- _After_, _Before_, _Context_. Следующее выражение выводит полную историю команд, а затем `rg` ищет команды над _init.lua_ и выводит не только саму команду, но и ближайшие 5. Это выражение, так же, показывает особенность регулярных выражений -- в них точка обозначает любой символ, а вот для поиска самой точки её необходимо экранировать:
-```cmd
-history | rg -C5 "init\.lua"
-```
-
-Опять же, аналогично `fd`, поиск по скрытым файлам с опцией `--hidden`.
-
-
-### parallel
-
-[GNU **parallel**](https://www.gnu.org/software/parallel/), это утилита, которая: запускает в параллель несколько задач; отслеживает их завершение, чтобы запустить следующую в очереди задачу; отслеживает вывод на экран, чтобы информация не выводилась вперемешку; может разбивать большие файлы для обработки в параллель по кусочкам; и многое другое. [Википедиа](https://ru.wikipedia.org/wiki/GNU_parallel), [Tutorial](https://www.gnu.org/software/parallel/parallel_tutorial.html).
-
-В Windows может использоваться `parallel` из _WSL_:
-
-```cmd
-wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080  resized_{}" ::: *.jpg
-```
-
-```cmd
-ls -1 *.jpg | wsl parallel -j4 "cmd.exe /c magick convert {} -resize 1920x1080 {.}.png"
-```
-
-В этих командах утилита обработки изображений _magick_ (из пакета _ImageMagick_) запускается в параллель. Здесь:
-
-* `-j4` определяет число параллельно запускаемых задач;
-* `:::` отделяет запускаемую команду от аргументов для _parallel_;
-* `{}` --- [строка замены](https://www.gnu.org/software/parallel/parallel.html#options), на место которой будет подставлен аргумент для распараллеливаемой команды;
-* `{.}` --- строка замены, в которой будет удалено расширение файла;
-* используется `cmd.exe /c` чтобы не пришлось прописывать полные пути до запускаемой команды, так как `wsl` не знает путей _PATH_ Windows;
-
-_Note:_ Установка _parallel_ в _WSL_: `wsl sudo apt install parallel`.
-
-
-### time
-
-**time** --- утилита из мира Linux, позволяющая измерить время выполнения программы.\
-Установка: `scoop install main/time`.
-
-Использование вполне обычное, только необходимо использовать команду `timecmd`, т.к. имя _time_ занято --- это встроенная команда Windows с другим функционалом:
-```cmd
-timecmd make all
-```
-
-_Note:_ При использовании современной темы оформления оболочки (shell) подобная утилита не требуется, так как сам терминал пишет затраченное время.
-
-
-### mc --- Midnight Commander
-
-Классика на Windows тоже работает, и умеет _Shell link..._.
-```cmd
-scoop install extras/mc
-```
-
-_Note:_ Сменить диск: `Alt+D`
-
-_Note:_ Терминал в `mc` по `Ctrl+O` нормально не работает.
-
-
-### Остальные Linux утилиты
-
-Большое количество стандартных Linux консольных утилит входит в пакет _BusyBox_.
-
-_Note:_ [**BusyBox**](https://frippery.org/busybox/) --- это набор Linux [_команд_](https://www.busybox.net/downloads/BusyBox.html#commands), скомпилированных для Windows, которые поддерживают [wildcard](https://frippery.org/busybox/globbing.html) [globbing](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) как в Linux.
-
-Установка:
-```cmd
-scoop install main/busybox
-```
-
-Общие опции:
-
-* `-h` -- [h]uman, размер в _Kb (KiB)_, _Mb (MiB)_, и т.д., а не в байтах;
-
-Некоторые утилиты:
-
-
-
-#### du и df
-
-`du` --- Disk Usage --- показывает объём, занимаемый файлами и/или папками; опция `-s` -- суммарный размер, а не каждого элемента.
-`df` --- Disk Full --- показывает объём дисков, полный, свободный, занятый.
-
-Посмотреть занимаемое место файлами и/или папками:
-```cmd
-du -sh .
-du -sh some-folder
-du -sh * | sort -h
-```
-
-Посмотреть общее и занятое место на дисках:
-```cmd
-df -h
-```
-
-#### head & tail
-
-`head -n3 *.txt` --- вывести первые три строки;\
-`head -n-3 *.txt` --- вывести все строки кроме последних трёх;\
-`tail -n3 *.txt` --- вывести три последних строки;\
-`tail -n+3 *.txt` --- вывести все строки кроме первых трёх;\
-\
-`tail -n+1 *.txt` --- вывести содержимое всех файлов, предварив названием файла.
-
-
-#### watch
-
-TBD
-
-`watch df -h` --- отслеживать заполненность дисков;
-
-`watch -d 'cat /proc/vmstat | grep numa'` --- отслеживать результат периодического выполнения команды.
-
-
-#### совпадающие системные имена
-
-С помощью алиасов можно настроить нормальные имена для Linux утилит, имена которых совпадают с именами системных Windows утилит.
-
-Например, настроить имя для утилит `sort`, `time`. Для _Clink_ добавить строчки в *"%LOCALAPPDATA%\\clink\\clink_start.cmd"*:
-```cmd
-doskey time=%UserProfile%\scoop\shims\sort.exe $*
-doskey time=%UserProfile%\scoop\shims\time.exe $*
-```
-
-
-_Note:_ Для PowerShell смотри соответствующий пункт главы [Настройки Windows Terminal](#настройка-windows-terminal).
 
 {{< pagebreak >}}
 
