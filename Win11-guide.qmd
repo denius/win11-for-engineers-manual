@@ -65,7 +65,7 @@ from: markdown+tex_math_single_backslash
 
 {{< pagebreak >}}
 
-*Version: 0.3.0*
+*Version: 0.4.0*
 
 # **_Этап 1: Установка базового набора рабочих программ_** {.unnumbered}
 
@@ -193,7 +193,7 @@ MSOffice лучше попробовать установить утилитой
 * `Win+E` --- открыть новый File Explorer (Проводник)
 
 
-_Note:_ [Руководство](https://www.geeksforgeeks.org/enable-and-disable-keyboard-shortcuts/), как включить или выключить те или иные комбинаций клавиш быстрого доступа Windows.
+_Note:_ [Guide](https://www.geeksforgeeks.org/enable-and-disable-keyboard-shortcuts/), как включить или выключить те или иные комбинаций клавиш быстрого доступа Windows.
 
 _Note:_ Для очень продвинутых пользователей может быть интересна утилита [AutoHotKey](https://www.autohotkey.com/), которая позволяет запрограммировать любые действия на любые клавиши.
 
@@ -303,6 +303,8 @@ winget install --id=WinMerge.WinMerge -e
 winget install --id=Qalculate.Qalculate -e
 winget install --id=Rufus.Rufus -e
 winget install --id=hluk.CopyQ -e
+winget install --id=FreeCAD.FreeCAD -e
+winget install --id=KDE.LabPlot -e
 ```
 
 ## Chocolatey
@@ -323,6 +325,7 @@ _Note:_ В настройках ChocolateyGUI (запускается уже и�
 ```cmd
 choco install -y vcredist-all
 choco install -y reflect-free
+choco install -y vcxsrv
 ```
 
 _Note:_ В консольных терминалах для выполнения программ под правами _Admin_ следует вставлять _sudo_ перед командой, например: `sudo choco install -y vcredist-all`.
@@ -331,6 +334,7 @@ _Note:_ В консольных терминалах для выполнения
 
 * Microsoft Visual C++ Runtime - all versions
 * Macrium Reflect
+* VcXsrv Windows X Server
 
 ## Обновление (update) всех установленных в Windows программ
 
@@ -343,7 +347,7 @@ winget update --all
 
 * _Scoop_ может обновить только то, что он сам установил: `scoop list`. Вывести список обновляемого: `scoop update`. Обновить всё: `scoop update --all`.
 
-* _Chocolatey_ может обновить только то, что он сам установил. В ChocolateyGUI при запуске он покажет, что можно обновить: нажать иконку-звёздочку. Обновить из CLI: `choco update all -y`.
+* _Chocolatey_ может обновить только то, что он сам установил. В ChocolateyGUI при запуске он покажет, что можно обновить: нажать иконку-звёздочку. Обновить из CLI: `sudo choco update all -y`.
 
 * _Winget_ может обновить программы, которые были установлены и через winget, и через Chocolatey, список установленного: `winget list`, при наличии обновления эта команда укажет новую версию; либо, сразу показать список с доступными обновлениями: `winget update`. Обновить всё: `winget update --all`.
 
@@ -353,7 +357,7 @@ _Note_: Есть утилита, [**topgrade**](https://github.com/topgrade-rs/t
 
 ## Некоторые программы и утилиты
 
-Несколько слов о разных программах и утилитах, которые не требуют подробного описания установки или использования. Большинство из них были в списках установки выше, т.е. _уже_ были установлены.
+Несколько параграфов о разных программах и утилитах, которые не требуют подробного описания установки или использования. Большинство из них были в списках установки выше, т.е. _уже_ были установлены.
 
 
 ### Программы для картинок
@@ -397,16 +401,16 @@ winget install --id=SumatraPDF.SumatraPDF -e
 
 * [**WinDirStat**](https://windirstat.net/) --- утилита для контроля занимаемого места файлами на диске, показывает размер файлов в виде плиток. Установка: `winget install --id=WinDirStat.WinDirStat -e`
 
-* [**Rufus**](https://rufus.ie/) --- утилита для создания загрузочных флешек, для установки операционных систем Windows, Linux и пр. Установка: `choco install -y rufus`.
+* [**Rufus**](https://rufus.ie/) --- утилита для создания загрузочных флешек, для установки операционных систем Windows, Linux и пр. Установка: `winget install --id=Rufus.Rufus -e`.
 
 * [**GSmartControl**](https://gsmartcontrol.shaduri.dev/) --- утилита для получения информации *S.M.A.R.T.* SSD/HDD, в частности, для контроля истирания **SSD**. Установка: `winget install --id=AlexanderShaduri.GSmartControl -e`
 
 * обновление прошивок **SSD**:
-  - _[Samsung](https://semiconductor.samsung.com/consumer-storage/support/tools/)_: `choco install -y samsung-magician`
+  - _[Samsung](https://semiconductor.samsung.com/consumer-storage/support/tools/)_: `sudo choco install -y samsung-magician`
   - _[Intel](https://www.solidigm.com/support-page/drivers-downloads/ka-00085.html)_: `winget install --id=Solidigm.StorageTool -e`
   - _[Transcend](https://www.transcend-info.com/Support/Software-10/)_: `winget install --id=TransendInfo.SSDScopeApp -e`
   - _[Kingston](https://www.kingston.com/en/support/technical/ssdmanager)_: `winget install --id=Kingston.SSDManager -e`
-  - _[Micron](https://www.micron.com/products/storage/ssd/micron-ssd-firmware)_, [2](https://www.micron.com/sales-support/downloads/software-drivers/storage-executive-software): `choco install -y micron-storage-executive`
+  - _[Micron](https://www.micron.com/products/storage/ssd/micron-ssd-firmware)_, [2](https://www.micron.com/sales-support/downloads/software-drivers/storage-executive-software): `sudo choco install -y micron-storage-executive`
   - _[Crucial](https://www.crucial.com/support/storage-executive)_: `winget install --id=Crucial.StorageExecutive -e`
   - _[WD](https://support-en.wd.com/app/answers/detailweb/a_id/31759)_: `winget install --id=WesternDigital.Dashboard -e`
 
@@ -438,7 +442,7 @@ winget install --id=samlab-ws.SnappyDriverInstaller -e
 
 Резервное копирование систем Windows удобно делать используя программу [**MacriumReflect**](https://en.wikipedia.org/wiki/Macrium_Reflect) --- это _проприетарная_ программа, но бесплатная для персонального использования. Программа должна была быть установлена через _Chocolatey_ (см. выше):
 ```cmd
-choco install -y reflect-free
+sudo choco install -y reflect-free
 ```
 
 ### Особенности использования MacriumReflect
@@ -480,7 +484,7 @@ winget install --id=Duplicati.Duplicati  -e
 
 ### Конфиденциальные данные
 
-Установить _FirefoxESR_: `choco install -y firefoxesr`, установить _МастерПароль_, установить [_NoScript_](https://addons.mozilla.org/en-US/firefox/addon/noscript/), [_U-Block Origin_](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/). Этот браузер будет для работы с конфиденциальными данными, для работы: с почтой, банковскими сайтами, и т.п. Поначалу придётся много раз добавлять сайты в разрешённые в _NoScript_, но их всё же ограниченное число.
+Установить _FirefoxESR_: `winget install --id=Mozilla.Firefox.ESR -e`, установить _МастерПароль_, установить [_NoScript_](https://addons.mozilla.org/en-US/firefox/addon/noscript/), [_U-Block Origin_](https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/). Этот браузер будет для работы с конфиденциальными данными, для работы: с почтой, банковскими сайтами, и т.п. Поначалу придётся много раз добавлять сайты в разрешённые в _NoScript_, но их всё же ограниченное число.
 
 ### Обычное использование интернета
 
@@ -1415,7 +1419,8 @@ doskey time=%UserProfile%\scoop\shims\time.exe $*
 
 _Note:_ Для _PowerShell_ смотри соответствующий пункт главы [Настройки Windows Terminal](#настройка-windows-terminal).
 
-#### all commands
+#### BusyBox команды
+
 
 [_\[_](https://frippery.org/busybox/BusyBox.html#test)
 [_\[\[_](https://frippery.org/busybox/BusyBox.html#test)
@@ -1701,10 +1706,6 @@ soffice -cat somedoc.doc
 
 [**OnlyOffice**](https://www.onlyoffice.com/ru/desktop.aspx) --- офисный пакет от Российских разработчиков, участвует в программе импортозамещения. Opensource, кроссплатформенный, имеет версию для Android и iOS. В качестве формата хранения документов использует форматы файлов MSOffice (какого-то своего особенного формата не имеет). Умеет редактировать _pdf_. Установка:
 ```cmd
-choco install -y onlyoffice
-```
-или?
-```cmd
 winget install --id=ONLYOFFICE.DesktopEditors -e
 ```
 
@@ -1967,6 +1968,7 @@ magick -delay 1x20 *.png movie.gif
 
 [**ffmpeg**](https://www.ffmpeg.org/) --- программа командной строки для создания, записи, конвертации, и проигрывания видео и аудио файлов.
 
+Установка:
 ```cmd
 scoop install ffmpeg
 scoop install handbrake-cli
@@ -3159,6 +3161,356 @@ setup.exe /configure configuration.xml
 ```cmd
 scoop install extras/office-tool-plus
 ```
+
+# _Приложение:_ Краткое описание команд входящих в BusyBox
+
+Использовано описание с _man_ страниц команд.
+
+
+
+
+Команда  | Описание
+---------|------------------------------------------
+[`[`](https://frippery.org/busybox/BusyBox.html#test), `[[`                | проверка типов файлов и сравнение значений
+[`ar`](https://frippery.org/busybox/BusyBox.html#ar)                       | создание, изменение и извлечение из архивов
+[`arch`](https://frippery.org/busybox/BusyBox.html#arch)                   | вывод названия аппаратного обеспечения машины (аналогично uname -m)
+[`ascii`](https://frippery.org/busybox/BusyBox.html#ascii)                 | набор символов ASCII
+[`ash`](https://frippery.org/busybox/BusyBox.html#ash)                     | интерпретатор Unix shell
+[`awk`](https://frippery.org/busybox/BusyBox.html#awk)                     | язык для сканирования и обработки шаблонов
+[`base32`](https://frippery.org/busybox/BusyBox.html#base32)               | кодирование/декодирование данных в base32 и вывод на стандартный вывод
+[`base64`](https://frippery.org/busybox/BusyBox.html#base64)               | кодирование/декодирование данных в base64 и вывод на стандартный вывод
+[`basename`](https://frippery.org/busybox/BusyBox.html#basename)           | удаление директории и суффикса из имен файлов
+[`bash`](https://frippery.org/busybox/BusyBox.html#bash)                   | GNU Bourne-Again SHell
+[`bc`](https://frippery.org/busybox/BusyBox.html#bc)                       | язык для вычислений с произвольной точностью
+[`bunzip2`](https://frippery.org/busybox/BusyBox.html#bunzip2)             | компрессор файлов с блочной сортировкой
+[`busybox`](https://frippery.org/busybox/BusyBox.html#busybox)             | "Швейцарский нож" для встроенных систем Linux
+[`bzcat`](https://frippery.org/busybox/BusyBox.html#bzcat)                 | распаковка файлов на стандартный вывод
+[`bzip2`](https://frippery.org/busybox/BusyBox.html#bzip2)                 | компрессор файлов с блочной сортировкой
+[`cal`](https://frippery.org/busybox/BusyBox.html#cal)                     | отображение календаря и даты Пасхи
+[`cat`](https://frippery.org/busybox/BusyBox.html#cat)                     | объединение файлов и вывод на стандартный вывод
+[`cdrop`](https://frippery.org/busybox/BusyBox.html#cdrop)                 | Сброс повышенных привилегий и выполнение команды. Если команда не указана, запускается cmd.exe.
+[`chattr`](https://frippery.org/busybox/BusyBox.html#chattr)               | изменение атрибутов файлов в файловой системе Linux
+[`chmod`](https://frippery.org/busybox/BusyBox.html#chmod)                 | изменение битов режима файла
+[`cksum`](https://frippery.org/busybox/BusyBox.html#cksum)                 | подсчет контрольной суммы и количества байтов в файле
+[`clear`](https://frippery.org/busybox/BusyBox.html#clear)                 | очистка экрана терминала
+[`cmp`](https://frippery.org/busybox/BusyBox.html#cmp)                     | побайтовое сравнение двух файлов
+[`comm`](https://frippery.org/busybox/BusyBox.html#comm)                   | построчное сравнение двух отсортированных файлов
+[`cp`](https://frippery.org/busybox/BusyBox.html#cp)                       | копирование файлов и директорий
+[`cpio`](https://frippery.org/busybox/BusyBox.html#cpio)                   | копирование файлов в архивы и из них
+[`crc32`](https://frippery.org/busybox/BusyBox.html#crc32)                 | вычисление контрольных сумм CRC-32 для указанных файлов
+[`cut`](https://frippery.org/busybox/BusyBox.html#cut)                     | удаление секций из каждой строки файлов
+[`date`](https://frippery.org/busybox/BusyBox.html#date)                   | вывод или установка системной даты и времени
+[`dc`](https://frippery.org/busybox/BusyBox.html#dc)                       | калькулятор с произвольной точностью
+[`dd`](https://frippery.org/busybox/BusyBox.html#dd)                       | преобразование и копирование файла
+[`df`](https://frippery.org/busybox/BusyBox.html#df)                       | отчет об использовании дискового пространства файловой системы
+[`diff`](https://frippery.org/busybox/BusyBox.html#diff)                   | построчное сравнение файлов
+[`dirname`](https://frippery.org/busybox/BusyBox.html#dirname)             | удаление последнего компонента из имени файла
+[`dos2unix`](https://frippery.org/busybox/BusyBox.html#dos2unix)           | конвертер текстовых файлов из формата DOS/Mac в Unix и наоборот
+[`dpkg`](https://frippery.org/busybox/BusyBox.html#dpkg)                   | менеджер пакетов для Debian
+[`dpkg-deb`](https://frippery.org/busybox/BusyBox.html#dpkg-deb)           | инструмент для работы с архивами пакетов Debian (.deb)
+[`drop`](https://frippery.org/busybox/BusyBox.html#drop)                   | сброс повышенных привилегий и выполнение команды
+[`du`](https://frippery.org/busybox/BusyBox.html#du)                       | оценка использования дискового пространства
+[`echo`](https://frippery.org/busybox/BusyBox.html#echo)                   | вывод строки текста
+[`ed`](https://frippery.org/busybox/BusyBox.html#ed)                       | построчный текстовый редактор
+[`egrep`](https://frippery.org/busybox/BusyBox.html#egrep)                 | вывод строк, соответствующих шаблонам
+[`env`](https://frippery.org/busybox/BusyBox.html#env)                     | запуск программы в измененной среде
+[`expand`](https://frippery.org/busybox/BusyBox.html#expand)               | преобразование табуляции в пробелы
+[`expr`](https://frippery.org/busybox/BusyBox.html#expr)                   | вычисление выражений
+[`factor`](https://frippery.org/busybox/BusyBox.html#factor)               | факторизация чисел
+[`false`](https://frippery.org/busybox/BusyBox.html#false)                 | ничего не делать, с ошибкой
+[`fgrep`](https://frippery.org/busybox/BusyBox.html#fgrep)                 | вывод строк, соответствующих шаблонам
+[`find`](https://frippery.org/busybox/BusyBox.html#find)                   | поиск файлов в иерархии директорий
+[`fold`](https://frippery.org/busybox/BusyBox.html#fold)                   | перенос каждой строки ввода до указанной ширины
+[`free`](https://frippery.org/busybox/BusyBox.html#free)                   | отображение объема свободной и используемой памяти в системе
+[`fsync`](https://frippery.org/busybox/BusyBox.html#fsync)                 | запись всех буферизованных блоков в файлы на диск
+[`getopt`](https://frippery.org/busybox/BusyBox.html#getopt)               | разбор параметров командной строки (улучшенный)
+[`grep`](https://frippery.org/busybox/BusyBox.html#grep)                   | вывод строк, соответствующих шаблонам
+[`groups`](https://frippery.org/busybox/BusyBox.html#groups)               | вывод групп, в которых состоит пользователь
+[`gunzip`](https://frippery.org/busybox/BusyBox.html#gunzip)               | сжатие или распаковка файлов
+[`gzip`](https://frippery.org/busybox/BusyBox.html#gzip)                   | сжатие или распаковка файлов
+[`hd`](https://frippery.org/busybox/BusyBox.html#hd)                       | дамп в формате ASCII, десятичный, шестнадцатеричный, восьмеричный
+[`head`](https://frippery.org/busybox/BusyBox.html#head)                   | вывод первой части файлов
+[`hexdump`](https://frippery.org/busybox/BusyBox.html#hexdump)             | дамп в формате ASCII, десятичный, шестнадцатеричный, восьмеричный
+[`httpd`](https://frippery.org/busybox/BusyBox.html#httpd)                 | прослушивание входящих HTTP-запросов
+[`iconv`](https://frippery.org/busybox/BusyBox.html#iconv)                 | преобразование текста из одной кодировки в другую
+[`id`](https://frippery.org/busybox/BusyBox.html#id)                       | вывод реального и эффективного идентификаторов пользователя и группы
+[`inotifyd`](https://frippery.org/busybox/BusyBox.html#inotifyd)           | запуск программы при изменениях в файловой системе
+[`install`](https://frippery.org/busybox/BusyBox.html#install)             | копирование файлов и установка атрибутов
+[`ipcalc`](https://frippery.org/busybox/BusyBox.html#ipcalc)               | вычисление и отображение сетевых настроек по IP-адресу
+[`jn`](https://frippery.org/busybox/BusyBox.html#jn)                       | создание соединения директории JUNC с DIR
+[`kill`](https://frippery.org/busybox/BusyBox.html#kill)                   | отправка сигнала процессу
+[`killall`](https://frippery.org/busybox/BusyBox.html#killall)             | завершение процессов по имени
+[`lash`](https://frippery.org/busybox/BusyBox.html#lash)                   | интерпретатор Unix shell
+[`less`](https://frippery.org/busybox/BusyBox.html#less)                   | противоположность more
+[`link`](https://frippery.org/busybox/BusyBox.html#link)                   | вызов функции link для создания ссылки на файл
+[`ln`](https://frippery.org/busybox/BusyBox.html#ln)                       | создание ссылок между файлами
+[`logname`](https://frippery.org/busybox/BusyBox.html#logname)             | вывод имени пользователя, вошедшего в систему
+[`ls`](https://frippery.org/busybox/BusyBox.html#ls)                       | вывод содержимого директории
+[`lsattr`](https://frippery.org/busybox/BusyBox.html#lsattr)               | вывод атрибутов файлов в файловой системе Linux second extended
+[`lzcat`](https://frippery.org/busybox/BusyBox.html#lzcat)                 | сжатие или распаковка файлов .xz и .lzma
+[`lzma`](https://frippery.org/busybox/BusyBox.html#lzma)                   | сжатие или распаковка файлов .xz и .lzma
+[`lzop`](https://frippery.org/busybox/BusyBox.html#lzop)                   | сжатие или распаковка файлов
+[`lzopcat`](https://frippery.org/busybox/BusyBox.html#lzopcat)             | распаковка файлов на стандартный вывод
+[`make`](https://frippery.org/busybox/BusyBox.html#make)                   | утилита GNU make для управления группами программ
+[`man`](https://frippery.org/busybox/BusyBox.html#man)                     | интерфейс к системным справочным руководствам
+[`md5sum`](https://frippery.org/busybox/BusyBox.html#md5sum)               | вычисление и проверка MD5 хеш-суммы
+[`mkdir`](https://frippery.org/busybox/BusyBox.html#mkdir)                 | создание директорий
+[`mktemp`](https://frippery.org/busybox/BusyBox.html#mktemp)               | создание временного файла или директории
+[`mv`](https://frippery.org/busybox/BusyBox.html#mv)                       | перемещение (переименование) файлов
+[`nc`](https://frippery.org/busybox/BusyBox.html#nc)                       | произвольные TCP и UDP соединения и прослушивание
+[`nl`](https://frippery.org/busybox/BusyBox.html#nl)                       | нумерация строк файлов
+[`nproc`](https://frippery.org/busybox/BusyBox.html#nproc)                 | вывод количества доступных процессорных единиц
+[`od`](https://frippery.org/busybox/BusyBox.html#od)                       | дамп файлов в восьмеричном и других форматах
+[`paste`](https://frippery.org/busybox/BusyBox.html#paste)                 | объединение строк файлов
+[`patch`](https://frippery.org/busybox/BusyBox.html#patch)                 | применение diff-файла к оригиналу
+[`pdpmake`](https://frippery.org/busybox/BusyBox.html#pdpmake)             | управление файлами на основе их зависимостей
+[`pdrop`](https://frippery.org/busybox/BusyBox.html#pdrop)                 | сброс повышенных привилегий и выполнение команды. Если команда не указана, запускается PowerShell
+[`pgrep`](https://frippery.org/busybox/BusyBox.html#pgrep)                 | поиск или сигнализация процессов по имени и другим атрибутам
+[`pidof`](https://frippery.org/busybox/BusyBox.html#pidof)                 | поиск идентификатора процесса запущенной программы
+[`pipe_progress`](https://frippery.org/busybox/BusyBox.html#pipe_progress) | отображение точки для индикации активности в канале
+[`pkill`](https://frippery.org/busybox/BusyBox.html#pkill)                 | поиск или сигнализация процессов по имени и другим атрибутам
+[`printenv`](https://frippery.org/busybox/BusyBox.html#printenv)           | вывод всей или части среды окружения
+[`printf`](https://frippery.org/busybox/BusyBox.html#printf)               | форматирование и вывод данных
+[`ps`](https://frippery.org/busybox/BusyBox.html#ps)                       | снимок текущих процессов
+[`pwd`](https://frippery.org/busybox/BusyBox.html#pwd)                     | вывод имени текущей/рабочей директории
+[`readlink`](https://frippery.org/busybox/BusyBox.html#readlink)           | вывод разрешенных символических ссылок или канонических имен файлов
+[`realpath`](https://frippery.org/busybox/BusyBox.html#realpath)           | вывод разрешенного пути
+[`reset`](https://frippery.org/busybox/BusyBox.html#reset)                 | инициализация терминала
+[`rev`](https://frippery.org/busybox/BusyBox.html#rev)                     | реверсирование строк посимвольно
+[`rm`](https://frippery.org/busybox/BusyBox.html#rm)                       | удаление файлов или директорий
+[`rmdir`](https://frippery.org/busybox/BusyBox.html#rmdir)                 | удаление пустых директорий
+[`rpm`](https://frippery.org/busybox/BusyBox.html#rpm)                     | менеджер пакетов RPM
+[`rpm2cpio`](https://frippery.org/busybox/BusyBox.html#rpm2cpio)           | извлечение архива cpio из пакета RPM
+[`sed`](https://frippery.org/busybox/BusyBox.html#sed)                     | потоковый редактор для фильтрации и преобразования текста
+[`seq`](https://frippery.org/busybox/BusyBox.html#seq)                     | вывод последовательности чисел
+[`sh`](https://frippery.org/busybox/BusyBox.html#sh)                       | Unix SHell
+[`sha1sum`](https://frippery.org/busybox/BusyBox.html#sha1sum)             | вычисление и проверка SHA1 хеш-суммы
+[`sha256sum`](https://frippery.org/busybox/BusyBox.html#sha256sum)         | вычисление и проверка SHA256 хеш-суммы
+[`sha512sum`](https://frippery.org/busybox/BusyBox.html#sha512sum)         | вычисление и проверка SHA512 хеш-суммы
+[`shred`](https://frippery.org/busybox/BusyBox.html#shred)                 | перезапись файла для сокрытия его содержимого и, возможно, удаление
+[`shuf`](https://frippery.org/busybox/BusyBox.html#shuf)                   | генерация случайных перестановок
+[`sleep`](https://frippery.org/busybox/BusyBox.html#sleep)                 | задержка на указанное количество времени
+[`sort`](https://frippery.org/busybox/BusyBox.html#sort)                   | сортировка строк текстовых файлов
+[`split`](https://frippery.org/busybox/BusyBox.html#split)                 | разделение файла на части
+[`ssl_client`](https://frippery.org/busybox/BusyBox.html#ssl_client)       | SSL-клиент
+[`stat`](https://frippery.org/busybox/BusyBox.html#stat)                   | отображение статуса файла или файловой системы
+[`strings`](https://frippery.org/busybox/BusyBox.html#strings)             | вывод последовательностей печатных символов в файлах
+[`su`](https://frippery.org/busybox/BusyBox.html#su)                       | выполнение команды с подменой пользователя и группы
+[`sum`](https://frippery.org/busybox/BusyBox.html#sum)                     | подсчет контрольной суммы и количества блоков в файле
+[`sync`](https://frippery.org/busybox/BusyBox.html#sync)                   | синхронизация кэшированных записей с постоянным хранилищем
+[`tac`](https://frippery.org/busybox/BusyBox.html#tac)                     | объединение и вывод файлов в обратном порядке
+[`tail`](https://frippery.org/busybox/BusyBox.html#tail)                   | вывод последней части файлов
+[`tar`](https://frippery.org/busybox/BusyBox.html#tar)                     | утилита для архивирования
+[`tee`](https://frippery.org/busybox/BusyBox.html#tee)                     | чтение из стандартного ввода и запись в стандартный вывод и файлы
+[`test`](https://frippery.org/busybox/BusyBox.html#test)                   | проверка типов файлов и сравнение значений
+[`time`](https://frippery.org/busybox/BusyBox.html#time)                   | выполнение программ и вывод сводки использования системных ресурсов
+[`timeout`](https://frippery.org/busybox/BusyBox.html#timeout)             | выполнение команды с ограничением по времени
+[`touch`](https://frippery.org/busybox/BusyBox.html#touch)                 | изменение временных меток файла
+[`tr`](https://frippery.org/busybox/BusyBox.html#tr)                       | замена или удаление символов
+[`true`](https://frippery.org/busybox/BusyBox.html#true)                   | ничего не делать, успешно
+[`truncate`](https://frippery.org/busybox/BusyBox.html#truncate)           | уменьшение или увеличение размера файла до указанного размера
+[`ts`](https://frippery.org/busybox/BusyBox.html#ts)                       | добавляет временную метку в начало каждой строки ввода
+[`tsort`](https://frippery.org/busybox/BusyBox.html#tsort)                 | выполнение топологической сортировки
+[`ttysize`](https://frippery.org/busybox/BusyBox.html#ttysize)             | вывод размеров stdin tty, или 80x24
+[`uname`](https://frippery.org/busybox/BusyBox.html#uname)                 | вывод информации о системе
+[`uncompress`](https://frippery.org/busybox/BusyBox.html#uncompress)       | сжатие или распаковка файлов
+[`unexpand`](https://frippery.org/busybox/BusyBox.html#unexpand)           | преобразование пробелов в табуляцию
+[`uniq`](https://frippery.org/busybox/BusyBox.html#uniq)                   | вывод или пропуск повторяющихся строк
+[`unix2dos`](https://frippery.org/busybox/BusyBox.html#unix2dos)           | конвертер текстовых файлов из формата Unix в DOS/Mac и наоборот
+[`unlink`](https://frippery.org/busybox/BusyBox.html#unlink)               | вызов функции unlink для удаления указанного файла
+[`unlzma`](https://frippery.org/busybox/BusyBox.html#unlzma)               | сжатие или распаковка файлов .xz и .lzma
+[`unlzop`](https://frippery.org/busybox/BusyBox.html#unlzop)               | распаковка файлов
+[`unxz`](https://frippery.org/busybox/BusyBox.html#unxz)                   | сжатие или распаковка файлов .xz и .lzma
+[`unzip`](https://frippery.org/busybox/BusyBox.html#unzip)                 | просмотр, тестирование и извлечение файлов из архива ZIP
+[`uptime`](https://frippery.org/busybox/BusyBox.html#uptime)               | отображение времени работы системы
+[`usleep`](https://frippery.org/busybox/BusyBox.html#usleep)               | пауза на N микросекунд
+[`uudecode`](https://frippery.org/busybox/BusyBox.html#uudecode)           | декодирование закодированного файла
+[`uuencode`](https://frippery.org/busybox/BusyBox.html#uuencode)           | кодирование файла в текст, пригодный для электронной почты
+[`vi`](https://frippery.org/busybox/BusyBox.html#vi)                       | Vi, текстовый редактор для программистов
+[`watch`](https://frippery.org/busybox/BusyBox.html#watch)                 | периодическое выполнение программы с отображением вывода на весь экран
+[`wc`](https://frippery.org/busybox/BusyBox.html#wc)                       | подсчет количества строк, слов и байтов для каждого файла
+[`wget`](https://frippery.org/busybox/BusyBox.html#wget)                   | неинтерактивный загрузчик из сети
+[`which`](https://frippery.org/busybox/BusyBox.html#which)                 | поиск команды
+[`whoami`](https://frippery.org/busybox/BusyBox.html#whoami)               | вывод эффективного идентификатора пользователя
+[`whois`](https://frippery.org/busybox/BusyBox.html#whois)                 | запрос информации WHOIS
+[`xargs`](https://frippery.org/busybox/BusyBox.html#xargs)                 | построение и выполнение командных строк из стандартного ввода
+[`xxd`](https://frippery.org/busybox/BusyBox.html#xxd)                     | создание hexdump или обратное преобразование
+[`xz`](https://frippery.org/busybox/BusyBox.html#xz)                       | сжатие или распаковка файлов .xz и .lzma
+[`xzcat`](https://frippery.org/busybox/BusyBox.html#xzcat)                 | сжатие или распаковка файлов .xz и .lzma
+[`yes`](https://frippery.org/busybox/BusyBox.html#yes)                     | повторяющийся вывод строки до завершения^[output a string repeatedly until killed]
+[`zcat`](https://frippery.org/busybox/BusyBox.html#zcat)                   | сжатие или распаковка файлов^[compress or expand files]
+
+|Command  | Description |
+|---------|------------------------------------------ |
+|test              | check file types and compare values |
+|ar                | create, modify, and extract from archives |
+|arch              | print machine hardware name (same as uname -m) |
+|ascii             | ASCII character set encoded in octal, decimal, and hexadecimal |
+|ash               | Unix shell interpreter |
+|awk               | pattern scanning and processing language |
+|base32            | base32 encode/decode data and print to standard output |
+|base64            | base64 encode/decode data and print to standard output |
+|basename          | strip directory and suffix from filenames |
+|bash              | GNU Bourne-Again SHell |
+|bc                | An arbitrary precision calculator language |
+|bunzip2           | a block-sorting file compressor |
+|busybox           | The Swiss Army Knife of Embedded Linux |
+|bzcat             | decompresses files to stdout |
+|bzip2             | a block-sorting file compressor |
+|cal               | displays a calendar and the date of Easter |
+|cat               | concatenate files and print on the standard output |
+|cdrop             | Drop elevated privileges and run a command. If no command is provided run cmd.exe. |
+|chattr            | change file attributes on a Linux file system |
+|chmod             | change file mode bits |
+|cksum             | checksum and count the bytes in a file |
+|clear             | clear the terminal screen |
+|cmp               | (unknown subject) |
+|comm              | compare two sorted files line by line |
+|cp                | copy files and directories |
+|cpio              | copy files to and from archives |
+|crc32             | compute CRC-32 checksums for the given files |
+|cut               | remove sections from each line of files |
+|date              | print or set the system date and time |
+|dc                | an arbitrary precision calculator |
+|dd                | convert and copy a file |
+|df                | report file system disk space usage |
+|diff              | (unknown subject) |
+|dirname           | strip last component from file name |
+|dos2unix          | DOS/Mac to Unix and vice versa text file format converter |
+|dpkg              | package manager for Debian |
+|dpkg|deb          - Debian package archive (.deb) manipulation tool |
+|drop              | drop elevated privileges and run a command |
+|du                | estimate file space usage |
+|echo              | display a line of text |
+|ed                | line-oriented text editor |
+|egrep             | print lines that match patterns |
+|env               | run a program in a modified environment |
+|expand            | convert tabs to spaces |
+|expr              | evaluate expressions |
+|factor            | factor numbers |
+|false             | do nothing, unsuccessfully |
+|fgrep             | print lines that match patterns |
+|find              | search for files in a directory hierarchy |
+|fold              | wrap each input line to fit in specified width |
+|free              | Display amount of free and used memory in the system |
+|fsync             | Write all buffered blocks in files to disk |
+|getopt            | parse command options (enhanced) |
+|grep              | print lines that match patterns |
+|groups            | print the groups a user is in |
+|gunzip            | compress or expand files |
+|gzip              | compress or expand files |
+|hd                | ASCII, decimal, hexadecimal, octal dump |
+|head              | output the first part of files |
+|hexdump           | ASCII, decimal, hexadecimal, octal dump |
+|httpd             | Listen for incoming HTTP requests |
+|iconv             | convert text from one character encoding to another |
+|id                | print real and effective user and group IDs |
+|inotifyd          | run some program on filesystem changes |
+|install           | copy files and set attributes |
+|ipcalc            | Calculate and display network settings from IP address |
+|jn                | Create directory junction JUNC to DIR |
+|kill              | send a signal to a process |
+|killall           | kill processes by name |
+|lash              | unix shell interpreter |
+|less              | opposite of more |
+|link              | call the link function to create a link to a file |
+|ln                | make links between files |
+|logname           | print user's login name |
+|ls                | list directory contents |
+|lsattr            | list file attributes on a Linux second extended file system |
+|lzcat             | Compress or decompress .xz and .lzma files |
+|lzma              | Compress or decompress .xz and .lzma files |
+|lzop              | compress or expand files |
+|lzopcat           | expand files to stdout |
+|make              | GNU make utility to maintain groups of programs |
+|man               | an interface to the system reference manuals |
+|md5sum            | compute and check MD5 message digest |
+|mkdir             | make directories |
+|mktemp            | create a temporary file or directory |
+|mv                | move (rename) files |
+|nc                | arbitrary TCP and UDP connections and listens |
+|nl                | number lines of files |
+|nproc             | print the number of processing units available |
+|od                | dump files in octal and other formats |
+|paste             | merge lines of files |
+|patch             | apply a diff file to an original |
+|pdpmake           | maintain files based on their dependencies |
+|pdrop             | drop elevated privileges and run a command. If no command is provided run PowerShell |
+|pgrep             | look up or signal processes based on name and other attributes |
+|pidof             | find the process ID of a running program. |
+|pipe_progress     | Display a dot to indicate pipe activity |
+|pkill             | look up or signal processes based on name and other attributes |
+|printenv          | print all or part of environment |
+|printf            | format and print data |
+|ps                | report a snapshot of the current processes. |
+|pwd               | print name of current/working directory |
+|readlink          | print resolved symbolic links or canonical file names |
+|realpath          | print the resolved path |
+|reset             | terminal initialization |
+|rev               | reverse lines characterwise |
+|rm                | remove files or directories |
+|rmdir             | remove empty directories |
+|rpm               | RPM Package Manager |
+|rpm2cpio          | Extract cpio archive from RPM Package Manager (RPM) package. |
+|sed               | stream editor for filtering and transforming text |
+|seq               | print a sequence of numbers |
+|sh                | Unix SHell |
+|sha1sum           | compute and check SHA1 message digest |
+|sha256sum         | compute and check SHA256 message digest |
+|sha512sum         | compute and check SHA512 message digest |
+|shred             | overwrite a file to hide its contents, and optionally delete it |
+|shuf              | generate random permutations |
+|sleep             | delay for a specified amount of time |
+|sort              | sort lines of text files |
+|split             | split a file into pieces |
+|ssl_client        | ssl client |
+|stat              | display file or file system status |
+|strings           | print the sequences of printable characters in files |
+|su                | run a command with substitute user and group ID |
+|sum               | checksum and count the blocks in a file |
+|sync              | Synchronize cached writes to persistent storage |
+|tac               | concatenate and print files in reverse |
+|tail              | output the last part of files |
+|tar               | an archiving utility |
+|tee               | read from standard input and write to standard output and files |
+|test              | check file types and compare values |
+|time              | run programs and summarize system resource usage |
+|timeout           | run a command with a time limit |
+|touch             | change file timestamps |
+|tr                | translate or delete characters |
+|true              | do nothing, successfully |
+|truncate          | shrink or extend the size of a file to the specified size |
+|ts                | timestamp input |
+|tsort             | perform topological sort |
+|ttysize           | print dimensions of stdin tty, or 80x24 |
+|uname             | print system information |
+|uncompress        | compress or expand files |
+|unexpand          | convert spaces to tabs |
+|uniq              | report or omit repeated lines |
+|unix2dos          | DOS/Mac to Unix and vice versa text file format converter |
+|unlink            | call the unlink function to remove the specified file |
+|unlzma            | Compress or decompress .xz and .lzma files |
+|unlzop            | expand files |
+|unxz              | Compress or decompress .xz and .lzma files |
+|unzip             | list, test and extract compressed files in a ZIP archive |
+|uptime            | Tell how long the system has been running. |
+|usleep            | pause for N microseconds |
+|uudecode          | decode an encoded file |
+|uuencode          | encode a file into email friendly text |
+|vi                | Vi IMproved, a programmer's text editor |
+|watch             | execute a program periodically, showing output fullscreen |
+|wc                | print newline, word, and byte counts for each file |
+|wget              | The non-interactive network downloader. |
+|which             | locate a command |
+|whoami            | print effective userid |
+|whois             | query WHOIS info |
+|xargs             | build and execute command lines from standard input |
+|xxd               | make a hexdump or do the reverse. |
+|xz                | Compress or decompress .xz and .lzma files |
+|xzcat             | Compress or decompress .xz and .lzma files |
+|yes               | output a string repeatedly until killed |
+|zcat              | compress or expand files |
+
 
 # _Приложение:_ Документация и ссылки
 
