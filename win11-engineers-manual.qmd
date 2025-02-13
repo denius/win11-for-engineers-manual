@@ -1091,7 +1091,7 @@ winget install --id=Microsoft.msmpi -e
 
 _Note:_ Здесь в списке присутствует библиотека [**numba**](https://github.com/numba/numba), это _JIT_^[Just-In-Time] компилятор Python, применяемый для высокопроизводительных вычислений (HPC). С его помощью можно добиться скорости выполнения Python программ наравне с C/C++ или Fortran. [Применение](https://numba.readthedocs.io/en/stable/user/5minguide.html) этой библиотеки совершенно тривиально: импортировать `from numba import jit` и добавить `@jit` перед определением своих функций `def ...`.
 
-Для разработки на Python есть несколько вариантов IDE: [VSCode](https://marketplace.visualstudio.com/items?itemName=ms-python.python), [Spyder](https://www.spyder-ide.org/), [Positron](https://positron.posit.co/), [PyCharm](https://www.jetbrains.com/pycharm/).
+Для разработки на Python есть несколько вариантов IDE: [VSCode](https://marketplace.visualstudio.com/items?itemName=ms-python.python), [Spyder](https://www.spyder-ide.org/), [Positron](https://positron.posit.co/), проприетарный [PyCharm](https://www.jetbrains.com/pycharm/).
 
 ### Python в VSCode {.unnumbered .unlisted}
 
@@ -1099,6 +1099,8 @@ _Note:_ Здесь в списке присутствует библиотека
 ```cmd
 scoop install extras/vscode
 ```
+
+Расширение Python для VSCode позволяет выполнять участки кода по `Shift+Enter`. Также можно выполнять построчную отладку по _Debug_, _Run_, _NextLine_, _EnterInto_, и т.д.
 
 ### Python в Spyder {.unnumbered .unlisted}
 
@@ -1117,12 +1119,11 @@ python -m pip install --upgrade ipykernel
 scoop install extras/positron
 ```
 
-### Python в PyCharm {.unnumbered .unlisted}
+### Блокноты на Python
 
-Для профессиональной разработки на Python, возможно, стоит рассмотреть _проприетарный_ _PyCharm_ --- порог вхождения выше, но и возможностей больше.
-```cmd
-scoop install extras/pycharm
-```
+Для создания [**_Интерактивных блокнотов_**](https://ru.wikipedia.org/wiki/Интерактивный_блокнот) (*журналов*) на Python следует предпочесть расширение [**Jupytext**](https://marketplace.visualstudio.com/items?itemName=donjayamanne.vscode-jupytext) (вместо [_Jupyter_](https://en.wikipedia.org/wiki/Project_Jupyter)), сохранённые файлы которого имеют нормальный **_.py_** формат со [специально оформленными комментариями](https://jupytext.readthedocs.io/en/latest/formats-scripts.html#the-percent-format), а не какой-то непонятный _JSON_.
+
+*\<TBD\>* Подробнее об [интерактивных блокнотах](https://ru.wikipedia.org/wiki/Интерактивный_блокнот), [реактивном программировании](https://en.wikipedia.org/wiki/Reactive_programming).
 
 ## Fortran
 
