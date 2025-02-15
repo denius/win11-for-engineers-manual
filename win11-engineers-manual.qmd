@@ -1688,8 +1688,8 @@ df -h
 Скачивает с инета страницу или файл:\
 `wget URL`
 
-Скачать сайт, `-r` -- recursive, `-np` -- no-parent, `-p` -- также скачать всё что требуется для отображения страницы. URL не обязательно должен быть корневой страницей.\
-`wget -r -np -p URL`
+Скачать сайт: `-r` -- recursive, `-np` -- no-parent, `-p` -- также скачать всё что требуется для отображения страницы, `-c` -- продолжить (continue) закачку с места разрыва, если он случится, `--restrict-file-names=nocontrol` -- после загрузки не [экранировать](https://www.gnu.org/software/wget/manual/wget.html#index-file-names_002c-restrict) русские буквы в именах файлов. URL не обязательно должен быть корневой страницей.\
+`wget -r -np -p -c --restrict-file-names=nocontrol URL`
 
 #### xargs
 
