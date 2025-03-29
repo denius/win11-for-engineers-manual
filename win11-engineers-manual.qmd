@@ -2503,6 +2503,10 @@ _Note:_ за один запрос модель вряд ли сможет вы�
 
 [Внедряем AI Code Assistant в разработку бесплатно и без вендорлока --- Инструкция](https://habr.com/ru/articles/875816/):
 
+https://ollama.com/blog/continue-code-assistant
+
+https://vsegpt.ru/ExtTools/Continue
+
 ## Работа с документами
 
 Для работы со своими документами/файлами применяется технология [RAG](https://en.wikipedia.org/wiki/Retrieval-augmented_generation) --- Retrieval-Augmented Generation. Продвинутые пользователи могут использовать более мощные [инструменты](https://github.com/vince-lam/awesome-local-llms#open-source-local-llm-projects), например [SillyTavern](https://github.com/SillyTavern/SillyTavern), а здесь далее будут описаны способы попроще.
