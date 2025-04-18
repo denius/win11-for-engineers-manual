@@ -4088,7 +4088,7 @@ vertical-align: -.125em;
 </nav>
 <div style="page-break-after: always;"></div>
 <p><em>Опубликовано под лицензией <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ru">CC-BY-NC-SA</a>.</em></p>
-<p><em>Version: 0.4.1</em></p>
+<p><em>Version: 0.4.3</em></p>
 <section id="этап-1-установка-базового-набора-рабочих-программ" class="level1 unnumbered">
 <h1 class="unnumbered"><strong><em>Этап 1: Установка базового набора рабочих программ</em></strong></h1>
 <blockquote class="blockquote">
@@ -6454,7 +6454,7 @@ _<span class="citation" data-cites="Справочник.md_">@Справочн�
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/denius\.github\.io\/win11-for-engineers-manual\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
