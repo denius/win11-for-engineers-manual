@@ -22,18 +22,19 @@ format:
     # sansfont: Open Sans SemiCondensed
     mainfont: OpenSansSemiCondensed Nerd Font Propo
     sansfont: OpenSansSemiCondensed Nerd Font Propo
-    monofont: UbuntuCondensed Nerd Font # All fitted!
-    # monofont: D2CodingLigature Nerd Font #tilde_auto
-    # monofont: IosevkaTerm NF #tilde_aut
-    # monofont: ZedMono Nerd Font Mono #tilde_aut
-    # monofont: M+1Code Nerd Font Mono #tilde_aut
-    # monofont: Monoid Nerd Font Mono #tilde
-    # monofont: Sudo #tilde
-    # monofont: InputMonoCondensed Nerd Font #ti
-    # monofont: Bitstream Vera Sans Mono #
-    # monofont: Inconsolata LGC Nerd Font Mono #
-    # monofont: UbuntuSansMono Nerd Font #
-    # monofont: RobotoMono Nerd Font Mono #
+    # fonts list by width
+    monofont: UbuntuCondensed Nerd Font
+    # monofont: D2CodingLigature Nerd Font
+    # monofont: IosevkaTerm NF
+    # monofont: ZedMono Nerd Font Mono
+    # monofont: M+1Code Nerd Font Mono
+    # monofont: Monoid Nerd Font Mono
+    # monofont: Sudo
+    # monofont: InputMonoCondensed Nerd Font
+    # monofont: Bitstream Vera Sans Mono
+    # monofont: Inconsolata LGC Nerd Font Mono
+    # monofont: UbuntuSansMono Nerd Font
+    # monofont: RobotoMono Nerd Font Mono
     # monofont: CaskaydiaCove Nerd Font Mono
     monofontoptions:
       - Color=39729E
@@ -70,7 +71,7 @@ from: markdown+tex_math_single_backslash
 
 *Опубликовано под лицензией [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ru).*
 
-*Version: 0.4.1*
+*Version: 0.4.2*
 
 # **_Этап 1: Установка базового набора рабочих программ_** {.unnumbered}
 
