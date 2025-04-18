@@ -46,6 +46,7 @@ format:
     tbl-colwidths: auto
     # listings: true # Didn't worked!
     lang: ru
+    output-file: win11-for-engineers-manual.pdf
 
   html:
     toc: true
@@ -60,6 +61,7 @@ format:
     # monofont: D2CodingLigature Nerd Font
     monofont: Iosevka Nerd Font
     # monofont: IosevkaTerm NF
+    page-layout: full
 
 from: markdown+tex_math_single_backslash
 ---
