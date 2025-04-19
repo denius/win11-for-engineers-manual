@@ -1213,7 +1213,7 @@ julia
 ```
 
 ```julia
-] add Revise, OhMyREPL, Unitful, Roots,
+] add Revise, OhMyREPL, About, Unitful, Roots,
       DataStructures, Plots, Chairmarks, Debugger
 ```
 
@@ -1226,6 +1226,7 @@ atreplinit() do repl
     @eval using Chairmarks
     @eval using Debugger
     @eval using DataStructures
+    @eval using About
     @eval using Revise
 end
 ```
