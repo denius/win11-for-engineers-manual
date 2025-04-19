@@ -1804,7 +1804,7 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 
 ## Текстовые документы
 
-На данный момент Markdown это основной формат разметки для текстовых документов. Помимо этого существует ещё пара десятков форматов с аналогичным функционалом, но после того, как [github](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) взял Markdown в качестве своего основного языка разметки, все остальные постепенно вышли из использования.
+На данный момент [Markdown](https://ru.wikipedia.org/wiki/Markdown) это основной формат разметки для текстовых документов. Помимо этого существует ещё пара десятков форматов с аналогичным функционалом (в том числе LaTeX), но после того, как [github](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) взял Markdown в качестве своего основного языка разметки, все остальные постепенно вышли из использования.
 
 Ещё существует LaTeX, но это излишне переусложнённо и не читабельно для целей написания простых статей, веб-страниц, или документации к программам. Здесь LaTeX упоминается только из-за его языка разметки математических выражений, который повсеместно распространился, в отрыве от самого LaTeX'а.
 
@@ -1844,6 +1844,10 @@ quarto install tinytex
 ```
 
 Можно [использовать в VSCode](https://quarto.org/docs/tools/vscode.html) с соответствующим [плагином](http://marketplace.visualstudio.com/items?itemName=quarto.quarto). А можно просто написать _.qmd_ файл в любом редакторе, и сконвертировать в [выбранный формат](https://quarto.org/docs/output-formats/all-formats.html): `quarto render win11-for-engineers-manual.qmd` (как данное руководство).
+
+### LaTeX
+
+Существует сайт [overleaf.com](https://www.overleaf.com/), это онлайн-редактор _LaTeX_ с поддержкой автоматического рендеринга (отображения) результата, контроля версий, совместного редактирования. Если требуется написать статью на LaTeX, а не знаешь как, то этот сайт правильный выбор. А если знаешь как, то мне и советовать нечего.
 
 ### Универсальный конвертер Pandoc
 
