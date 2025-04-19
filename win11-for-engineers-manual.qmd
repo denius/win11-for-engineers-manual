@@ -950,12 +950,15 @@ _Note:_ Профессиональные разработчики в своей 
 
 ### Отладка в Windows {.unnumbered .unlisted}
 
-*\<TBD\>*
 
 ```sh
 cd project
 wsl code .
 ```
+
+*\<TBD\>*
+
+Отладка в Windows не должна отличаться от отладки в Linux, см. следующий пункт.
 
 ### Отладка в Linux {.unnumbered .unlisted}
 
