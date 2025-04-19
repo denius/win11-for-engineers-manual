@@ -4,7 +4,7 @@
 
 В руководстве:
 
-* Скачивание дистрибутивов Windows и MSOffice с официальных сайтов. Пояснение различия лицензий программного обеспечения MicroSoft, таких как Retail, OEM, VL.
+* Загрузка дистрибутивов Windows и MSOffice с официальных сайтов. Пояснение различия лицензий программного обеспечения MicroSoft, таких как Retail, OEM, VL.
 
 * Установка программного обеспечения с использованием менеджеров программ [Scoop](https://scoop.sh/#/), [WinGet](https://github.com/microsoft/winget-cli), [Chocolatey](https://chocolatey.org/).
 
