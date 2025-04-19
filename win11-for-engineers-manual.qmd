@@ -1470,6 +1470,13 @@ scoop install busybox
 
 * `-h` --- [h]uman, выводить размеры в _Kb (KiB)_, _Mb (MiB)_, и т.д., а не в байтах;
 
+_**Note**:_ `ls` из состава BusyBox не умеет показывать файлы с русскими буквами в имени файла. Поэтому, её следует заменить на утилиту `ls` из состава приложения `git`:
+```cmd
+scoop shim add ls %UserProfile%\scoop\apps\git\current\usr\bin\ls.exe
+```
+Пока не пофиксят этот [баг](https://github.com/rmyorston/busybox-w32/issues/17), данную процедуру придётся повторять после каждого обновления _BusyBox_ или _git_, благо такие обновления могут быть проведены только вручную командой `scoop update --all`.
+
+
 #### BusyBox команды
 
 
@@ -1905,6 +1912,28 @@ _Markdown_
 
 _Note:_ Есть поддержка режима редактирования Vim в плагине _CodeMirror Keymap Vim_. Но для _очень_ продвинутых пользователей этот плагин не актален, так как они уже настроили себе расширение <https://github.com/glacambre/firenvim>.
 
+### AI-based
+
+*Данный пункт написан при поддержке LLM.*
+
+Появляются приложения со встроенными ИИ-помощниками (ассистентами). Разумно предположить, что в недалёком будущем это станет мейнстримом --- облегчение человеческой деятельности в областях монотонной или однообразной работы.
+
+Одним из таких приложений с интеграцией ИИ-ассистента является [Reor](https://www.reorproject.org/), это [опенсорс](https://github.com/reorproject/reor) приложение для ведения заметок. В Reor встроена утилита Ollama, которая позволяет использовать локальную языковую модель (LLM). Также поддерживается подключение внешних LLM через OpenAI-совместимый протокол. _Note:_ Для работы с локальными LLM для приложения требуется мощный компьютер, точнее, требуется наличие видеокарты.
+
+Заметки в Reor хранятся в виде отдельных Markdown-файлов (*.md*), организованных в папках. Пользователь может создавать подпапки для структурирования информации. При установке можно указать папку с уже существующими Markdown-заметками, и Reor продолжит работу с ними, не нарушая текущую организацию файлов.
+
+В процессе работы Reor выступает как RAG AI-ассистент (Retrieval-Augmented Generation). Это означает, что встроенная языковая модель (LLM) анализирует содержимое заметок и на основе этого предоставляет дополнительные функции: отвечает на вопросы, учитывает контекст заметок, автоматически устанавливает семантические связи между ними и предлагает подсказки при написании текста. Подробнее [на официальной сайте](https://www.reorproject.org/).
+
+[Установка](https://winstall.app/apps/ReorProject.Reor) Reor:
+```bash
+winget install --id=ReorProject.Reor -e
+```
+
+_Note:_ В целом, на данном этапе развития, не стоит ожидать от таких приложений чего-то выдающегося. Да и шумит компьютер сильно при работе с локальными LLM.
+
+Подробнее про используемые термины и технологии в [Приложение: AI/LLM](#приложение-aillm).
+
+
 ## Обработка картинок и создание видео
 
 ### ImageMagick
@@ -2121,7 +2150,8 @@ HandBrakeCLI --preset "Production Standard" --encoder x264 -i export.avi -o expo
 
 ## OpenFOAM
 
-[**OpenFOAM**](https://openfoam.org/)\
+[**OpenFOAM**](https://openfoam.org/)
+
 Онлайн книжка по OpenFOAM --- [Notes on Computational Fluid Dynamics: General Principles (2022) C. Greenshields, H. Weller](https://doc.cfd.direct/notes/cfd-general-principles/index).
 
 OpenFOAM будет запускаться из docker-контейнера из под WSL. В такой комбинации: OpenFOAM сможет работать в параллельном режиме, будет запускаться [ParaView](https://www.paraview.org/) без X-сервера в нативном WSL2 графическом режиме.
@@ -2201,8 +2231,7 @@ See also <https://github.com/topics/3d-reconstruction>
 
 ## Калькулятор!
 
-[**Qalculate!**](https://qalculate.github.io/screenshots.html)\
-калькулятор с широчайшими возможностями: единицы измерения, интервальная арифметика, полиномы, решение уравнений, простое дифференцирование и интегрирование, матрицы и вектора! [Примеры вычислений](https://github.com/Qalculate/libqalculate/#examples-expressions).
+[**Qalculate!**](https://qalculate.github.io/screenshots.html) --- калькулятор с широчайшими возможностями: единицы измерения, интервальная арифметика, полиномы, решение уравнений, простое дифференцирование и интегрирование, матрицы и вектора! [Примеры вычислений](https://github.com/Qalculate/libqalculate/#examples-expressions).
 
 [Установка](https://winstall.app/apps/Qalculate.Qalculate):
 ```cmd
@@ -2213,8 +2242,7 @@ winget install --id=Qalculate.Qalculate -e`.
 
 ### Scilab
 
-[**Scilab**](https://www.scilab.org/about/scilab-open-source-software)\
-Открытый программный комплекс, полноценная замена Matlab. Есть встроенный аналог Simulink --- [Xcos](https://www.scilab.org/software/xcos). Установка:
+[**Scilab**](https://www.scilab.org/about/scilab-open-source-software) --- [открытый](https://gitlab.com/scilab/scilab) программный комплекс, полноценная замена Matlab. Есть встроенный аналог Simulink --- [Xcos](https://www.scilab.org/software/xcos). Установка:
 ```cmd
 winget install --id=Scilab.Scilab -e
 ```
@@ -2253,7 +2281,7 @@ To access the server, open this file in a browser:
 scoop install extras/maxima
 ```
 
-Дополнительно можно установить чуть более новый GUI со страницы [wxMaxima-developers](https://github.com/wxMaxima-developers/wxmaxima/releases).
+Дополнительно, можно установить чуть более новый GUI со страницы [wxMaxima-developers](https://github.com/wxMaxima-developers/wxmaxima/releases).
 
 ## Построение графиков
 
@@ -2770,6 +2798,7 @@ fd --hidden "\.vhdx$" %HOME% | xargs -I@ cp -v @ E:\backup\wsl\
 
 _**Note**:_ _Clink_ не работает внутри _Far_, т.е, в терминале _Far_ по `<Ctrl+O>` все супер-пупер автодополнения и поиск от _Clink_ не сработают --- для работы _Clink_ должна использоваться отдельная консоль.
 
+_Note:_ `ls` из состава BusyBox не работает с русскими буквами, решение описано чуть ниже.
 
 ### Установка Clink+BusyBox
 
@@ -2783,6 +2812,13 @@ scoop install oh-my-posh
 scoop bucket add nerd-fonts
 scoop install nerd-fonts/IosevkaTerm-NF-Mono
 ```
+
+_**Note**:_ `ls` из состава BusyBox не умеет показывать файлы с русскими буквами в имени файла. Поэтому, её следует заменить на утилиту `ls` из состава приложения `git`:
+```cmd
+scoop shim add ls %UserProfile%\scoop\apps\git\current\usr\bin\ls.exe
+```
+Пока не пофиксят этот [баг](https://github.com/rmyorston/busybox-w32/issues/17), данную процедуру придётся повторять после каждого обновления _BusyBox_ или _git_, благо такие обновления могут быть проведены только вручную командой `scoop update --all`.
+
 
 ### Настройка Clink
 
