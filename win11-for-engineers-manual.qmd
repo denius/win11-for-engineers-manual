@@ -192,6 +192,10 @@ _\<Upd 2025\>:_ Создать локальную учётную запись в
 
 * Для продвинутых пользователей есть утилита [Win11Debloat](https://github.com/Raphire/Win11Debloat) для отключения телеметрии и удаления ненужных предустановленных программ. Этот скрипт имеет три режима работы, в одном из которых (_3-ем_) предлагается список предустановленного софта, где можно выбрать галочками что удалить  а что оставить. Перед применением _крайне_ рекомендуется сделать бекап системы.
 
+# Справочные материалы по системе Windows
+
+[Windows 10/11 Guide. Including Windows Security tools, Encryption, Nextcloud, Graphics, Gaming, Virtualization, Windows Subsystem for Linux (WSL 2), Software Apps, and Resources.](https://github.com/mikeroyal/Windows-11-Guide)
+
 ## Клавиши быстрого доступа (shortcut keys) в Windows
 
 Полный список [комбинаций клавиш быстрого доступа Windows](https://support.microsoft.com/help/12445), [ещё один](https://www.windowscentral.com/best-windows-10-keyboard-shortcuts), [и ещё один](https://answers.microsoft.com/en-us/windows/forum/all/73-keyboard-shortcuts-in-windows/1a56279c-752a-4d2e-8223-2b31b643ebaa).
@@ -372,7 +376,7 @@ sudo choco update all -y
 winget update --all
 ```
 
-* _Scoop_ может обновить только то, что он сам установил: `scoop list`. Вывести список обновляемого: `scoop update`. Обновить всё: `scoop update --all`.
+* _Scoop_ может обновить только то, что он сам установил: `scoop list`. Обновить реестр программ и обновлений: `scoop update`, вывести список обновляемого: `scoop status`. Обновить всё: `scoop update --all`.
 
 * _Chocolatey_ может обновить только то, что он сам установил. В ChocolateyGUI при запуске он покажет, что можно обновить: нажать иконку-звёздочку. Обновить из CLI: `sudo choco update all -y`.
 
@@ -3182,7 +3186,7 @@ _Note:_ Входящие в _BusyBox_ утилиты имеют некоторы
 
 В установленной конфигурации, включение-выключение подсветки проверки правописания будет происходить по команде `<LocalLeader>s` = `\s`, а переключение языка по `Ctrl-6` (в документации обозначается как `Ctrl-^`) в режиме редактирования (INSERT) или режиме команд (COMMAND), в нормальном режиме (NORMAL) команда `Ctrl-^` не работает. Для режима команд индикатор текущей кодировки не отображается.
 
-#### Некоторые команды Neovim
+#### Некоторые команды и настройки Neovim
 
 * В меню выбора из командной строки, стрелки влево/вправо бегают по вариантам, например, набрать `:colorscheme ` и `<Tab>`, появится меню, перемещаться по которому следует клавишами влево-вправо, `Ctrl-Y` или `<Enter>` --- [выбрать](https://neovim.io/doc/user/options.html#'wildmenu').
 
