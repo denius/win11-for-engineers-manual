@@ -196,6 +196,8 @@ _\<Upd 2025\>:_ Создать локальную учётную запись в
 
 [Windows 10/11 Guide. Including Windows Security tools, Encryption, Nextcloud, Graphics, Gaming, Virtualization, Windows Subsystem for Linux (WSL 2), Software Apps, and Resources.](https://github.com/mikeroyal/Windows-11-Guide)
 
+[Awesome list dedicated to Windows Subsystem for Linux.](https://github.com/sirredbeard/awesome-wsl)
+
 ## Клавиши быстрого доступа (shortcut keys) в Windows
 
 Полный список [комбинаций клавиш быстрого доступа Windows](https://support.microsoft.com/help/12445), [ещё один](https://www.windowscentral.com/best-windows-10-keyboard-shortcuts), [и ещё один](https://answers.microsoft.com/en-us/windows/forum/all/73-keyboard-shortcuts-in-windows/1a56279c-752a-4d2e-8223-2b31b643ebaa).
@@ -745,7 +747,11 @@ sudo apt install aptitude mc bash-completion neovim wget curl \
          python3 python3-pip ripgrep fzf fd-find parallel
 ```
 
-Для запуска терминала с WSL запускать `WSL` или `Ubuntu.exe` из меню _Start/Пуск_; другой вариант --- запуск команды `wsl` из Cmd/PowerShell; и, самый лучший вариант, это запуск в отдельном терминале в _WindowsTerminal_ (сам автоматически настроится при установке WSL), или запуск в отдельном терминале в [_Cmder_](https://conemu.github.io/en/wsl.html#wsl-native) (настраивается автоматически в _Cmder_ по _Setup Tasks > Add/refresh default tasks_).
+Методы запуска консоли WSL:
+
+* самый лучший вариант, это запуск в отдельном профиле в _WindowsTerminal_^[сам автоматически настроится при установке WSL] (или в отдельном профиле в [_Cmder_](https://conemu.github.io/en/wsl.html#wsl-native)^[настраивается автоматически в _Cmder_ по _Setup Tasks > Add/refresh default tasks_]);
+* запуск команды `wsl` прямо из запущенного термина Cmd/Clink/PowerShell/Far, который запущен в WT или Cmder;
+* запускать `WSL` или `Ubuntu.exe` из меню _Start/Пуск_;
 
 _Note:_ _Ubuntu.exe_ --- это alias --- Windows автоматически создаёт такие ссылки для каждой WSL системы для быстрого доступа/запуска.
 
@@ -1752,7 +1758,7 @@ _Note:_ Для _PowerShell_ смотри соответствующий пунк
 
 ## Офисные пакеты
 
-Существует, как минимум, три офисных пакета с открытым исходным кодом, которые позиционируются как вполне разумная замена MSOffice для вариантов персонального использования. У MSOffice есть заметные преимущества в совместной, распределённой работе над документами в организациях, с поддержкой сервиса SharePoint/OneDrive, и т.п., но и здесь появились альтернативы. У всех пакетов есть ленточный/ribbon интерфейс схожий с MSOffice. Все поддерживают стили MSOffice, отображение и набор формул.
+Существует, как минимум, два офисных пакета с открытым исходным кодом: [LibreOffice](https://www.libreoffice.org/) и [OnlyOffice](https://www.onlyoffice.com/ru/desktop.aspx), которые позиционируются как вполне разумная замена MSOffice для вариантов персонального использования. У MSOffice есть заметные преимущества в совместной, распределённой работе над документами в организациях, с поддержкой сервиса SharePoint/OneDrive, и т.п., но и здесь появились альтернативы. У всех пакетов есть ленточный/ribbon интерфейс схожий с MSOffice. Все поддерживают стили MSOffice, отображение и набор формул.
 
 _Note:_ у всех офисных пакетов есть некоторое несовпадение в отображении открытых документов с MSOffice, которое связано с тем, что пользователи оформляют документы и презентации не на основе стилей, а вручную подгоняя вид пробелами и отступами. Если же использовать правильный, рекомендуемый Microsoft, поход к оформлению документов, то различия в отображении документов будут минимальны, а скорее всего, вообще неразличимы.
 
