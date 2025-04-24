@@ -3043,6 +3043,28 @@ cmd.exe /k "clink inject && %ConEmuBaseDir%\CmdInit.cmd"
 * Cmder/Conemu имеет большое количество настроек, поэтому рекомендуется, разок его настроив, сохранить файл настроек ConEmu.xml, и в дальнейшем, применять его на других своих компьютерах.
 * [mc](https://scoop.sh/#/apps?q=mc) под Windows: сменить диск: `Alt+D`
 
+### Использование Cmder/Conemu {.unnumbered .unlisted}
+
+Списки горячих клавиш: [Cmder](https://github.com/cmderdev/cmder#keyboard-shortcuts) ([Conemu](https://conemu.github.io/en/KeyboardShortcuts.html)) и [Clink](https://chrisant996.github.io/clink/clink.html#gettingstarted_keybindings); ниже приведены наиболее часто используемые.
+
+
+Управление терминалами Cmder/Conemu:
+
+* ``Ctrl+` `` --- глобальная комбинация клавиш вызова Cmder, не работает в поле ввода
+* `Ctrl+Shift+T` --- диалог открытия новой вкладки/окна (по умолчанию `Ctrl+T`, см. _Настройки Cmder_ ниже)
+* `Ctrl+Shift+W` --- закрыть вкладку/окно (по умолчанию `Ctrl+W`, см. _Настройки Cmder_ ниже)
+* `Ctrl+D` --- завершить терминальную сессию, эквивалентно команде _exit_
+* `Shift+Alt+#Number` --- открыть новую вкладку/окно по быстрому набору из меню открытия новых терминалов, см. `Win+Alt+T`
+* `Alt+Enter`, `Ctrl+Win+Enter` --- Full Screen
+
+Управление вкладками Cmder/Conemu работает когда все консоли открыты в одном окне Cmder/Conemu, а не когда каждый терминал в своём собственном окне. Управление вкладками:
+
+* `Ctrl+#Number` --- переключиться на вкладку номер #Number
+* `Ctrl+Tab` --- переключиться на следующую вкладку
+* `Ctrl+Shift+Tab` --- переключиться на предыдущую вкладку
+
+## Алиасы и переменные окружения в консоли
+
 ### Алиасы для Cmder {.unnumbered .unlisted}
 
 В настройках в _Settings > Startup > Environment_ есть поле для стартовых настроек. В это поле можно добавить свои переменные окружения и алиасы:
@@ -3073,27 +3095,7 @@ alias ls=ls --color=auto -F $*
 
 А можно использовать те алиасы, что настроены в _Clink_.
 
-### Использование Cmder/Conemu {.unnumbered .unlisted}
-
-Списки горячих клавиш: [Cmder](https://github.com/cmderdev/cmder#keyboard-shortcuts) ([Conemu](https://conemu.github.io/en/KeyboardShortcuts.html)) и [Clink](https://chrisant996.github.io/clink/clink.html#gettingstarted_keybindings); ниже приведены наиболее часто используемые.
-
-
-Управление терминалами Cmder/Conemu:
-
-* ``Ctrl+` `` --- глобальная комбинация клавиш вызова Cmder, не работает в поле ввода
-* `Ctrl+Shift+T` --- диалог открытия новой вкладки/окна (по умолчанию `Ctrl+T`, см. _Настройки Cmder_ ниже)
-* `Ctrl+Shift+W` --- закрыть вкладку/окно (по умолчанию `Ctrl+W`, см. _Настройки Cmder_ ниже)
-* `Ctrl+D` --- завершить терминальную сессию, эквивалентно команде _exit_
-* `Shift+Alt+#Number` --- открыть новую вкладку/окно по быстрому набору из меню открытия новых терминалов, см. `Win+Alt+T`
-* `Alt+Enter`, `Ctrl+Win+Enter` --- Full Screen
-
-Управление вкладками Cmder/Conemu работает когда все консоли открыты в одном окне Cmder/Conemu, а не когда каждый терминал в своём собственном окне. Управление вкладками:
-
-* `Ctrl+#Number` --- переключиться на вкладку номер #Number
-* `Ctrl+Tab` --- переключиться на следующую вкладку
-* `Ctrl+Shift+Tab` --- переключиться на предыдущую вкладку
-
-## Замечание про _HOME_
+### Замечание про _HOME_
 
 * Для _Clink_ переменную _HOME_ можно прописать в стартап файле\
   `%LOCALAPPDATA%\clink\clink_start.cmd`, см. раздел [Алиасы для Clink](#алиасы-для-clink).
