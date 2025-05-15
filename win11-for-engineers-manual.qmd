@@ -71,7 +71,7 @@ from: markdown+tex_math_single_backslash
 
 *Опубликовано под лицензией [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ru).*
 
-*Version: 0.4.4*
+*Version: 0.4.5*
 
 # **_Этап 1: Установка базового набора рабочих программ_** {.unnumbered}
 
