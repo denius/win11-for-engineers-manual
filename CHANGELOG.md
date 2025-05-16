@@ -3,6 +3,14 @@
 
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+### Fixed
+
+- Уточнения по LLM моделям.
+
 ## [0.4.5] - 2025-05-15
 
 ### Added
