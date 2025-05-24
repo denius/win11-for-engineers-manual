@@ -831,7 +831,7 @@ winget install --id=PuTTY.PuTTY -e
    vi authorized_keys
    ```
    Далее процесс добавления ключа из буфера обмена в открытый в `vi` файл: набрать на клавиатуре команду:
-   ```txt
+   ```default
    Go<Shift+Insert><Esc>:wq
    ```
    здесь `<Shift+Insert>` и `<Esc>` --- это клавиатурные комбинации, а не строчки которые вводить.\
@@ -1871,26 +1871,94 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 
 ### Quarto
 
-[**Quarto**](https://quarto.org/) --- интерактивная система вёрстки на основе Markdown, с одновременным отображением отрендеренного содержимого:
+[**Quarto**](https://quarto.org/) --- система вёрстки на основе Markdown, с одновременным отображением отрендеренного содержимого:
 
 * умеет [показывать формулы, картинки, код, таблицы](https://quarto.org/docs/authoring/markdown-basics.html);
-* может выполнять код на [Julia](https://quarto.org/docs/computations/julia.html), [Python](https://quarto.org/docs/computations/python.html), [R](https://quarto.org/docs/computations/r.html), [Observable JS](https://quarto.org/docs/computations/ojs.html), и [показывать результат в тексте](https://quarto.org/docs/computations/inline-code.html);
-* имеет [стили](https://quarto.org/docs/output-formats/pdf-basics.html#document-class), для оформления [статей](https://quarto.org/docs/output-formats/ms-word.html), [презентаций](https://quarto.org/docs/presentations/powerpoint.html), [сайтов](https://quarto.org/docs/websites/), и др. Стили можно использовать пользовательские, их можно предоставить либо в виде шаблона стилей dotx или potx, либо в виде готового файла docx или pptx, с которого будет скопирован стиль оформления;
+
+* может выполнять код на [_Julia_](https://quarto.org/docs/computations/julia.html), [_Python_](https://quarto.org/docs/computations/python.html), [_R_](https://quarto.org/docs/computations/r.html), [_Observable JS_](https://quarto.org/docs/computations/ojs.html), и [показывать результат выполнения в тексте](https://quarto.org/docs/computations/inline-code.html);
+
+* умеет отображать [диаграммы](https://quarto.org/docs/authoring/diagrams.html) в форматах [Mermaid](https://mermaid.js.org/) и [Graphviz](https://graphviz.org/) (_dot_);
+
 * формат файлов Quarto (_.qmd_) --- это Markdown с некоторыми расширениями, т.е. простой текстовый файл, который можно редактировать в любом редакторе;
-* поддерживается в [VSCode расширении](http://marketplace.visualstudio.com/items?itemName=quarto.quarto);
-* _.qmd_ файлы конвертируются в pdf, docx, pptx, html с учётом заданных стилей, или стилем по умолчанию;
-* умеет [загружать](https://quarto.org/docs/tools/jupyter-lab.html) _.ipynb_;
+
+* поддерживается в [VSCode расширении](http://marketplace.visualstudio.com/items?itemName=quarto.quarto), с возможностью синхронного отображения отрендеренного содержимого;
+
+* _.qmd_ файлы конвертируются в форматы _pdf_, _docx_, _pptx_, _html_ с учётом заданных стилей:
+
+  + Quarto имеет предустановленные [стили](https://quarto.org/docs/output-formats/pdf-basics.html#document-class), для оформления [статей](https://quarto.org/docs/output-formats/ms-word.html), [презентаций](https://quarto.org/docs/presentations/powerpoint.html), [сайтов](https://quarto.org/docs/websites/), и др. В случае отсутствия явного указания стиля будет использован стиль по умолчанию _article_.
+
+  + вместо предустановленных стилей, можно задавать пользовательские стили; их можно указать либо в виде файла шаблона стилей _dotx_ или _potx_, либо указать на файл готового документа _docx_ или _pptx_, с которого будет скопирован стиль оформления. Для оформления _pdf_ можно непосредственно внедрять код _LaTeX_ для явного указания стилей и/или пакетов;
+
+* умеет [загружать](https://quarto.org/docs/tools/jupyter-lab.html) _.ipynb_ и рендерить в различные форматы;
+
 * [JupyterLab](https://quarto.org/docs/tools/jupyter-lab-extension.html) умеет показывать Quarto с полным форматированием;
-* под капотом использует [pandoc](https://pandoc.org/).
+
+* "под капотом" использует [pandoc](https://pandoc.org/).
 
 Установка:
 ```cmd
 winget install --id=Posit.Quarto -e
 python3 -m pip install nbclient
 quarto install tinytex
+quarto install chromium
 ```
 
 Можно [использовать в VSCode](https://quarto.org/docs/tools/vscode.html) с соответствующим [плагином](http://marketplace.visualstudio.com/items?itemName=quarto.quarto). А можно просто написать _.qmd_ файл в любом редакторе, и сконвертировать в [выбранный формат](https://quarto.org/docs/output-formats/all-formats.html): `quarto render win11-for-engineers-manual.qmd` (как данное руководство).
+
+
+#### Выполняемые блоки кода {.unnumbered .unlisted}
+
+Помимо отображения блоков кода и математических формул в _LaTeX_ нотации в Markdown/Quarto документы можно добавлять выполняемые блоки кода, результат выполнения которых будет подставлен на страницу, для примера, в главе про [Matplotlib](#matplotlib) показан блок кода на питон и результат его выполнения тут же добавлен в документ. Выполняемые блоки кода аннотируются фигурными скобками вокруг названия типа блока кода, например, `{python}`.
+
+Также, Quarto выполняет и выводит [диаграммы](https://quarto.org/docs/authoring/diagrams.html), с использованием аннотированных блоков кода в форматах [Mermaid](https://mermaid.js.org/) ([примеры](https://github.com/mermaid-js/mermaid#examples)) и [Graphviz(dot)](https://graphviz.org/) ([примеры](https://renenyffenegger.ch/notes/tools/Graphviz/examples/index)). _Note:_ помимо этих двух типов диаграмм в Quarto есть поддержка [других типов диаграмм](https://github.com/pandoc-ext/diagram#diagram-types) (*TikZ* и др.) через [плагины pandoc](https://github.com/pandoc-ext).
+
+Пример диаграммы Mermaid со [страницы](https://quarto.org/docs/authoring/diagrams.html) документации Quarto. Этот блок кода Mermaid выполняется по месту и отрисовывается вместо кода:
+
+```{mermaid}
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
+На месте диаграммы в этом документе, на самом деле, стоит код Mermaid код с аннотацией выполнения (`{}`):
+
+```{{mermaid}}
+flowchart LR
+  A[Hard edge] --> B(Round edge)
+  B --> C{Decision}
+  C --> D[Result one]
+  C --> E[Result two]
+```
+
+Аналогично работает отрисовка диаграмм Graphviz (_dot_), здесь показан пример сразу вместе с блоком кода:
+
+```{dot}
+//| echo: fenced
+//| fig-width: 6
+//| fig-height: 1.5
+digraph G {
+  rankdir = LR;
+
+  A [label="Hard edge" shape=box];
+  B [label="Round edge" shape=ellipse];
+  C [label="Decision" shape=diamond];
+  D [label="Result one" shape=box];
+  E [label="Result two" shape=box];
+
+  A -> B;
+  B -> C;
+  C -> D;
+  C -> E;
+}
+```
+
+Выполняемые блоки кода для языков _Python_, _Julia_ и *R*, по умолчанию, отображаются вместе с результатами их выполнения; выполняемые блоки кода диаграмм по умолчанию не отображаются в результирующем документе. Это можно изменить опцией выполнения `#| echo:`, что было проделано выше на примере диаграммы Graphviz добавлением опции `//| echo: fenced`; подробности опций отображения блоков кода и результатов выполнения описаны в [документации](https://quarto.org/docs/computations/execution-options.html#output-options).
+
+
+В документе Quarto могут выполняться достаточно большие блоки кода, их результат выполнения будет отрисован в документе, и, вполне возможно, создавать статьи, или, скажем, курсовые работы вместе отчётом, в одном _qmd_ файле. При наличии большого числа блоков кода, или длительных вычислений в них, для контроля времени затрачиваемого на выполнения блоков кода во время рендеринга (`quarto render`) существуют опции [запрета](https://quarto.org/docs/computations/python.html#freezing-execution) на выполнение или выполнения только при изменении кода, [кеширования](https://quarto.org/docs/computations/python.html#caching) результатов выполнения и другие.
+
 
 ### _LaTeX_
 
@@ -1950,7 +2018,7 @@ _Highlight_\
 _KaTeX_\
 _Markdown_
 
-_Note:_ Есть поддержка режима редактирования Vim в плагине _CodeMirror Keymap Vim_. Но для _очень_ продвинутых пользователей этот плагин не актален, так как они уже настроили себе расширение <https://github.com/glacambre/firenvim>.
+_Note:_ Есть поддержка режима редактирования Vim в плагине _CodeMirror Keymap Vim_. Но для _очень_ продвинутых пользователей этот плагин не актуален, так как они уже настроили себе расширение <https://github.com/glacambre/firenvim>.
 
 ### AI-based
 
@@ -2364,12 +2432,13 @@ int main()
 {
     // Prepare data
     int n = 1000;
+    double xl = 0.0, xh = 10.0;
     std::vector<double> x(n), y(n), z(n);
 
-    for(int i=0; i<n; ++i)
+    for(int i=0; i<=n; ++i)
     {
-        x.at(i) = i;
-        y.at(i) = pow(i-1,-2/3);
+        x.at(i) = xl + i*(xh-xl)/n;
+        y.at(i) = pow(1.0 / pow(x.at(i) - 1.0, 2.0), 1.0/3.0);
     }
 
     // Set the size of output image to 1200x780 pixels
@@ -2379,7 +2448,7 @@ int main()
     // Plot a line whose name will show up as "x exp(-x)" in the legend
     plt::named_plot("1/(x-1)^(2/3)", x, y);
     // Set x-axis to interval [0,10]
-    plt::xlim(0, 10);
+    plt::xlim(xl, xh);
     // Add graph title
     plt::title("1/(x-1)^(2/3)");
     // Enable legend.
@@ -2392,21 +2461,27 @@ int main()
 
 Тоже самое на Python:
 
-```python
+
+```{python}
+#| warning: false
+#| echo: fenced
 import numpy as np
 import matplotlib.pyplot as plt
 
 n = 1000
-x = np.linspace(0, n - 1, n)
-y = np.power(x - 1, -2 / 3)
+xl = 0.0; xh = 10.0
+x = np.linspace(xl, xh, n)
+#y = np.power(x - 1, -2 / 3)
+y = np.power(1 / (x - 1)**2, 1/3)
 
 # plot 12 by 7.8 inches size at default 100 DPI gives 1200 by 780 picture
-plt.figure(figsize=(12, 7.8))
+# but for Quarto inline-pic there is should be real size:
+plt.figure(figsize=(8, 6))
 
 plt.plot(x, y, label="1/(x-1)^(2/3)")
 
 # Set x-axis to interval [0,10]
-plt.xlim(0, 10)
+plt.xlim(xl, xh)
 
 plt.title("1/(x-1)^(2/3)")
 
@@ -2425,7 +2500,7 @@ scoop install gnuplot
 
 Пример построения изображения графика на gnuplot. Этот фрагмент кода необходимо сохранить в файл, например _sample-plot.gp_, и выполнить команду `gnuplot sample-plot.gp`.
 
-```txt
+```default
 # set the image size (in pixels)
 set terminal pngcairo size 1200,780 enhanced font 'Verdana,10'
 
@@ -2433,7 +2508,7 @@ set terminal pngcairo size 1200,780 enhanced font 'Verdana,10'
 set output 'basic.png'
 
 # set the plot title
-set title "1/(x-1)^(2/3)"
+set title "1/(x-1)^{2/3}"
 
 # set axis ranges
 set xrange [0:10]  # Set x-axis range from 0 to 10
@@ -2443,12 +2518,12 @@ set yrange [*:*]   # Automatically determine y-axis range
 set key box
 
 # plot the function
-plot [0:10] (x - 1)**(-2.0/3.0) title "1/(x-1)^(2/3)" with lines linewidth 2 linecolor rgb "blue"
+plot [0:10] (1.0/(x - 1.0)**2)**(1.0/3.0) title "1/(x-1)^{2/3}" with lines linewidth 2 linecolor rgb "blue"
 ```
 
 Более сложный пример построения графика в gnuplot с обработкой данных из файла и построением двойной оси _Y_:
 
-```txt
+```default
 scale = 2.0
 
 set terminal pngcairo size 640*scale,480*scale fontscale scale linewidth scale pointscale scale
