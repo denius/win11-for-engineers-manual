@@ -273,6 +273,7 @@ scoop config aria2-enabled false
 
 scoop bucket add nerd-fonts
 scoop install nerd-fonts/IosevkaTerm-NF-Mono
+scoop install busybox
 scoop install fd
 scoop install ripgrep
 scoop install fzf
@@ -280,14 +281,12 @@ scoop install ccat
 scoop install btop
 scoop install wttop
 scoop install 7zip
-scoop install wget
 scoop install curl
 scoop install gcc
 scoop install gdb
 scoop install make
 scoop install cmake
 scoop install time
-scoop install busybox
 scoop install clipboard
 scoop install imagemagick
 scoop install ffmpeg
@@ -3341,6 +3340,7 @@ alias ls=ls --color=auto -F $*
 ```cmd
 scoop install llvm
 scoop install gcc
+scoop install busybox
 scoop install curl
 scoop install luarocks
 scoop bucket add versions
@@ -3355,13 +3355,6 @@ scoop install nodejs-lts
 scoop install tree-sitter
 scoop install yarn
 scoop install neovim
-```
-
-Если не установлен _BusyBox_, то установить ещё:
-```cmd
-scoop install gzip
-scoop install unzip
-scoop install wget
 ```
 
 Выйти и зайти заново в терминал, чтобы прописались пути для _python_ и проч., после выполнить:
@@ -3403,7 +3396,6 @@ _Note:_ для 256-цветного терминала, возможно, пот
 
 После всех настроек можно проверить, как всё это установилось, командой `:checkhealth`. Возможно будет указано несколько Warning: про pyenv, про недостающие языки типа ruby или php, но это не имеет принципиального значения. Основное --- надо убедиться что: а) плагин _treesitter_ (парсер) нормально заработал, и, что: б) плагин _LSP_ для нужного типа файлов работает --- LSP будет выводить отдельную диагностику для каждого типа файлов.
 
-_Note:_ Входящие в _BusyBox_ утилиты имеют некоторые параметры аргументов несколько отличающиеся от Linux. Поэтому, один из плагинов Neovim (Mason.nvim), в _:checkhealth_ сообщает о не настроенных программах _wget_, _unzip_, _gzip_, это сообщение _можно игнорировать_ если установлен _BusyBox_. (*CHECKME:* проверить именно неработоспособность Neovim (Mason.nvim) в чистом BusyBox. *\<TBD\>*) В случае, если ошибка всё же _реально_ проявляется, можно переустановить эти программы с целью замены на оригинальные; но, следует помнить, что при этом они перестанут нормально понимать пути файлов и глоббинг в Windows и использовать их надо будет с осторожность. _scoop install unzip_, _scoop install gzip_, _scoop install wget_. В данном случае, это [баг со стороны Neovim](https://github.com/williamboman/mason.nvim/issues/1601), который собираются исправлять.
 
 ### Использование
 
