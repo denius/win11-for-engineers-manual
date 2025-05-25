@@ -3,6 +3,12 @@
 
 ## [Unreleased]
 
+### Added
+
+### Changed
+
+### Fixed
+
 ## [0.5.0] - 2025-05-25
 
 ### Added
