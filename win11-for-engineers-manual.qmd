@@ -140,12 +140,16 @@ _\<Upd 2025\>:_ Создать локальную учётную запись в
 * Разрешить _Windows Development Mode_: (~~_Settings > Update & Security > For Developers:_~~) _Settings > System > For Developers: Developer Mode -> On_
 
 * Также, для разработчиков, для поддержки длинных имён файлов выполнить в PowerShell(Admin):\
-  `Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1`{.powershell}
+  ```powershell
+  Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
+  ```
 
 * После активации появится возможность переместить меню Старт влево: _Setting > Personalization > TaskBar > Taskbar behaviors > Taskbar alignment_.
 
 * Отключить режим гибернации (hibernate): в Cmd/PowerShell(Admin) выполнить:\
-  `powercfg /H off`
+  ```powershell
+  powercfg /H off
+  ```
 
 * После установки региона _Россия_ Windows настроит все соответствующие параметры, в том числе, установит запятую в качестве десятичного разделителя. Поправить на точку можно в _ControlPannel_, раздел _Region > Additional Settings... > Decimal Symbol_.
 
@@ -173,7 +177,7 @@ _\<Upd 2025\>:_ Создать локальную учётную запись в
 
 * Высокое время задержки перед повтором нажатия клавиш (если не помогает стандартный метод _ControlPanel > Keyboard: Repeat delay_) [правится](https://www.reddit.com/r/techsupport/comments/1du2gvd/keyboard_repeat_delay_keeps_setting_itself_to_its/) в реестре:\
   `regedit`: `HKEY_CURRENT_USER>Control Panel>Accessibility>Keyboard Response`:
-  ```
+  ```default
   AutoRepeatDelay 200
   AutoRepeatRate 5
   BounceTime 0
@@ -181,6 +185,11 @@ _\<Upd 2025\>:_ Создать локальную учётную запись в
   Flags 59
   ```
   Эти настройки могут слетать (при каждом обновлении Windows11?), поэтому, если ситуация будет повторяться, то надо сделать _.reg_ файл для этого раздела регистра, и применять его, когда задержка перед повтором опять станет длительной. См. также [Настройки](https://learn.microsoft.com/en-us/answers/questions/1124213/registry-keyboard-response-default-values). В общем, с этой задержкой перед повтором нажатий клавиш в Windows 11 какой-то баг, и, я полагаю, проблема разрешится с очередным обновлением.
+
+* После полной переустановки Windows, если были данные на диске D: и т.д., то может возникнуть проблема с доступом к старым данным, которые обусловлены несовпадением новых идентификаторов пользователя со старыми идентификаторами. В этом случае необходимо установить права доступа по умолчанию ([подробности *icacls*](https://learn.microsoft.com/ru-ru/windows-server/administration/windows-commands/icacls)), для этого запустить с правами Администратора команду:\
+  ```powershell
+  icacls D:\ /reset /t /c /l
+  ```
 
 * Для продвинутых пользователей есть утилита [Winutil](https://github.com/ChrisTitusTech/winutil) с широкими возможностями по [установке и удаления утилит и программ](https://christitustech.github.io/winutil/userguide/#__tabbed_1_1), по [тюнингу](https://christitustech.github.io/winutil/userguide/#tweaks) и [настройке](https://christitustech.github.io/winutil/userguide/#config) Windows, отключения телеметрии, и прочему. [Установка](https://christitustech.github.io/winutil/KnownIssues/#script-blocked-by-execution-policy) в PowerShell от Администратора (Admin!):
   ```powershell
