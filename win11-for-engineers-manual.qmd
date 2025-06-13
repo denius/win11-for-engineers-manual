@@ -5,6 +5,8 @@ subtitle: "по настройке компьютера инженера"
 author: "Денис Тельнов"
 license: "CC BY-NC-SA"
 pdf-engine: lualatex
+engine: julia
+#engine: knitr
 format:
   pdf:
     # top-level-division: part
@@ -63,9 +65,15 @@ format:
     monofont: Iosevka Nerd Font
     # monofont: IosevkaTerm NF
     page-layout: full
+    fig-width: 7in
+    fig-height: 5.625in
 
 from: markdown+tex_math_single_backslash
 ---
+
+```{julia}
+using PythonCall
+```
 
 {{< pagebreak >}}
 
@@ -1123,6 +1131,7 @@ python -m pip install --upgrade numpy
 python -m pip install --upgrade plotly
 python -m pip install --upgrade numba
 python -m pip install --upgrade mpi4py
+python -m pip install --upgrade jupyterlab
 winget install --id=Microsoft.msmpisdk -e
 winget install --id=Microsoft.msmpi -e
 ```
@@ -1966,6 +1975,42 @@ digraph G {
 
 В документе Quarto могут выполняться достаточно большие блоки кода, их результат выполнения будет отрисован в документе, и, вполне возможно, создавать статьи, или, скажем, курсовые работы вместе отчётом, в одном _qmd_ файле. При наличии большого числа блоков кода, или длительных вычислений в них, для контроля времени затрачиваемого на выполнения блоков кода во время рендеринга (`quarto render`) существуют опции [запрета](https://quarto.org/docs/computations/python.html#freezing-execution) на выполнение или выполнения только при изменении кода, [кеширования](https://quarto.org/docs/computations/python.html#caching) результатов выполнения и другие.
 
+##### Некоторые особенности блоков Julia
+
+В современных версиях _Quarto_, для выполняемых блоков кода языка _Julia_ есть возможность их выполнения непосредственно в julia (по умолчанию используется _jupyter_). Для этого в заголовке необходимо прописать опцию `engine: julia`; этого достаточно для Quarto документов с блоками кода _julia_. Если же в qmd-документе, при этом, присутствуют одновременно ещё _python_, или _r_ блоки, то дополнительно потребуется выполнить следующую команду в текущей директории:
+```sh
+julia --project=. -e 'import Pkg; Pkg.add("QuartoNotebookRunner"); Pkg.add("PythonCall"); Pkg.add("CondaPkg"); Pkg.add("RCall");'
+julia --project=. -e 'import Pkg; Pkg.build("QuartoNotebookRunner"); Pkg.build("PythonCall"); Pkg.build("CondaPkg"); Pkg.build("RCall");'
+julia --project=. -e 'using PythonCall'
+```
+
+что эквивалентно выполнению следующих команд в терминале julia:
+
+```julia
+julia> import Pkg
+julia> Pkg.activate(".")
+julia> Pkg.add("QuartoNotebookRunner")
+julia> Pkg.add("PythonCall")
+julia> Pkg.add("CondaPkg")
+julia> Pkg.add("RCall")
+julia> Pkg.build("QuartoNotebookRunner")
+julia> Pkg.build("PythonCall")
+julia> Pkg.build("CondaPkg")
+julia> Pkg.build("RCall")
+julia> using PythonCall
+```
+
+Эти операции требуются для загрузки пакета _PythonCall_, а также его предзагрузки и инициализации, в процессе которой будет также установлен пакет NumPy.
+
+Для [добавления пакетов _Python_](https://juliapy.github.io/PythonCall.jl/stable/pythoncall/#python-deps) следует выполнить команды:
+```julia
+julia> using CondaPkg
+julia> # press ] to enter the Pkg REPL
+pkg> conda add matplotlib
+```
+
+Также потребуется установить используемые в выполняемых блоках кода Julia пакеты: `Pkg.add("Plots")`.
+
 
 ### _LaTeX_
 
@@ -2457,12 +2502,12 @@ int main()
     // Set x-axis to interval [0,10]
     plt::xlim(xl, xh);
     // Add graph title
-    plt::title("1/(x-1)^(2/3)");
+    plt::title("Plot of 1/(x-1)^(2/3)");
     // Enable legend.
     plt::legend();
     plt::show();
     // Save the image (file format is determined by the extension)
-    // plt::save("./basic.png");
+    // plt::save("basic.png");
 }
 ```
 
@@ -2483,6 +2528,7 @@ y = np.power(1 / (x - 1)**2, 1/3)
 
 # plot 12 by 7.8 inches size at default 100 DPI gives 1200 by 780 picture
 # but for Quarto inline-pic there is should be real size:
+#plt.figure(figsize=(12, 7.8))
 plt.figure(figsize=(8, 6))
 
 plt.plot(x, y, label="1/(x-1)^(2/3)")
@@ -2490,7 +2536,7 @@ plt.plot(x, y, label="1/(x-1)^(2/3)")
 # Set x-axis to interval [0,10]
 plt.xlim(xl, xh)
 
-plt.title("1/(x-1)^(2/3)")
+plt.title("Plot of 1/(x-1)^(2/3)")
 
 plt.legend()
 plt.show()
@@ -2509,7 +2555,7 @@ scoop install gnuplot
 
 ```default
 # set the image size (in pixels)
-set terminal pngcairo size 1200,780 enhanced font 'Verdana,10'
+set terminal pngcairo size 1200,780 enhanced font 'Verdana,18'
 
 # save the plot to a file
 set output 'basic.png'
@@ -2524,9 +2570,47 @@ set yrange [*:*]   # Automatically determine y-axis range. The `[*:*]` is the de
 # enable the legend
 set key box
 
+set border linewidth 2
+
 # plot the function
-plot [0:10] (1.0/(x - 1.0)**2)**(1.0/3.0) title "1/(x-1)^{2/3}" with lines linewidth 2 linecolor rgb "blue"
+plot [0:10] (1.0/(x - 1.0)**2)**(1.0/3.0) title "1/(x-1)^{2/3}" with lines linewidth 3 linecolor rgb "blue"
 ```
+
+
+```python
+#| warning: false
+#| echo: false
+import subprocess
+process = subprocess.run(
+    ['gnuplot'],
+    input="""
+# set the image size (in pixels)
+set terminal pngcairo size 1200,780 enhanced font 'Verdana,18'
+
+# save the plot to a file
+set output 'basic-gnuplot.png'
+
+# set the plot title
+set title "Plot of 1/(x-1)^{2/3}"
+
+# set axis ranges
+set xrange [0:10]  # Set x-axis range from 0 to 10
+set yrange [*:*]   # Automatically determine y-axis range. The `[*:*]` is the default behavior.
+
+# enable the legend
+set key box
+
+set border linewidth 2
+
+# plot the function
+plot [0:10] (1.0/(x - 1.0)**2)**(1.0/3.0) title "1/(x-1)^{2/3}" with lines linewidth 3 linecolor rgb "blue"
+    """,
+    text=True,
+    capture_output=True
+)
+```
+
+![](basic-gnuplot.png){height=5.625in, width=7in}
 
 Более сложный пример построения графика в gnuplot с обработкой данных из файла и построением двойной оси _Y_:
 
@@ -2588,6 +2672,83 @@ plot [:][:] 'report-water-mass.out' using ($3):( (1.01 - fun1($2/1000.0)) / 0.02
 220 2468.360142802453 11
 ```
 
+
+### Julia
+
+```julia
+using Plots
+x = LinRange(0.0, π, 1000)
+y = sin.(x)
+plot(x, y, title="Plot")
+```
+
+```{julia}
+using Plots
+x = LinRange(0.0, π, 1000)
+y = sin.(x)
+plot(x, y, title="Plot {}")
+```
+
+```{{julia}}
+using Plots
+x = LinRange(0.0, π, 1000)
+y = sin.(x)
+plot(x, y, title="Plot {{}}")
+```
+
+
+Для построения графиков на Julia существует множество пакетов, наиболее распространённый из них это [Plots.jl](https://github.com/JuliaPlots/Plots.jl). Документацию по параметрам отображения графиков можно найти на страницах документации: [общие атрибуты](https://docs.juliaplots.org/stable/generated/attributes_series/), [оси](https://docs.juliaplots.org/stable/generated/attributes_axis/), [параметры изображения](https://docs.juliaplots.org/stable/generated/attributes_plot/) и другие. Далее представлен код для построения графика аналогичного вышеприведённым.
+
+```{{julia}}
+using Plots
+
+n = 1000
+xl = 0.0
+xh = 10.0
+
+x = LinRange(xl, xh, n)
+
+y = (1 ./ (x .- 1).^2).^(1/3)
+
+plot(x, y,
+     label="1/(x-1)^(2/3)",
+     title="Plot of 1/(x-1)^(2/3)", # also can be `:none`
+     xlims=(xl, xh),
+     xlabel="x",
+     ylabel="y",
+     legend=:topright,  # by default `:best`
+     size=(1200,780),   # picture size in pixels (width x height)
+     dpi=96,            # picture DPI
+     #margin=10mm,
+     left_margin=10mm,
+     bottom_margin=10mm,
+     linewidth=4,
+     #markersize=8,
+     #markerstrokewidth=2,
+     legendfontsize=20,
+     guidefontsize=20,
+     titlefontsize=24,
+     tickfontsize=20,
+     #grid=true,              # Enable grid
+     #gridalpha=0.5,          # Grid transparency
+     #gridlinewidth=1.5,      # Grid thickness
+     #minorgrid=true,         # Enable secondary grid
+     #minorgridalpha=0.3,     # Secondary grid transparency
+     #minorgridlinewidth=1.0, # Secondary grid thickness
+     framestyle=:box
+)
+
+# display plot at screen
+#gui()
+
+savefig("basic-julia.png")
+```
+
+![](basic-julia.png){height=5.625in, width=7in}
+
+
+
+
 {{< pagebreak >}}
 
 # **_Этап 4: Сложные ненужные программы_** {.unnumbered}
@@ -2604,7 +2765,7 @@ _Note:_ В этой главе в основном говорится про р�
 
 Из характерных особенностей нейронных сетей типа трансформер можно выделить:
 
-* входной текст разбивается на токены --- это минимальные единицы информации для нейросети. Каждому знаку препинания соответствует один токен. Каждому короткому, или общеупотребительному слову соответствует один токен. Сложным или редким словам соответствуют 2, 3, реже больше токенов, как правило, по числу слогов. На выходе из трансформера токены обратно превращаются в текст.
+* входной текст разбивается на токены --- это минимальные единицы информации для нейросети. Каждому знаку препинания соответствует один токен. Каждому короткому, или общеупотребительному слову соответствует один токен. Сложным или редким словам соответствуют 2, 3 или более, токенов, как правило, по одному токену на корень слова, на приставку, суффикс, окончание, что очень характерно для русского языка, в английском большинство слов это один токен. На выходе из трансформера токены обратно превращаются в текст;
 
 * в процессе работы, на каждой итерации, на выходе из сети в качестве ответа генерируется один токен, который присоединяется в конец цепочки, состоящей, из исходного запроса, и последовательности уже присоединённых в конец токенов ответа, полученных на предыдущих итерациях; после чего пополненная цепочка токенов опять посылается на вход и начинается новая итерация;
 
