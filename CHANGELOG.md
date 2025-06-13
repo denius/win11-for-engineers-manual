@@ -5,6 +5,15 @@
 
 ### Added
 
+### Changed
+
+### Fixed
+
+
+## [0.5.4] - 2025-06-13
+
+### Added
+
 - Добавлено построение графика на Julia.
 
 ### Changed
@@ -17,6 +26,7 @@
 - Отработана ошибка при `quarto render` связанная с <https://github.com/quarto-dev/quarto-cli/issues/8373>,
   для этого изменён порядок в yaml-заголовке: pdf <-> html.
 
+
 ## [0.5.3] - 2025-06-11
 
 ### Added
@@ -27,6 +37,7 @@
 ### Changed
 
 ### Fixed
+
 
 ## [0.5.2] - 2025-06-04
 
