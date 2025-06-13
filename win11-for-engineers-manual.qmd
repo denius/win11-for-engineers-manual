@@ -6,8 +6,33 @@ author: "Денис Тельнов"
 license: "CC BY-NC-SA"
 pdf-engine: lualatex
 engine: julia
-#engine: knitr
+#julia:
+#    exeflags: ["--project=@."]
+execute:
+  freeze: false
+  #freeze: auto
+  cache: false
+  echo: true
+
 format:
+
+  html:
+    toc: true
+    # shift-heading-level-by: -1
+    toc-depth: 2
+    toc-location: right-body
+    number-sections: true
+    embed-resources: true
+    link-external-newwindow: true
+    mainfont: OpenSansSemiCondensed Nerd Font Propo
+    sansfont: OpenSansSemiCondensed Nerd Font Propo
+    # monofont: D2CodingLigature Nerd Font
+    monofont: Iosevka Nerd Font
+    # monofont: IosevkaTerm NF
+    page-layout: full
+    fig-width: 7      # in inches
+    fig-height: 5.625 # in inches
+
   pdf:
     # top-level-division: part
     # shift-heading-level-by: -1
@@ -51,27 +76,11 @@ format:
     lang: ru
     output-file: win11-for-engineers-manual.pdf
 
-  html:
-    toc: true
-    # shift-heading-level-by: -1
-    toc-depth: 2
-    toc-location: right-body
-    number-sections: true
-    embed-resources: true
-    link-external-newwindow: true
-    mainfont: OpenSansSemiCondensed Nerd Font Propo
-    sansfont: OpenSansSemiCondensed Nerd Font Propo
-    # monofont: D2CodingLigature Nerd Font
-    monofont: Iosevka Nerd Font
-    # monofont: IosevkaTerm NF
-    page-layout: full
-    fig-width: 7in
-    fig-height: 5.625in
-
 from: markdown+tex_math_single_backslash
 ---
 
 ```{julia}
+#| echo: false
 using PythonCall
 ```
 
@@ -1931,6 +1940,7 @@ quarto install chromium
 Пример диаграммы Mermaid со [страницы](https://quarto.org/docs/authoring/diagrams.html) документации Quarto. Этот блок кода Mermaid выполняется по месту и отрисовывается вместо кода:
 
 ```{mermaid}
+%%| echo: false
 flowchart LR
   A[Hard edge] --> B(Round edge)
   B --> C{Decision}
@@ -2006,11 +2016,20 @@ julia> using PythonCall
 ```julia
 julia> using CondaPkg
 julia> # press ] to enter the Pkg REPL
+pkg> conda add numpy
 pkg> conda add matplotlib
 ```
 
 Также потребуется установить используемые в выполняемых блоках кода Julia пакеты: `Pkg.add("Plots")`.
 
+_Note:_ При использовании `engine: julia` (и, соответственно, пакета _QuartoNotebookRunner_) имеет место [баг](https://github.com/quarto-dev/quarto-cli/issues/8373), в связи с чем следует в заголовке в секции _format_ объявлять _html_ перед _pdf_:
+```yaml
+format:
+  html:
+  pdf:
+```
+
+> _Note:_ Хотелось бы отметить, что смешение языков выполняемых блоков в одном qmd-документе --- это плохая идея.
 
 ### _LaTeX_
 
@@ -2513,10 +2532,8 @@ int main()
 
 Тоже самое на Python:
 
-
 ```{python}
 #| warning: false
-#| echo: fenced
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -2539,9 +2556,61 @@ plt.xlim(xl, xh)
 plt.title("Plot of 1/(x-1)^(2/3)")
 
 plt.legend()
-plt.show()
-# plt.savefig("basic.png")
+#plt.show()
+plt.savefig("basic-python.png")
 ```
+
+![](basic-python.png)
+
+
+### Julia
+
+Для построения графиков на Julia существует множество пакетов, наиболее распространённый из них это [Plots.jl](https://github.com/JuliaPlots/Plots.jl). Документацию по параметрам отображения графиков можно найти на страницах документации: [общие атрибуты](https://docs.juliaplots.org/stable/generated/attributes_series/), [оси](https://docs.juliaplots.org/stable/generated/attributes_axis/), [параметры изображения](https://docs.juliaplots.org/stable/generated/attributes_plot/) и другие. Далее представлен код для построения графика аналогичного вышеприведённым.
+
+```{julia}
+using Plots
+import Plots:mm
+
+n = 1000
+xl = 0.0
+xh = 10.0
+
+x = LinRange(xl, xh, n)
+
+y = (1 ./ (x .- 1).^2).^(1/3)
+
+plot(x, y,
+     label="1/(x-1)^(2/3)",
+     title="Plot of 1/(x-1)^(2/3)", # also can be `:none`
+     xlims=(xl, xh),
+     xlabel="x",
+     ylabel="y",
+     legend=:topright,  # by default `:best`
+     size=(700,500),   # picture size in pixels (width x height)
+     #size=(1200,780),   # picture size in pixels (width x height)
+     #dpi=96,            # picture DPI
+     #margin=10mm,
+     left_margin=8mm,
+     bottom_margin=8mm,
+     linewidth=3,
+     #markersize=8,
+     #markerstrokewidth=2,
+     legendfontsize=14,
+     guidefontsize=14,
+     titlefontsize=18,
+     tickfontsize=14,
+     #grid=true,              # Enable grid
+     #gridalpha=0.5,          # Grid transparency
+     #gridlinewidth=1.5,      # Grid thickness
+     #minorgrid=true,         # Enable secondary grid
+     #minorgridalpha=0.3,     # Secondary grid transparency
+     #minorgridlinewidth=1.0, # Secondary grid thickness
+     framestyle=:box
+)
+
+#savefig("basic-julia.png")
+```
+
 
 ### Gnuplot
 
@@ -2577,13 +2646,11 @@ plot [0:10] (1.0/(x - 1.0)**2)**(1.0/3.0) title "1/(x-1)^{2/3}" with lines linew
 ```
 
 
-```python
-#| warning: false
+```{julia}
 #| echo: false
-import subprocess
-process = subprocess.run(
-    ['gnuplot'],
-    input="""
+using Dates
+
+gnuplot_script = """
 # set the image size (in pixels)
 set terminal pngcairo size 1200,780 enhanced font 'Verdana,18'
 
@@ -2604,13 +2671,17 @@ set border linewidth 2
 
 # plot the function
 plot [0:10] (1.0/(x - 1.0)**2)**(1.0/3.0) title "1/(x-1)^{2/3}" with lines linewidth 3 linecolor rgb "blue"
-    """,
-    text=True,
-    capture_output=True
-)
+"""
+
+filename = "temp_$(now()).gp"
+open(filename, "w") do io
+    write(io, gnuplot_script)
+end
+run(`gnuplot $filename`)
+rm(filename)
 ```
 
-![](basic-gnuplot.png){height=5.625in, width=7in}
+![](basic-gnuplot.png)
 
 Более сложный пример построения графика в gnuplot с обработкой данных из файла и построением двойной оси _Y_:
 
@@ -2673,83 +2744,8 @@ plot [:][:] 'report-water-mass.out' using ($3):( (1.01 - fun1($2/1000.0)) / 0.02
 ```
 
 
-### Julia
-
-```julia
-using Plots
-x = LinRange(0.0, π, 1000)
-y = sin.(x)
-plot(x, y, title="Plot")
-```
-
-```{julia}
-using Plots
-x = LinRange(0.0, π, 1000)
-y = sin.(x)
-plot(x, y, title="Plot {}")
-```
-
-```{{julia}}
-using Plots
-x = LinRange(0.0, π, 1000)
-y = sin.(x)
-plot(x, y, title="Plot {{}}")
-```
-
-
-Для построения графиков на Julia существует множество пакетов, наиболее распространённый из них это [Plots.jl](https://github.com/JuliaPlots/Plots.jl). Документацию по параметрам отображения графиков можно найти на страницах документации: [общие атрибуты](https://docs.juliaplots.org/stable/generated/attributes_series/), [оси](https://docs.juliaplots.org/stable/generated/attributes_axis/), [параметры изображения](https://docs.juliaplots.org/stable/generated/attributes_plot/) и другие. Далее представлен код для построения графика аналогичного вышеприведённым.
-
-```{{julia}}
-using Plots
-
-n = 1000
-xl = 0.0
-xh = 10.0
-
-x = LinRange(xl, xh, n)
-
-y = (1 ./ (x .- 1).^2).^(1/3)
-
-plot(x, y,
-     label="1/(x-1)^(2/3)",
-     title="Plot of 1/(x-1)^(2/3)", # also can be `:none`
-     xlims=(xl, xh),
-     xlabel="x",
-     ylabel="y",
-     legend=:topright,  # by default `:best`
-     size=(1200,780),   # picture size in pixels (width x height)
-     dpi=96,            # picture DPI
-     #margin=10mm,
-     left_margin=10mm,
-     bottom_margin=10mm,
-     linewidth=4,
-     #markersize=8,
-     #markerstrokewidth=2,
-     legendfontsize=20,
-     guidefontsize=20,
-     titlefontsize=24,
-     tickfontsize=20,
-     #grid=true,              # Enable grid
-     #gridalpha=0.5,          # Grid transparency
-     #gridlinewidth=1.5,      # Grid thickness
-     #minorgrid=true,         # Enable secondary grid
-     #minorgridalpha=0.3,     # Secondary grid transparency
-     #minorgridlinewidth=1.0, # Secondary grid thickness
-     framestyle=:box
-)
-
-# display plot at screen
-#gui()
-
-savefig("basic-julia.png")
-```
-
-![](basic-julia.png){height=5.625in, width=7in}
-
-
-
-
 {{< pagebreak >}}
+
 
 # **_Этап 4: Сложные ненужные программы_** {.unnumbered}
 
