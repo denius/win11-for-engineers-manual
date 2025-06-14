@@ -6,13 +6,9 @@ author: "Денис Тельнов"
 license: "CC BY-NC-SA"
 pdf-engine: lualatex
 engine: julia
-#julia:
-#    exeflags: ["--project=@."]
 execute:
   freeze: false
-  #freeze: auto
   cache: false
-  echo: true
 
 format:
 
@@ -81,6 +77,19 @@ from: markdown+tex_math_single_backslash
 
 ```{julia}
 #| echo: false
+#| include: false
+import Pkg
+# project should be already activated by metadata option: julia.exeflags: ["--project=@."]
+if !(Base.active_project() !== nothing && !startswith(Base.active_project(), Base.Sys.BINDIR))
+    Pkg.activate(".")
+end
+Pkg.add("CondaPkg")
+Pkg.add("PythonCall")
+Pkg.add("Plots")
+Pkg.add("LaTeXStrings")
+import CondaPkg
+CondaPkg.add("numpy")
+CondaPkg.add("matplotlib")
 using PythonCall
 ```
 
@@ -1904,11 +1913,11 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 
 * умеет отображать [диаграммы](https://quarto.org/docs/authoring/diagrams.html) в форматах [Mermaid](https://mermaid.js.org/) и [Graphviz](https://graphviz.org/) (_dot_);
 
-* формат файлов Quarto (_.qmd_) --- это Markdown с некоторыми расширениями, т.е. простой текстовый файл, который можно редактировать в любом редакторе;
+* формат файлов Quarto (_.qmd_) --- это Markdown с некоторыми расширениями, т.е. простой текстовый файл, который можно редактировать в любом текстовом редакторе;
 
 * поддерживается в [VSCode расширении](http://marketplace.visualstudio.com/items?itemName=quarto.quarto), с возможностью синхронного отображения отрендеренного содержимого;
 
-* _.qmd_ файлы конвертируются в форматы _pdf_, _docx_, _pptx_, _html_ с учётом заданных стилей:
+* _.qmd_ файлы конвертируются (рендерятся) в форматы _pdf_, _docx_, _pptx_, _html_ с учётом заданных стилей:
 
   + Quarto имеет предустановленные [стили](https://quarto.org/docs/output-formats/pdf-basics.html#document-class), для оформления [статей](https://quarto.org/docs/output-formats/ms-word.html), [презентаций](https://quarto.org/docs/presentations/powerpoint.html), [сайтов](https://quarto.org/docs/websites/), и др. В случае отсутствия явного указания стиля будет использован стиль по умолчанию _article_.
 
@@ -1917,6 +1926,8 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 * умеет [загружать](https://quarto.org/docs/tools/jupyter-lab.html) _.ipynb_ и рендерить в различные форматы;
 
 * [JupyterLab](https://quarto.org/docs/tools/jupyter-lab-extension.html) умеет показывать Quarto с полным форматированием;
+
+* [может отрендерить](https://quarto.org/docs/computations/render-scripts.html) обычные файлы с кодом *.py*, *.jl*, *.R* в _pdf_, _html_ и т.п., где в файлах в комментариях специального формата ([*percent format*](https://jupytext.readthedocs.io/en/latest/formats-scripts.html#the-percent-format)) помещены _Markdown_ блоки. Данный подход позволяет вести разработку программ привычным способом, а по завершении разработки сгенерировать документ отчёта прямо с файла программы;
 
 * "под капотом" использует [pandoc](https://pandoc.org/).
 
@@ -1933,7 +1944,17 @@ quarto install chromium
 
 #### Выполняемые блоки кода {.unnumbered .unlisted}
 
-Помимо отображения блоков кода и математических формул в _LaTeX_ нотации в Markdown/Quarto документы можно добавлять выполняемые блоки кода, результат выполнения которых будет подставлен на страницу, для примера, в главе про [Matplotlib](#matplotlib) показан блок кода на питон и результат его выполнения тут же добавлен в документ. Выполняемые блоки кода аннотируются фигурными скобками вокруг названия типа блока кода, например, `{python}`.
+Помимо отображения блоков кода и математических формул в _LaTeX_ нотации в Markdown/Quarto документы можно добавлять выполняемые блоки кода, результат выполнения которых будет подставлен на страницу, для примера, в главе про [Matplotlib](#matplotlib) показан блок кода на питон и результат его выполнения тут же добавлен в документ. Выполняемые блоки кода аннотируются фигурными скобками вокруг названия типа блока кода, например, `{python}`. Как и в других [_Интерактивных блокнотах_](#блокноты-на-python), в _Quarto_ выполняемые блоки кода имеют единое пространство имён, т.е. объявив переменную в одном блоке, она будет доступна в последующих блоках, причём даже в блоках разного типа:
+
+```{julia}
+#| echo: fenced
+n = 3
+```
+
+```{python}
+for i in range(1, $n + 1):
+    print("i =", i)
+```
 
 Также, Quarto выполняет и выводит [диаграммы](https://quarto.org/docs/authoring/diagrams.html), с использованием аннотированных блоков кода в форматах [Mermaid](https://mermaid.js.org/) ([примеры](https://github.com/mermaid-js/mermaid#examples)) и [Graphviz(dot)](https://graphviz.org/) ([примеры](https://renenyffenegger.ch/notes/tools/Graphviz/examples/index)). _Note:_ помимо этих двух типов диаграмм в Quarto есть поддержка [других типов диаграмм](https://github.com/pandoc-ext/diagram#diagram-types) (*TikZ* и др.) через [плагины pandoc](https://github.com/pandoc-ext).
 
@@ -1987,10 +2008,10 @@ digraph G {
 
 ##### Некоторые особенности блоков Julia
 
-В современных версиях _Quarto_, для выполняемых блоков кода языка _Julia_ есть возможность их выполнения непосредственно в julia (по умолчанию используется _jupyter_). Для этого в заголовке необходимо прописать опцию `engine: julia`; этого достаточно для Quarto документов с блоками кода _julia_. Если же в qmd-документе, при этом, присутствуют одновременно ещё _python_, или _r_ блоки, то дополнительно потребуется выполнить следующую команду в текущей директории:
+В современных версиях _Quarto_, для выполняемых блоков кода языка _Julia_ есть возможность их выполнения [непосредственно в julia](https://quarto.org/docs/computations/julia.html#using-the-julia-engine) (по умолчанию используется _Jupyter_). Для этого в заголовке необходимо прописать опцию `engine: julia`; этого достаточно для Quarto документов с блоками кода _Julia_. Если же в qmd-документе, при этом, присутствуют одновременно ещё _Python_, или _R_ блоки, то дополнительно потребуется [выполнить следующую команду](https://quarto.org/docs/computations/julia.html#r-and-python-support) в текущей директории:
 ```sh
-julia --project=. -e 'import Pkg; Pkg.add("QuartoNotebookRunner"); Pkg.add("PythonCall"); Pkg.add("CondaPkg"); Pkg.add("RCall");'
-julia --project=. -e 'import Pkg; Pkg.build("QuartoNotebookRunner"); Pkg.build("PythonCall"); Pkg.build("CondaPkg"); Pkg.build("RCall");'
+julia --project=. -e 'import Pkg; Pkg.add("PythonCall"); Pkg.add("CondaPkg"); Pkg.add("RCall");'
+julia --project=. -e 'import Pkg; Pkg.build("PythonCall"); Pkg.build("CondaPkg"); Pkg.build("RCall");'
 julia --project=. -e 'using PythonCall'
 ```
 
@@ -1999,11 +2020,9 @@ julia --project=. -e 'using PythonCall'
 ```julia
 julia> import Pkg
 julia> Pkg.activate(".")
-julia> Pkg.add("QuartoNotebookRunner")
 julia> Pkg.add("PythonCall")
 julia> Pkg.add("CondaPkg")
 julia> Pkg.add("RCall")
-julia> Pkg.build("QuartoNotebookRunner")
 julia> Pkg.build("PythonCall")
 julia> Pkg.build("CondaPkg")
 julia> Pkg.build("RCall")
@@ -2013,6 +2032,13 @@ julia> using PythonCall
 Эти операции требуются для загрузки пакета _PythonCall_, а также его предзагрузки и инициализации, в процессе которой будет также установлен пакет NumPy.
 
 Для [добавления пакетов _Python_](https://juliapy.github.io/PythonCall.jl/stable/pythoncall/#python-deps) следует выполнить команды:
+
+```sh
+julia --project=. -e 'import CondaPkg; CondaPkg.add("numpy");  CondaPkg.add("matplotlib");'
+```
+
+или
+
 ```julia
 julia> using CondaPkg
 julia> # press ] to enter the Pkg REPL
@@ -2020,7 +2046,7 @@ pkg> conda add numpy
 pkg> conda add matplotlib
 ```
 
-Также потребуется установить используемые в выполняемых блоках кода Julia пакеты: `Pkg.add("Plots")`.
+Также потребуется установить используемые в выполняемых блоках кода Julia пакеты, например, `Pkg.add("Plots")`.
 
 _Note:_ При использовании `engine: julia` (и, соответственно, пакета _QuartoNotebookRunner_) имеет место [баг](https://github.com/quarto-dev/quarto-cli/issues/8373), в связи с чем следует в заголовке в секции _format_ объявлять _html_ перед _pdf_:
 ```yaml
@@ -2028,6 +2054,8 @@ format:
   html:
   pdf:
 ```
+
+_Note:_ В случае возникновения ошибки про *Qt6Base_jll* при выполнении команды `quarto render` следует выполнить эту команду повторно.
 
 > _Note:_ Хотелось бы отметить, что смешение языков выполняемых блоков в одном qmd-документе --- это плохая идея.
 
@@ -2568,6 +2596,8 @@ plt.savefig("basic-python.png")
 Для построения графиков на Julia существует множество пакетов, наиболее распространённый из них это [Plots.jl](https://github.com/JuliaPlots/Plots.jl). Документацию по параметрам отображения графиков можно найти на страницах документации: [общие атрибуты](https://docs.juliaplots.org/stable/generated/attributes_series/), [оси](https://docs.juliaplots.org/stable/generated/attributes_axis/), [параметры изображения](https://docs.juliaplots.org/stable/generated/attributes_plot/) и другие. Далее представлен код для построения графика аналогичного вышеприведённым.
 
 ```{julia}
+#| echo: fenced
+using LaTeXStrings
 using Plots
 import Plots:mm
 
@@ -2579,15 +2609,15 @@ x = LinRange(xl, xh, n)
 
 y = (1 ./ (x .- 1).^2).^(1/3)
 
-# init GR backend of Plots.jl
+# explicit init GR backend of Plots.jl
 gr(size=(700,500))
 
 plot(x, y,
-     label="1/(x-1)^(2/3)",
-     title="Plot of 1/(x-1)^(2/3)", # also can be `:none`
+     label=L"$\frac{1}{x-1}^{2/3}$",
+     title=L"Plot of $1/\left(x-1\right)^{2/3}$", # also can be `:none`
      xlims=(xl, xh),
-     xlabel="x",
-     ylabel="y",
+     xlabel=L"$x$",
+     ylabel=L"$y$",
      legend=:topright,  # by default `:best`
      #size=(700,500),   # picture size in pixels (width x height)
      #size=(1200,780),   # picture size in pixels (width x height)
@@ -2602,12 +2632,12 @@ plot(x, y,
      guidefontsize=14,
      titlefontsize=18,
      tickfontsize=14,
-     #grid=true,              # Enable grid
-     #gridalpha=0.5,          # Grid transparency
-     #gridlinewidth=1.5,      # Grid thickness
-     #minorgrid=true,         # Enable secondary grid
-     #minorgridalpha=0.3,     # Secondary grid transparency
-     #minorgridlinewidth=1.0, # Secondary grid thickness
+     #grid=true,              # enable grid
+     #gridalpha=0.5,          # grid transparency
+     #gridlinewidth=1.5,      # grid thickness
+     #minorgrid=true,         # enable secondary grid
+     #minorgridalpha=0.3,     # secondary grid transparency
+     #minorgridlinewidth=1.0, # secondary grid thickness
      framestyle=:box
 )
 
@@ -2904,6 +2934,10 @@ _Note:_ Конечно, возникает естественный вопрос
 
 В скрипте необходима процедура сохранения полученной MLP в общеупотребительный
 формат хранения нейросетей PyTorch для дальнейшей загрузки и использования.
+```
+
+```md
+Добавь в приведённый код ускорение обучения и применения на GPU Nvidia.
 ```
 
 Для улучшения качества ответов связанных с математикой, к запросу следует добавлять фразу вида:
@@ -4233,3 +4267,4 @@ scoop install extras/office-tool-plus
 
 [Заметки по работе с системными командами и консольными утилитами Linux для Windows пользователей.](https://github.com/Lifailon/PS-Commands/blob/rsa/linux.md)
 
+[Огромный гайд по настройке рабочего окружения: Linux, VScode, Python](https://habr.com/ru/companies/timeweb/articles/916040/).
