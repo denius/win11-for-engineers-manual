@@ -79,18 +79,45 @@ from: markdown+tex_math_single_backslash
 #| echo: false
 #| include: false
 import Pkg
-# project should be already activated by metadata option: julia.exeflags: ["--project=@."]
+
+# Активация текущего проекта, если он не активен
 if !(Base.active_project() !== nothing && !startswith(Base.active_project(), Base.Sys.BINDIR))
     Pkg.activate(".")
 end
-Pkg.add("CondaPkg")
-Pkg.add("PythonCall")
-Pkg.add("Plots")
-Pkg.add("LaTeXStrings")
-import CondaPkg
-CondaPkg.add("numpy")
-CondaPkg.add("matplotlib")
+
+# Список необходимых Julia-пакетов
+julia_packages = ["CondaPkg", "PythonCall", "Plots", "LaTeXStrings"]
+
+# Проверка и установка Julia-пакетов
+for package_str in julia_packages
+    package = Symbol(package_str)
+    try
+        # Попытка загрузить пакет
+        eval(:(using $package))
+    catch
+        # Если не установлен, добавляем и загружаем снова
+        Pkg.add(package_str)
+        eval(:(using $package))
+    end
+end
+
+# Подключение установленных пакетов
+using CondaPkg
 using PythonCall
+
+# Список необходимых Python-пакетов
+python_packages = ["numpy", "matplotlib"]
+
+# Проверка и установка Python-пакетов через CondaPkg
+for package in python_packages
+    try
+        # Попытка импортировать Python-пакет
+        pyimport(package)
+    catch
+        # Если не установлен, добавляем через CondaPkg
+        CondaPkg.add(package)
+    end
+end
 ```
 
 {{< pagebreak >}}
