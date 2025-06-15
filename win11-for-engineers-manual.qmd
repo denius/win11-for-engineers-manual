@@ -80,35 +80,32 @@ from: markdown+tex_math_single_backslash
 #| include: false
 import Pkg
 
-# Активация текущего проекта, если он не в системной директории
 if !(Base.active_project() !== nothing && !startswith(Base.active_project(), Base.Sys.BINDIR))
     Pkg.activate(".")
 end
 
-# Проверка и установка пакетов через Pkg
-function install_if_missing(pkg::String)
-    if !haskey(Pkg.installed(), pkg)
-        Pkg.add(pkg)
+julia_packages = ["CondaPkg", "PythonCall", "Plots", "LaTeXStrings"]
+
+for package_str in julia_packages
+    package = Symbol(package_str)
+    try
+        eval(:(using $package))
+    catch
+        Pkg.add(package_str)
+        eval(:(using $package))
     end
 end
 
-install_if_missing("CondaPkg")
-install_if_missing("PythonCall")
-install_if_missing("Plots")
-install_if_missing("LaTeXStrings")
+using CondaPkg
+python_packages = ["numpy", "matplotlib"]
 
-import CondaPkg
-
-# Проверка и установка библиотек Python через CondaPkg
-function conda_install_if_missing(pkg::String)
-    conda_packages = CondaPkg.conda_list()
-    if !haskey(conda_packages, pkg)
-        CondaPkg.add(pkg)
+for package in python_packages
+    try
+        pyimport(package)
+    catch
+        CondaPkg.add(package)
     end
 end
-
-conda_install_if_missing("numpy")
-conda_install_if_missing("matplotlib")
 
 using PythonCall
 ```
