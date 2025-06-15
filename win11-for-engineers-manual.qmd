@@ -78,6 +78,10 @@ from: markdown+tex_math_single_backslash
 ```{julia}
 #| echo: false
 #| include: false
+
+# В случае `engine: julia` в силу бага https://github.com/PumasAI/QuartoNotebookRunner.jl/issues/309
+# в {python} блоках нельзя объявлять `#| echo` опции.
+
 import Pkg
 
 if !(Base.active_project() !== nothing && !startswith(Base.active_project(), Base.Sys.BINDIR))
@@ -1315,6 +1319,7 @@ end
 
 \+ <https://github.com/>
 
+
 ## Полезные консольные утилитки
 
 ### _TL;DR --- Too Long; Didn't Read_
@@ -1427,6 +1432,7 @@ scoop install rga
 
 С такой конфигурацией, если в шаблоне нет заглавных букв, то `rg` будет считать шаблон _ignorecase_, иначе шаблон _casesensitive_. Строчка конфигурации _\-\-auto-hybrid-regex_ указывает применять разные библиотеки _regex_ в зависимости от сложности шаблона --- для простых шаблонов это значительно ускоряет поиск. Применённая опция `--glob=!*~` указывает пропускать (`!`) файлы оканчивающиеся на `~`.
 
+
 #### Использование {.unnumbered .unlisted}
 
 Как и `fd`, `rg` производит поиск по шаблонам в форме [регулярных выражений](https://docs.rs/regex/1.11.1/regex/#syntax), поэтому не нужны какие-либо звёздочки, а надо прямо набирать:
@@ -1505,6 +1511,7 @@ timecmd make all
 
 _Note:_ При использовании современной темы оформления оболочки (shell) подобная утилита не требуется, так как сам терминал пишет затраченное время.
 
+
 ### top
 
 Утилиты схожие с `top`: `btop`, `wttop`
@@ -1512,6 +1519,7 @@ _Note:_ При использовании современной темы офо
 scoop install btop
 scoop install wttop
 ```
+
 
 ### ccat
 
@@ -1734,6 +1742,7 @@ scoop shim add ls %UserProfile%\scoop\apps\git\current\usr\bin\ls.exe
 
 _Note:_ Подробное описание по командам на русском языке можно найти на сайте <https://www.opennet.ru/man_1.shtml>.
 
+
 #### _Некоторые утилиты:_ {.unnumbered .unlisted}
 
 
@@ -1804,6 +1813,7 @@ fd --hidden "\.vhdx$" %HOME% | xargs -I@ cp -v @ E:\backup\wsl\
 
 `watch -d 'cat /proc/vmstat | grep numa'` --- отслеживать результат периодического выполнения команды.
 
+
 ### Совпадающие системные имена
 
 С помощью алиасов можно настроить нормальные имена для Linux утилит, имена которых совпадают с именами системных Windows утилит.
@@ -1834,6 +1844,7 @@ _Note:_ у всех офисных пакетов есть некоторое н
 * Якори --- это плохо!
 * _.doc_ давно пора закопать!
 * Пора обновить свой офисный пакет, ему уже почти 20 лет, там всё стало намного удобнее.
+
 
 ### LibreOffice
 
@@ -1880,10 +1891,12 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 > _Отступление про редактирование pdf._\
   Внутренний формат pdf не содержит информации о последовательности символов и слов, а содержит информацию, в каком месте страницы нарисовать тот или символ или слово (и, как следствие, пробелы тоже не хранит). Даже в отдельном параграфе слова не обязательно будут в естественном порядке. С математическими формулами или таблицами ситуация совсем катастрофическая. Поэтому, все программы для редактирования pdf "додумывают" информацию о том, в какой последовательности идут символы и слова. Поэтому, самый лучший способ редактирования pdf, это сконвертировать pdf в Markdown методом OCR или ИИ, и полученный Markdown сконвертировать в docx.
 
+
 ### Collabora
 
 [**Collabora Online**](https://www.collaboraonline.com/collabora-office/)\
 Ещё один бесплатный открытый офисный пакет с возможностью совместного, распределённого редактирования документов; эти возможности хорошо интегрированы в платформу частного облака [NextCloud](https://nextcloud.com/office/). Этот офисный пакет работает исключительно "онлайн", т.е. его нельзя "установить" на компьютер. Опять же, для персонального использования это избыточно; и здесь упоминается только для полноты обзора.
+
 
 ### MSOffice tips
 
@@ -1910,6 +1923,7 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 
 В силу того, что Markdown это всё же просто текст, то в нём не содержится каких-либо стилей или графического оформления. Таким занимаются программы для отображения, рендеринга и конвертации. Именно в этих программах будет выбираться размер шрифта, межстрочный интервал и т.п. при конвертации в pdf или docx. Обычно, это применение либо встроенных в программы шаблонов стиля, либо использование шаблонов стиля предоставляемых пользователем.
 
+
 ### Markdown
 
 Редактирование **Markdown** и синхронное отображение поддерживается в _VSCode_ "из коробки", в том числе, есть отображение картинок, таблиц, формул, сносок, и проч. <https://code.visualstudio.com/docs/languages/markdown>. Встроенный в VSCode Markdown Preview можно донастраивать расширениями. Открыть превью в _VSCode_: `Ctrl+Shift+V`.
@@ -1919,6 +1933,7 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 В Google docs Markdown --- это один из [форматов для экспорта](https://support.google.com/docs/answer/12014036), причём, при экспорте, рисунки становятся встроенными (embedded) прямо в файл _.md_.
 
 Для конвертации _в_ и _из_ формата Markdown во всевозможные другие применяется конвертер _pandoc_, о нём будет [дальше](#универсальный-конвертер-pandoc).
+
 
 ### Quarto
 
@@ -1938,7 +1953,7 @@ winget install --id=ONLYOFFICE.DesktopEditors -e
 
   + Quarto имеет предустановленные [стили](https://quarto.org/docs/output-formats/pdf-basics.html#document-class), для оформления [статей](https://quarto.org/docs/output-formats/ms-word.html), [презентаций](https://quarto.org/docs/presentations/powerpoint.html), [сайтов](https://quarto.org/docs/websites/), и др. В случае отсутствия явного указания стиля будет использован стиль по умолчанию _article_.
 
-  + вместо предустановленных стилей, можно задавать пользовательские стили; их можно указать либо в виде файла шаблона стилей _dotx_ или _potx_, либо указать на файл готового документа _docx_ или _pptx_, с которого будет скопирован стиль оформления. Для оформления _pdf_ можно непосредственно внедрять код _LaTeX_ для явного указания стилей и/или пакетов;
+  + вместо предустановленных стилей, можно задавать пользовательские стили; их можно указать либо в виде файла шаблона стилей [_dotx_](https://quarto.org/docs/output-formats/ms-word-templates.html#sec-docx-create-template) или [_potx_](https://quarto.org/docs/presentations/powerpoint.html#powerpoint-templates), либо указать на файл готового документа _docx_ или _pptx_, с которого будет скопирован стиль оформления. Для оформления _pdf_ можно непосредственно внедрять код _LaTeX_ для явного указания стилей и/или пакетов;
 
 * умеет [загружать](https://quarto.org/docs/tools/jupyter-lab.html) _.ipynb_ и рендерить в различные форматы;
 
@@ -1956,12 +1971,12 @@ quarto install tinytex
 quarto install chromium
 ```
 
-Можно [использовать в VSCode](https://quarto.org/docs/tools/vscode.html) с соответствующим [плагином](http://marketplace.visualstudio.com/items?itemName=quarto.quarto). А можно просто написать _.qmd_ файл в любом редакторе, и сконвертировать в [выбранный формат](https://quarto.org/docs/output-formats/all-formats.html): `quarto render win11-for-engineers-manual.qmd` (как данное руководство).
+Можно [использовать в VSCode](https://quarto.org/docs/tools/vscode.html) с соответствующим [плагином](http://marketplace.visualstudio.com/items?itemName=quarto.quarto). А можно просто написать _.qmd_ файл в любом редакторе, и сконвертировать в [выбранный формат](https://quarto.org/docs/output-formats/all-formats.html): `quarto render win11-for-engineers-manual.qmd --to html` (как данное руководство).
 
 
 #### Выполняемые блоки кода {.unnumbered .unlisted}
 
-Помимо отображения блоков кода и математических формул в _LaTeX_ нотации в Markdown/Quarto документы можно добавлять выполняемые блоки кода, результат выполнения которых будет подставлен на страницу, для примера, в главе про [Matplotlib](#matplotlib) показан блок кода на питон и результат его выполнения тут же добавлен в документ. Выполняемые блоки кода аннотируются фигурными скобками вокруг названия типа блока кода, например, `{python}`. Как и в других [_Интерактивных блокнотах_](#блокноты-на-python), в _Quarto_ выполняемые блоки кода имеют единое пространство имён, т.е. объявив переменную в одном блоке, она будет доступна в последующих блоках, причём даже в блоках разного типа:
+Помимо отображения блоков кода и математических формул в _LaTeX_ нотации в Markdown/Quarto документы можно добавлять выполняемые блоки кода, результат выполнения которых будет подставлен на страницу, для примера, в главе про [Matplotlib](#matplotlib) показан блок кода на питон и результат его выполнения тут же добавлен в документ. Выполняемые блоки кода аннотируются фигурными скобками вокруг названия типа блока кода, например, `{python}`. Как и в других [_Интерактивных блокнотах_](#блокноты-на-python), в _Quarto_ выполняемые блоки кода имеют единое пространство имён, т.е. объявив переменную в одном блоке, она будет доступна в последующих блоках, причём даже в блоках разного типа ([через `$` синтаксис](https://quarto.org/docs/computations/julia.html#r-and-python-support)):
 
 ```{julia}
 #| echo: fenced
@@ -1972,6 +1987,8 @@ n = 3
 for i in range(1, $n + 1):
     print("i =", i)
 ```
+
+_Note:_ В силу [бага](https://github.com/PumasAI/QuartoNotebookRunner.jl/issues/309) в ```` ```{python} ```` блоках нельзя объявить `#| echo: fenced`.
 
 Также, Quarto выполняет и выводит [диаграммы](https://quarto.org/docs/authoring/diagrams.html), с использованием аннотированных блоков кода в форматах [Mermaid](https://mermaid.js.org/) ([примеры](https://github.com/mermaid-js/mermaid#examples)) и [Graphviz(dot)](https://graphviz.org/) ([примеры](https://renenyffenegger.ch/notes/tools/Graphviz/examples/index)). _Note:_ помимо этих двух типов диаграмм в Quarto есть поддержка [других типов диаграмм](https://github.com/pandoc-ext/diagram#diagram-types) (*TikZ* и др.) через [плагины pandoc](https://github.com/pandoc-ext).
 
@@ -2023,12 +2040,11 @@ digraph G {
 
 В документе Quarto могут выполняться достаточно большие блоки кода, их результат выполнения будет отрисован в документе, и, вполне возможно, создавать статьи, или, скажем, курсовые работы вместе отчётом, в одном _qmd_ файле. При наличии большого числа блоков кода, или длительных вычислений в них, для контроля времени затрачиваемого на выполнения блоков кода во время рендеринга (`quarto render`) существуют опции [запрета](https://quarto.org/docs/computations/python.html#freezing-execution) на выполнение или выполнения только при изменении кода, [кеширования](https://quarto.org/docs/computations/python.html#caching) результатов выполнения и другие.
 
-##### Некоторые особенности блоков Julia
+##### Некоторые особенности блоков Julia {.unnumbered .unlisted}
 
-В современных версиях _Quarto_, для выполняемых блоков кода языка _Julia_ есть возможность их выполнения [непосредственно в julia](https://quarto.org/docs/computations/julia.html#using-the-julia-engine) (по умолчанию используется _Jupyter_). Для этого в заголовке необходимо прописать опцию `engine: julia`; этого достаточно для Quarto документов с блоками кода _Julia_. Если же в qmd-документе, при этом, присутствуют одновременно ещё _Python_, или _R_ блоки, то дополнительно потребуется [выполнить следующую команду](https://quarto.org/docs/computations/julia.html#r-and-python-support) в текущей директории:
+В современных версиях _Quarto_, для выполняемых блоков кода языка _Julia_ есть возможность их выполнения [непосредственно в julia](https://quarto.org/docs/computations/julia.html#using-the-julia-engine) (иначе, по умолчанию, используется _Jupyter_). Для этого в заголовке необходимо прописать опцию `engine: julia`; этого достаточно для Quarto документов с блоками кода _Julia_. Если же в qmd-документе, при этом, присутствуют одновременно ещё _Python_, или _R_ блоки, то дополнительно потребуется [выполнить следующую команду](https://quarto.org/docs/computations/julia.html#r-and-python-support) в текущей директории:
 ```sh
 julia --project=. -e 'import Pkg; Pkg.add("PythonCall"); Pkg.add("CondaPkg"); Pkg.add("RCall");'
-julia --project=. -e 'import Pkg; Pkg.build("PythonCall"); Pkg.build("CondaPkg"); Pkg.build("RCall");'
 julia --project=. -e 'using PythonCall'
 ```
 
@@ -2040,9 +2056,6 @@ julia> Pkg.activate(".")
 julia> Pkg.add("PythonCall")
 julia> Pkg.add("CondaPkg")
 julia> Pkg.add("RCall")
-julia> Pkg.build("PythonCall")
-julia> Pkg.build("CondaPkg")
-julia> Pkg.build("RCall")
 julia> using PythonCall
 ```
 
@@ -2065,7 +2078,45 @@ pkg> conda add matplotlib
 
 Также потребуется установить используемые в выполняемых блоках кода Julia пакеты, например, `Pkg.add("Plots")`.
 
-_Note:_ При использовании `engine: julia` (и, соответственно, пакета _QuartoNotebookRunner_) имеет место [баг](https://github.com/quarto-dev/quarto-cli/issues/8373), в связи с чем следует в заголовке в секции _format_ объявлять _html_ перед _pdf_:
+Но проще всего вставить следующий блок кода где-нибудь в начале документа:
+
+```{{julia}}
+#| echo: false
+#| include: false
+import Pkg
+
+if !(Base.active_project() !== nothing && !startswith(Base.active_project(), Base.Sys.BINDIR))
+    Pkg.activate(".")
+end
+
+julia_packages = ["CondaPkg", "PythonCall", "Plots", "LaTeXStrings"]
+
+for package_str in julia_packages
+    package = Symbol(package_str)
+    try
+        eval(:(using $package))
+    catch
+        Pkg.add(package_str)
+        eval(:(using $package))
+    end
+end
+
+using CondaPkg
+python_packages = ["numpy", "matplotlib"]
+
+for package in python_packages
+    try
+        pyimport(package)
+    catch
+        CondaPkg.add(package)
+    end
+end
+
+using PythonCall
+```
+
+
+_Note:_ При использовании движка `engine: julia` (и, соответственно, пакета _QuartoNotebookRunner_) имеет место [баг](https://github.com/quarto-dev/quarto-cli/issues/8373), в связи с чем следует в заголовке в секции _format_ объявлять опцию _html_ перед _pdf_:
 ```yaml
 format:
   html:
@@ -2074,15 +2125,17 @@ format:
 
 _Note:_ В случае возникновения ошибки про *Qt6Base_jll* при выполнении команды `quarto render` следует выполнить эту команду повторно.
 
-> _Note:_ Хотелось бы отметить, что смешение языков выполняемых блоков в одном qmd-документе --- это плохая идея.
+_Note:_ Хотелось бы отметить, что смешение языков выполняемых блоков в одном qmd-документе --- это плохая идея.
+
 
 ### _LaTeX_
 
 Существует сайт [overleaf.com](https://www.overleaf.com/) --- это онлайн-редактор _LaTeX_ с поддержкой автоматического рендеринга (отображения) результата, контроля версий, совместного редактирования. Если требуется написать статью на _LaTeX_, а не знаешь как, то этот сайт это правильный выбор. А если знаешь как, то какие-либо советы излишни.
 
+
 ### Универсальный конвертер Pandoc
 
-[**pandoc**](https://pandoc.org/) --- инструмент командной строки (CLI) для конвертации документов в различных форматах в документы других различных форматов: pdf, docx, pptx, html, Markdown могут быть сконвертированы друг в друга почти без ограничений, в том числе и с сохранением математических формул. Поддерживает перенос библиографий, цитирования, стилей оформления, таблиц в другие форматы файлов. Усть ограничение: pdf нельзя сконвертировать в другие форматы. Установка:
+[**pandoc**](https://pandoc.org/) --- инструмент командной строки (CLI) для конвертации документов в различных форматах в документы других различных форматов: pdf, docx, pptx, html, Markdown могут быть сконвертированы друг в друга почти без ограничений, в том числе и с сохранением математических формул. Поддерживает перенос библиографий, цитирования, стилей оформления, таблиц в другие форматы файлов. Есть ограничение: pdf нельзя сконвертировать в другие форматы. Установка:
 ```cmd
 scoop install pandoc
 ```
@@ -2100,11 +2153,13 @@ pandoc -s math.tex -o example30.docx
 
 Опцию `--from` использовать необязательно, `pandoc` в большинстве случаев автоматически поймёт исходный формат по расширению или содержимому. Выходной формат надо обозначать в случаях неоднозначного соответствия расширения файла формату, как в случае с _.md_, которому соответствует несколько диалектов Markdown. См. руководство <https://pandoc.org/MANUAL.html>.
 
+
 ## Программы для ведения заметок
 
 Приложения для ведения заметок разделяются по способу хранения базы заметок: один локальный файл с базой, множество локальных _.md_ файлов и картинок, облачное хранение. Выбор программы во многом определяется выбором способа хранения.
 
 Среди множества существующих программ для ведения заметок следует рассматривать только opensource программы, которые используют формат Markdown и поддерживают формулы в LaTeX нотации: [https://alternativeto.net/category/productivity/note-taking/](https://alternativeto.net/category/productivity/note-taking/?feature=latex-support&license=opensource). Программ много, можно выбрать на любой вкус.
+
 
 ### Logseq
 
@@ -2118,6 +2173,7 @@ winget install --id=Logseq.Logseq  -e
 ### dendron
 
 Ещё одно приложение с хранением каждой записи в отдельном файле --- плагин [**dendron**](https://github.com/dendronhq/dendron) для [VSCode](https://marketplace.visualstudio.com/items?itemName=dendron.dendron). Это приложение в качестве основной особенности указывает удобный поиск и навигацию по базе в десятки тысяч заметок. [Инструкция](https://learn.microsoft.com/ru-ru/shows/vs-code-livestreams/note-taking-inside-of-vs-code).
+
 
 ### TiddlyWiki
 
@@ -2135,6 +2191,7 @@ _KaTeX_\
 _Markdown_
 
 _Note:_ Есть поддержка режима редактирования Vim в плагине _CodeMirror Keymap Vim_. Но для _очень_ продвинутых пользователей этот плагин не актуален, так как они уже настроили себе расширение <https://github.com/glacambre/firenvim>.
+
 
 ### AI-based
 
