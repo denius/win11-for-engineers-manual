@@ -5,6 +5,8 @@
 
 ### Added
 
+- Глава про git и <https://github.com>.
+
 ### Changed
 
 ### Fixed
