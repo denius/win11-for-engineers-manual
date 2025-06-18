@@ -118,7 +118,7 @@ using PythonCall
 
 *Опубликовано под лицензией [CC-BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ru).*
 
-*Version: 0.5.6*
+*Version: 0.5.7*
 
 # **_Этап 1: Установка базового набора рабочих программ_** {.unnumbered}
 
