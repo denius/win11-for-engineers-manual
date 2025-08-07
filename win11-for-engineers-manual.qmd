@@ -343,6 +343,7 @@ scoop install gdb
 scoop install make
 scoop install cmake
 scoop install time
+scoop install hyperfine
 scoop install clipboard
 scoop install imagemagick
 scoop install ffmpeg
@@ -1606,6 +1607,13 @@ timecmd make all
 
 _Note:_ При использовании современной темы оформления оболочки (shell) подобная утилита не требуется, так как сам терминал пишет затраченное время.
 
+Ещё существует утилита [hyperfine](https://github.com/sharkdp/hyperfine), это расширенный аналог `time`.\
+Установка: `scoop install hyperfine`.
+
+Использование аналогично утилите `time`:
+```cmd
+hyperfine make all
+```
 
 ### top
 
