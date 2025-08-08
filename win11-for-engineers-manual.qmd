@@ -799,7 +799,7 @@ sudo apt install aptitude mc bash-completion neovim wget curl \
          libhypre-dev liblapack-dev liblapack-doc libhdf5-mpi-dev \
          libscotch-dev petsc-dev libsuitesparse-dev libsuperlu-dev \
          libsuperlu-dist-dev fortran-language-server gdb \
-         python3 python3-pip ripgrep fzf fd-find parallel
+         python3 python3-pip ripgrep fzf fd-find parallel libsixel-bin
 ```
 
 Методы запуска консоли WSL:
