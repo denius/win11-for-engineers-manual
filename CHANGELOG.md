@@ -5,6 +5,8 @@
 
 ### Added
 
+- Добавлены в список LLM от GigaChat Сбера и T-Pro Т-Банка.
+
 ### Changed
 
 ### Fixed

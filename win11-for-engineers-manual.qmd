@@ -3350,11 +3350,15 @@ _Ассистенты_, и, в частности, _Copilot'ы_ (code assistant)
 
 * семействa моделей [Qwen3](https://huggingface.co/collections/Qwen/qwen3-67dd247413f0e2e4f653967f) и [Qwen3-Coder](https://huggingface.co/collections/Qwen/qwen3-coder-687fc861e53c939e52d52d10), и модель [QwQ-32B](https://huggingface.co/Qwen/QwQ-32B), от [Alibaba](https://qwenlm.github.io/blog/qwen3/);
 
-* семейство моделей [GLM4](https://huggingface.co/collections/zai-org/glm-4-0414-67f3cbcb34dd9d252707cb2e) от [Zhipu AI](https://github.com/zai-org/GLM-4);
-
 * семейство моделей [gemma 3n](https://huggingface.co/collections/google/gemma-3n-685065323f5984ef315c93f4) от [Google](https://developers.googleblog.com/en/introducing-gemma-3n-developer-guide/);
 
 * модель [gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b) от [OpenAI](https://github.com/openai/gpt-oss);
+
+* модель [GigaChat-20B-A3B](https://huggingface.co/ai-sage/GigaChat-20B-A3B-instruct-GGUF) (Light) от [Сбера](https://habr.com/ru/companies/sberdevices/articles/865996/);
+
+* модель [T-Pro-2.0](https://huggingface.co/t-tech/T-pro-it-2.0-GGUF) от [Т-Банк](https://habr.com/ru/companies/tbank/articles/928956/);
+
+* семейство моделей [GLM4](https://huggingface.co/collections/zai-org/glm-4-0414-67f3cbcb34dd9d252707cb2e) от [Zhipu AI](https://github.com/zai-org/GLM-4);
 
 * ещё есть семейство моделей [ERNIE-4.5](https://huggingface.co/collections/baidu/ernie-45-6861cd4c9be84540645f35c9) от [Baidu](https://yiyan.baidu.com/blog/posts/ernie4.5), но здесь есть сложности с запуском.
 
@@ -3794,7 +3798,7 @@ _Note:_ Далее в тексте будет применяться сокра�
 
 ## Ограничения командной строки Windows
 
-В Windows `*` (wildcard) [не](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) [раскрывается](https://github.com/chrisant996/clink/discussions/548#discussioncomment-8137898) перед запуском программ, а передаётся прямо как звёздочка, и, скажем, обычная Linux команда `ls *` скажет, что нет такого файла `*`. У этого ограничения есть несколько решений:
+В Windows `*` (wildcard) [не](https://stackoverflow.com/questions/72434739/globbing-patterns-in-windows-command-prompt-powershell) [раскрывается](https://github.com/chrisant996/clink/discussions/548#discussioncomment-8137898) перед запуском программ, а передаётся в программу прямо как звёздочка, и, для примера, обычная Linux команда `ls *` скажет, что нет такого файла `*`. У этого ограничения есть несколько решений:
 
 * Использовать [BusyBox](https://frippery.org/busybox/), где в каждую [команду](https://www.busybox.net/downloads/BusyBox.html) встроен свой [глоббинг](https://frippery.org/busybox/globbing.html) и правильное распознавание `\` | `/` в путях, и, тот же `ls`, из состава BusyBox, сработает как в Linux. BusyBox, это альтернатива сборкам [Git-for-Windows](https://gitforwindows.org/)/[MSYS2](https://www.msys2.org/). Этот вариант подходит для использования с _WT_/_Conemu_.
 
