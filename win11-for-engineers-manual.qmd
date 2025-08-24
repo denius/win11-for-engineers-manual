@@ -1338,6 +1338,22 @@ git --- это распределённая система контроля ве
 
 ### Установка и настройка
 
+Скорее всего git уже был установлен вместе с менеджером пакетов scoop; если это не так, то для установки git (вместе со scoop) выполнить в PowerShell терминале (не Admin!):
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+scoop install git
+```
+
+Для полноценной настройки git следует настроить имя и email, которые будут использоваться для подписи коммитов; без явного задания этих настроек git всё равно будет использовать какие-то имя и email, которые будут определены исходя из USERNAME и имени хоста, поэтому лучше самому задать эти параметры.
+
+```cmd
+git config --global user.name "Your Name"
+git config --global user.email "your_email@example.com"
+```
+
 ### Основы использования
 
 Инициализация репозитория в текущей папке (**`.`**):
@@ -3550,6 +3566,14 @@ docker run --rm --volume /var/run/docker.sock:/var/run/docker.sock ^
 
 _Note:_ В Open WebUI по умолчанию стоит включенной настройка _Rich Text Input for Chat_, которая пытается на лету превращать набираемый текст с разметкой Markdown в отформатированный текст, что приводит к излишней "оптимизации" и [потере некоторых символов вроде перевода строк](https://github.com/open-webui/open-webui/issues/9759#issuecomment-2677880302) и т.п. Эту опцию следует отключить в *Settings > Interface > Chat > Rich Text Input for Chat*.
 
+#### Использование Open WebUI для распознавания (OCR) pdf и картинок {.unnumbered}
+
+Для распознавания _pdf_ документов необходимо загрузить pdf-файл с помощью кнопки "+" в интерфейсе чата Open WebUI, и применить LLM модель [GPT-OSS-20B](https://ollama.com/library/gpt-oss:20b) от OpenAI с запросом:
+```md
+OCR attached pdf to MarkDown. Preserve formatting.
+```
+
+_Note:_ Применяемая модель GPT-OSS-20B занимает 14Гб, поэтому потребуется компьютер с не менее чем 24Гб оперативной памяти. При отсутствии видеокарты распознавание pdf-файла займёт несколько минут; при наличии видеокарты время выполнения может сократиться до нескольких секунд.
 
 ### Page Assist (with Ollama)
 

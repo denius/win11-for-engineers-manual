@@ -8,6 +8,7 @@
 - Добавлены в список LLM от GigaChat Сбера и T-Pro Т-Банка.
 - Добавлено описание ИИ помощников: редактора zed, плагинов Roo Code, Continue.
 - Настройка git.
+- OCR pdf с помощью LLM GPT-OSS-20B в Open WebUI.
 
 ### Changed
 
