@@ -1453,6 +1453,20 @@ git commit -m "Merge upstream commits"
 
 В VSCode есть [поддержка git](https://code.visualstudio.com/docs/sourcecontrol/overview) "из коробки": есть возможность добавлять файлы, делать коммиты, переключаться по веткам; в общем большинство операций доступны из интерфейса VSCode, необходимо лишь чтобы git был установлен.
 
+### UI git
+
+Для git существует множество интерфейсов GUI и TUI. Одним из несложных и в тоже время мощных является [lazygit](https://github.com/jesseduffield/lazygit). [Установка](https://github.com/jesseduffield/lazygit?tab=readme-ov-file#installation):
+
+```cmd
+winget install -e --id=JesseDuffield.lazygit
+```
+
+или
+
+```cmd
+scoop install lazygit
+```
+
 
 ## Полезные консольные утилитки
 

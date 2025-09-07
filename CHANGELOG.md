@@ -9,6 +9,7 @@
 - Добавлено описание ИИ помощников: редактора zed, плагинов Roo Code, Continue.
 - Настройка git.
 - OCR pdf с помощью LLM GPT-OSS-20B в Open WebUI.
+- lazygit.
 
 ### Changed
 
