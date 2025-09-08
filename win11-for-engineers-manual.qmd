@@ -1431,6 +1431,26 @@ git commit -m "Merge upstream commits"
 В коммит попадают только данные, закешированные командой `git add ....`.
 
 
+### git в VSCode
+
+В VSCode есть [поддержка git](https://code.visualstudio.com/docs/sourcecontrol/overview) "из коробки": есть возможность добавлять файлы, делать коммиты, переключаться по веткам; в общем большинство операций доступны из интерфейса VSCode, необходимо лишь чтобы git был установлен.
+
+
+### UI git
+
+Для git существует множество интерфейсов GUI и TUI. Одним из несложных и в тоже время мощных является [lazygit](https://github.com/jesseduffield/lazygit). [Установка](https://github.com/jesseduffield/lazygit?tab=readme-ov-file#installation):
+
+```cmd
+winget install -e --id=JesseDuffield.lazygit
+```
+
+или
+
+```cmd
+scoop install lazygit
+```
+
+
 ### [github.com](https://github.com/)
 
 Сайт <https://github.com/> даёт возможность бесплатного хранения своих репозиториев онлайн. Плюс развитая система ведения багов (*issues*), пул-реквестов (*pull request* --- *PR*), возможность ведения релизов, вики-страниц, возможность отслеживания изменений.
@@ -1449,23 +1469,6 @@ git commit -m "Merge upstream commits"
 
 * для внесения изменений в "чужие" репозитории следует создавать его форк (*fork*) на github, делать правки, и создавать пул-реквест в исходный репозиторий.
 
-### git в VSCode
-
-В VSCode есть [поддержка git](https://code.visualstudio.com/docs/sourcecontrol/overview) "из коробки": есть возможность добавлять файлы, делать коммиты, переключаться по веткам; в общем большинство операций доступны из интерфейса VSCode, необходимо лишь чтобы git был установлен.
-
-### UI git
-
-Для git существует множество интерфейсов GUI и TUI. Одним из несложных и в тоже время мощных является [lazygit](https://github.com/jesseduffield/lazygit). [Установка](https://github.com/jesseduffield/lazygit?tab=readme-ov-file#installation):
-
-```cmd
-winget install -e --id=JesseDuffield.lazygit
-```
-
-или
-
-```cmd
-scoop install lazygit
-```
 
 
 ## Полезные консольные утилитки
